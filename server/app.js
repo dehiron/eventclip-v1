@@ -19,10 +19,11 @@ app.get("/api/events", (req,res) => {
 });
 
 //新規イベント登録用
-app.post("/api/register_event", (req, res) => {
+app.post("/api/registerevent", (req, res) => {
     const eventData = req.body;
     const eventName = eventData.event_name;
     const eventNameKana = eventData.event_name_kana;
+
     const genre = eventData.genre;
     const address = eventData.address;
     const tel = eventData.tel;
@@ -33,16 +34,16 @@ app.post("/api/register_event", (req, res) => {
     const startTime = eventData.start_time;
     const endTime = eventData.end_time;
     const description = eventData.description;
-    const owner_id = eventData.owner_id;
+    const ownerId = eventData.owner_id;
     const img1 = eventData.img1;
     const img2 = eventData.img2;
     const img3 = eventData.img3;
     const img4 = eventData.img4;
     const img5 = eventData.img5;
 
-    database("events".count('id').where({
+    database("events").count('id').where({
         event_name:eventName,
-    })).then(result => {
+    }).then(result => {
         if (result[0].count === '0'){
             database("events").insert({
                 event_name: eventName,
@@ -57,7 +58,7 @@ app.post("/api/register_event", (req, res) => {
                 start_time: startTime,
                 end_time: endTime,
                 description: description,
-                owner_id: owner_id,
+                owner_id: ownerId,
                 img1: img1,
                 img2: img2,
                 img3: img3,

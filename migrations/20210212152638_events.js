@@ -19,9 +19,9 @@ exports.up = async function(knex) {
         table.string('email')
         table.string('prefecture').notNullable();
         table.string('city').notNullable();
-        table.date('date').notNullable();
-        table.datetime('start_time')
-        table.datetime('end_time')
+        table.string('date').notNullable().defaultTo('19000101');
+        table.string('start_time').defaultTo('00:00');
+        table.string('end_time').defaultTo('00:00');
         table.text('description')
         table.string('owner_id').notNullable();
         table.string('img1').notNullable().defaultTo('https:dl.dropboxusercontent.com/s/t1u9z09klzlfm33/garden2.jpg')
