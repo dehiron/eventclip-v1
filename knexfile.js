@@ -18,7 +18,7 @@ module.exports = {
   production : {
     client: "pg",
     connection:
-      process.env.DATABASE_URL ||
+      process.env.DATABASE_URL + "?sslmode=require" ||
       `postgres://${process.env.USER}@127.0.0.1:5432/eventclip`,
       searchPath: "public",
       migrations: {
