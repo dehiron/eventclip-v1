@@ -17,6 +17,7 @@ module.exports = {
   },
   production : {
     client: "pg",
+    ssl: { rejectUnauthorized: false } ,
     connection:
       process.env.DATABASE_URL + "?sslmode=require" ||
       `postgres://${process.env.USER}@127.0.0.1:5432/eventclip`,
@@ -26,10 +27,6 @@ module.exports = {
       },
       seeds:{
         directory: __dirname + "/seeds"
-      },
-      ssl: {
-        require: true,
-        rejectUnauthorized: false
       },
   }
 }
