@@ -9,7 +9,11 @@ function Home(props) {
 
   const handleClickToOwnerPage = () => {
       props.history.push("/OwnerPage");
-  } 
+    }
+  
+  const handleClickToMap = () => {
+    props.history.push("/Map");
+    }
 
   useEffect(()=>{
     const fetchData = async () => {
@@ -32,6 +36,7 @@ function Home(props) {
       <ul>
         {events.map((element) => <li key={element.id}>{element.event_name} {element.address}</li>)}
       </ul>
+      <p className="link-to-Map" onClick={handleClickToMap}>マップ（後で置き換える）</p>
     </div>
   );
 }
