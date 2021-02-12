@@ -5,7 +5,7 @@ module.exports = {
   development : {
     client: "pg",
     connection:
-      process.env.REACT_APP_DATABASE_URL ||
+      process.env.DATABASE_URL ||
       `postgres://${process.env.USER}@127.0.0.1:5432/eventclip`,
       searchPath: "public",
       migrations: {
@@ -18,7 +18,7 @@ module.exports = {
   production : {
     client: "pg",
     connection:
-      process.env.REACT_APP_DATABASE_URL ||
+      process.env.DATABASE_URL ||
       `postgres://${process.env.USER}@127.0.0.1:5432/eventclip`,
       searchPath: "public",
       migrations: {
@@ -26,6 +26,10 @@ module.exports = {
       },
       seeds:{
         directory: __dirname + "/seeds"
-      }
+      },
+      ssl: {
+        require: true,
+        rejectUnauthorized: false
+      },
   }
 }
