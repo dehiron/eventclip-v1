@@ -2,9 +2,11 @@ const express = require('express')
 const multer = require('multer') //formData形式のリクエストを扱うミドルウェア
 const app = express()
 const databse = require('./knex')
+const cors = require('cors')
 
 app.use(multer().none());
 app.use(express.json());
+app.use(cors());
 
 //確認用
 app.get("/api", (req,res) => {
