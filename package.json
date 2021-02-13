@@ -24,8 +24,9 @@
     "web-vitals": "^1.0.1"
   },
   "scripts": {
-    "start" : "nodemon server",
-    "start:hack": "react-scripts start",
+    "start" : "node server",
+    "demonstart" : "nodemon server",
+    "hack": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
