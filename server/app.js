@@ -2,13 +2,12 @@ const express = require('express')
 const multer = require('multer') //formData形式のリクエストを扱うミドルウェア
 const app = express()
 const databse = require('./knex')
-const cors = require('cors')
 const path = require('path')
 
 app.use(multer().none());
 app.use(express.json());
-app.use(cors());
 
+// Serve static assets 静的コンテンツをビルドして返す
 app.use(express.static(path.resolve(__dirname, "..", "build")));
 
 //確認用
@@ -76,6 +75,7 @@ app.post("/api/registerevent", (req, res) => {
     })
 })
 
+// Always return the main index.html, so react-router render the route in the client
 app.get("*", (req, res) => {
     res.sendFile(path.resolve(__dirname, "..", "build", "index.html"));
   });
