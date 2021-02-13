@@ -12,7 +12,8 @@ import "@reach/combobox/styles.css"
 import mapStyles from "./MapStyles";
 require('dotenv').config();
 
-const libraries = ["places"]
+const apiKey = process.env.REACT_APP_GOOGLE_MAPS_API_KEY;
+const libraries = ["places"];
 const mapContainerStyle = {
     width: '100vw',
     height: '100vh'
@@ -29,7 +30,7 @@ const options = {
 
 function Map(props) {
     const { isLoaded, loadError } = useLoadScript({
-        googleMapsApiKey: process.env.REACT_APP_GOOGLE_MAPS_API_KEY,
+        googleMapsApiKey: apiKey,
         libraries
     });
     const [markers, setMarkers] = useState([]);
