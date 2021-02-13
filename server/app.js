@@ -3,10 +3,13 @@ const multer = require('multer') //formData形式のリクエストを扱うミ�
 const app = express()
 const databse = require('./knex')
 const cors = require('cors')
+const path = require('path')
 
 app.use(multer().none());
 app.use(express.json());
 app.use(cors());
+
+app.use(express.static(path.resolve(__dirname, "..", "build")));
 
 //確認用
 app.get("/api", (req,res) => {
@@ -73,5 +76,8 @@ app.post("/api/registerevent", (req, res) => {
     })
 })
 
+app.get("*", (req, res) => {
+    res.sendFile(path.resolve(__dirname, "..", "build", "index.html"));
+  });
 
 module.exports = app; 
