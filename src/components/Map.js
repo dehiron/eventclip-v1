@@ -2,9 +2,8 @@ import React, { useState, useCallback , useRef } from "react";
 // import axios from "axios";
 import "./Styles.css";
 import { GoogleMap, useLoadScript, Marker, InfoWindow } from "@react-google-maps/api";
-//
-//
-//
+import usePlacesAutocomplete, { getGeocode, getLagLng, getLatLng } from "use-places-autocomplete";
+import { Combobox, ComboboxInput, ComboboxPopover, ComboboxList, ComboboxOption} from "@reach/combobox";
 import "@reach/combobox/styles.css"
 import mapStyles from "./MapStyles";
 import { formatRelative } from "date-fns";
@@ -49,6 +48,10 @@ function Map(props) {
     const onMapLoad = useCallback((map) => {
         mapRef.current = map;
     },[])
+    const panTo = useCallback(({lat,lng}) => {
+        mapRef.current.panTo({lat, lng});
+        mapRef.current.setZoom(14);
+    },[])
 
     if (loadError) return "Error loading maps";
     if (!isLoaded) return "Loading Maps";
@@ -60,6 +63,12 @@ function Map(props) {
                     🖇
                 </span>
             </h1>
+
+            {/* サーチバー */}
+            
+            <Search panTo = { panTo } />
+
+
             <GoogleMap 
             // GoogleMapタグのattitude
                 mapContainerStyle={mapContainerStyle}
@@ -101,9 +110,55 @@ function Map(props) {
                 ) : null}
             </GoogleMap>
         </div>
+    );
+};
 
-    )
+function Search({ panTo }) {
+    const {
+        ready, 
+        value, 
+        suggestions:{status, data}, 
+        setValue, 
+        clearSuggestions
+    } = usePlacesAutocomplete({
+        requestOptions: {
+            location:{ lat:() => 35.681236, lng:() => 139.767125 },
+            radius: 200 * 1000,
+        }
+    });
 
+    return(
+        <div className="search">
+            <Combobox 
+                onSelect={async (address) => {
+                    setValue(address, false); // falseを設定するのはusePlacesAutocomplete特有のやり方みたい
+                    clearSuggestions(); //選んだ瞬間候補がなくなる
+                    try{
+                        const results = await getGeocode({ address });
+                        const { lat, lng } = await getLatLng(results[0]);
+                        console.log({ lat,lng })
+                        panTo({ lat,lng });
+                    } catch(error){
+                        console.log("Error!")
+                    }
+                }}
+            >
+                <ComboboxInput 
+                    value = {value} 
+                    onChange = {(e) => {
+                        setValue(e.target.value)
+                }}
+                disablaed = {!ready}
+                placeholder = "Enter an address" 
+                />
+                <ComboboxPopover>
+                {status === "OK" && data.map(({ id, description }) =>　(
+                    <ComboboxOption key={id} value={description} />
+                ))}
+                </ComboboxPopover>
+            </Combobox>
+        </div>
+    ); 
 }
 
 export default Map;  
