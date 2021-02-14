@@ -23,7 +23,7 @@ app.get("/api/events", (req,res) => {
 });
 
 //新規イベント登録用
-app.post("/api/registerevent", (req, res) => {
+app.post("/api/event/name", (req, res) => {
     const eventData = req.body;
     const eventName = eventData.event_name;
     const eventNameKana = eventData.event_name_kana;
@@ -74,6 +74,20 @@ app.post("/api/registerevent", (req, res) => {
         }
     })
 })
+
+//イベント削除用
+app.delete("/api/event/name", (req,res) => {
+    console.log(req.query.event_name)
+    try {
+        database("events")
+        .where({event_name: req.query.event_name})
+        .del()
+        .then((res => console.log("deleted")));
+    } catch {
+        console.log("event already registered")
+    }
+});
+
 
 // Always return the main index.html, so react-router render the route in the client
 app.get("*", (req, res) => {
