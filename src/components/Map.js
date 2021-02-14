@@ -2,7 +2,7 @@ import React, { useState, useCallback , useRef } from "react";
 // import axios from "axios";
 import "./Styles.css";
 import { GoogleMap, useLoadScript, Marker, InfoWindow } from "@react-google-maps/api";
-import usePlacesAutocomplete, { getGeocode, getLagLng, getLatLng } from "use-places-autocomplete";
+import usePlacesAutocomplete, { getGeocode, getLatLng } from "use-places-autocomplete";
 import { Combobox, ComboboxInput, ComboboxPopover, ComboboxList, ComboboxOption} from "@reach/combobox";
 import "@reach/combobox/styles.css"
 import mapStyles from "./MapStyles";
@@ -67,6 +67,7 @@ function Map(props) {
             {/* サーチバー */}
             
             <Search panTo = { panTo } />
+            <Locate panTo = { panTo } />
 
 
             <GoogleMap 
@@ -113,6 +114,25 @@ function Map(props) {
     );
 };
 
+function Locate({ panTo }) {
+    return (
+        <button className="locate" onClick={()=> {
+            navigator.geolocation.getCurrentPosition(
+                (positions) => { //sucessの場合
+                    panTo ({
+                        lat: positions.coords.latitude,
+                        lng: positions.coords.longitude,
+                    });
+                }, 
+                () => null, options //failの場合
+            )
+        }}>
+        <img src="compass.svg" alt="compass - locate me" />
+    </button>
+    )
+};
+
+
 function Search({ panTo }) {
     const {
         ready, 
@@ -136,7 +156,6 @@ function Search({ panTo }) {
                     try{
                         const results = await getGeocode({ address });
                         const { lat, lng } = await getLatLng(results[0]);
-                        console.log({ lat,lng })
                         panTo({ lat,lng });
                     } catch(error){
                         console.log("Error!")
@@ -148,13 +167,15 @@ function Search({ panTo }) {
                     onChange = {(e) => {
                         setValue(e.target.value)
                 }}
-                disablaed = {!ready}
+                disabled = {!ready}
                 placeholder = "Enter an address" 
                 />
                 <ComboboxPopover>
-                {status === "OK" && data.map(({ id, description }) =>　(
-                    <ComboboxOption key={id} value={description} />
-                ))}
+                    <ComboboxList>
+                        {status === "OK" && data.map(({ id, description },key) =>　(
+                            <ComboboxOption key={id} value={description} />
+                        ))}
+                    </ComboboxList>
                 </ComboboxPopover>
             </Combobox>
         </div>
