@@ -57,12 +57,7 @@ function Home(props) {
     googleMapsApiKey: apiKey,
     libraries
   });
-  const [markers, setMarkers] = useState([
-    //サンプル
-    {lat:35.658584, lng:139.7454316, time:new Date()},
-    {lat:35.7100069, lng:139.8108103, time: new Date(new Date().getTime() + (1 * 24 * 60 * 60 * 1000))},
-    {lat:35.6598003, lng:139.7023894, time: new Date(new Date().getTime() + (2 * 24 * 60 * 60 * 1000))},
-  ]);
+  const [markers, setMarkers] = useState([]);
   const [selected, setSelected] = useState(null); //選択されたマーカー情報
   //選択したマーカーのステート管理（？）
   const mapRef = useRef();
@@ -85,19 +80,25 @@ function Home(props) {
     fetchData();
   }, [modalIsOpen])
 
-  // useEffect(()=>{
-  //   const fetchDataForMarkers = async () => {
-  //     await axios.get("/api/events")
-  //     .then((response) =>
-  //       setMarkers(
-  //         response.data
-  //           .map(event => getGeocode({address:event.address}))
-  //           // .map(address => getGeocode({address:address}))
-  //           // .map(latLng => getLatLng(latLng[0])) 
-  //     ))
-  //   }
-  //   fetchDataForMarkers();
-  // }, [modalIsOpen])
+  useEffect(()=>{
+    const fetchDataForMarkers = async () => {
+      try {
+        const results = [];
+        const response = await axios.get("/api/events")
+        const allEvents = response.data;
+        for (const event of allEvents){
+          const geoCodeInfo = await getGeocode({address:event.address});
+          const {lat,lng} = await getLatLng(geoCodeInfo[0]);
+          results.push({lat:lat, lng:lng, time:new Date()});
+          //参考文献：https://tomokazu-kozuma.com/how-to-use-async-await-promise-all-effectively-in-loop-processing-of-for-statement/
+        }
+        setMarkers(results);
+      } catch(error){
+        console.log(error)
+      }
+    }
+    fetchDataForMarkers();
+  }, [modalIsOpen])
 
   //displaying contents
   if (isLoading){
@@ -126,7 +127,8 @@ function Home(props) {
               setSelectedEventName(element.event_name);
               setSelectedEventAddress(element.address);
               setModalIsOpen(true);
-              }}>詳細情報</button>
+              }}>詳細情報
+            </button>
             <Modal 
               isOpen={modalIsOpen} 
               onRequestClose = {() => setModalIsOpen(false)}
@@ -137,7 +139,8 @@ function Home(props) {
               <button onClick={()=>{
                 handleClickDeleteEvent(selectedEventName)
                 setModalIsOpen(false);
-              }}>delete</button>
+                }}>delete
+              </button>
             </Modal>
           </li>)
         }
