@@ -10,7 +10,7 @@ import mapStyles from "./MapStyles";
 import { formatRelative } from "date-fns";
 require('dotenv').config();
 
-//******for use of google map component
+//******defining variables, for use of google map component
 const apiKey = process.env.REACT_APP_GOOGLE_MAPS_API_KEY;
 const libraries = ["places"];
 const mapContainerStyle = {
@@ -26,42 +26,11 @@ const options = {
     disableDefaultUI: true,
     zoomControl: true
 };
-//******for use of google map component
+//******defining variables, for use of google map component
 
 
 Modal.setAppElement("#root")
 function Home(props) {
-
-  //******for use of google map component
-    const { isLoaded, loadError } = useLoadScript({
-        googleMapsApiKey: apiKey,
-        libraries
-    });
-    const [markers, setMarkers] = useState([]);
-    const [selected, setSelected] = useState(null); //選択されたマーカー情報
-    //マーカーを作成する旅にレンダーするのを防ぐためのuseCallback
-    const onMapClick = useCallback((event) => {
-        setMarkers((current) => [
-            ...current, 
-            {
-                lat: event.latLng.lat(),
-                lng: event.latLng.lng(),
-                time: new Date(),
-            }   
-        ]);
-    },[]);
-    //選択したマーカーのステート管理（？）
-    const mapRef = useRef();
-    const onMapLoad = useCallback((map) => {
-        mapRef.current = map;
-    },[])
-    const panTo = useCallback(({lat,lng}) => {
-        mapRef.current.panTo({lat, lng});
-        mapRef.current.setZoom(14);
-    },[])
-  //******for use of google map component
-
-
 
   //state群
   const [isLoading, setLoading] = useState(true)
@@ -83,6 +52,29 @@ function Home(props) {
     }).then((response) => response);
   }
 
+  //******for use of google map component
+  const { isLoaded, loadError } = useLoadScript({
+    googleMapsApiKey: apiKey,
+    libraries
+  });
+  const [markers, setMarkers] = useState([
+    //サンプル
+    {lat:35.658584, lng:139.7454316, time:new Date()},
+    {lat:35.7100069, lng:139.8108103, time: new Date(new Date().getTime() + (1 * 24 * 60 * 60 * 1000))},
+    {lat:35.6598003, lng:139.7023894, time: new Date(new Date().getTime() + (2 * 24 * 60 * 60 * 1000))},
+  ]);
+  const [selected, setSelected] = useState(null); //選択されたマーカー情報
+  //選択したマーカーのステート管理（？）
+  const mapRef = useRef();
+  const onMapLoad = useCallback((map) => {
+      mapRef.current = map;
+  },[])
+  const panTo = useCallback(({lat,lng}) => {
+      mapRef.current.panTo({lat, lng});
+      mapRef.current.setZoom(14);
+  },[])
+  //******for use of google map component
+
   useEffect(()=>{
     const fetchData = async () => {
       await axios.get("/api/events")
@@ -90,9 +82,22 @@ function Home(props) {
           setEvents(response.data),
           setLoading(false))
     }
-    fetchData()
+    fetchData();
   }, [modalIsOpen])
 
+  // useEffect(()=>{
+  //   const fetchDataForMarkers = async () => {
+  //     await axios.get("/api/events")
+  //     .then((response) =>
+  //       setMarkers(
+  //         response.data
+  //           .map(event => getGeocode({address:event.address}))
+  //           // .map(address => getGeocode({address:address}))
+  //           // .map(latLng => getLatLng(latLng[0])) 
+  //     ))
+  //   }
+  //   fetchDataForMarkers();
+  // }, [modalIsOpen])
 
   //displaying contents
   if (isLoading){
@@ -143,7 +148,6 @@ function Home(props) {
                 zoom = {10}
                 center = {center}
                 options = {options}
-                onClick = {onMapClick}
                 onLoad = {onMapLoad}
             >
                  {/* GoogleMapタグの中身=マーカーの見た目について */}
@@ -152,10 +156,10 @@ function Home(props) {
                         key = {marker.time.toISOString()}
                         position = {{ lat: marker.lat, lng: marker.lng }}
                         icon={{
-                            url: `/bear.svg`,
-                            origin: new window.google.maps.Point(0,0),
-                            anchor: new window.google.maps.Point(15,15),
-                            scaledSize: new window.google.maps.Size(30,30)
+                            url: `/bluepin.svg`,
+                            // origin: new window.google.maps.Point(0,0),
+                            // anchor: new window.google.maps.Point(15,15),
+                            scaledSize: new window.google.maps.Size(35,35)
                         }}
                         onClick = {() => {
                             setSelected(marker)
@@ -171,7 +175,7 @@ function Home(props) {
                         onCloseClick = {() => { setSelected(null) }}
                     >
                         <div>
-                            <h2>Bear Spotted!</h2>
+                            <h2>Marker Spotted!</h2>
                             <p>Spotted {formatRelative(selected.time, new Date())}</p>
                         </div>
                     </InfoWindow>

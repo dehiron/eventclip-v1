@@ -3,9 +3,11 @@ const multer = require('multer') //formData形式のリクエストを扱うミ�
 const app = express()
 const databse = require('./knex')
 const path = require('path')
+const cors = require("cors");
 
 app.use(multer().none());
 app.use(express.json());
+app.use(cors());
 
 // Serve static assets 静的コンテンツをビルドして返す
 app.use(express.static(path.resolve(__dirname, "..", "build")));
