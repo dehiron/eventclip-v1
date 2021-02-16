@@ -7,7 +7,7 @@ import usePlacesAutocomplete, { getGeocode, getLatLng } from "use-places-autocom
 import { Combobox, ComboboxInput, ComboboxPopover, ComboboxList, ComboboxOption} from "@reach/combobox";
 import "@reach/combobox/styles.css"
 import mapStyles from "./MapStyles";
-import { formatRelative } from "date-fns";
+// import { formatRelative } from "date-fns";
 require('dotenv').config();
 
 //******defining variables, for use of google map component
@@ -35,9 +35,6 @@ function HomePage(props) {
   //state群
   const [isLoading, setLoading] = useState(true)
   const [events, setEvents] = useState([]);
-  const [modalIsOpen, setModalIsOpen] = useState(false);
-  const [selectedEventName, setSelectedEventName] = useState(null);
-  const [selectedEventAddress, setSelectedEventAddress] = useState(null);
 
   //関数群
   const handleClickToOwnerPage = () => {
@@ -45,14 +42,6 @@ function HomePage(props) {
   }
   const handleClickToEventsPage = () => {
     props.history.push("/EventsPage");
-  }
-  async function handleClickDeleteEvent(event_name){
-    // e.preventDefault();
-    await axios.delete('/api/event/name', {
-      params:{
-        event_name:event_name
-      }
-    }).then((response) => response);
   }
 
   //******for use of google map component
@@ -83,7 +72,7 @@ function HomePage(props) {
         setLoading(false);
         let counter = 0;
         for (const event of allEvents){
-          console.log(counter)
+          console.log(counter);
           const geoCodeInfo = await getGeocode({address:event.address});
           const {lat,lng} = await getLatLng(geoCodeInfo[0]);
           results.push({lat:lat, lng:lng, time:new Date()});
@@ -96,7 +85,7 @@ function HomePage(props) {
       }
     }
     fetchData();
-  }, [modalIsOpen])
+  }, [isLoading])
 
   //displaying contents
   if (isLoading){
@@ -118,32 +107,7 @@ function HomePage(props) {
       <h2>Upcoming Events!</h2>
       <h3 className="link-to-OwnerPage" onClick={ handleClickToOwnerPage }>新規イベント登録はこちら</h3>
       <h3 className="link-to-OwnerPage" onClick={ handleClickToEventsPage }>イベント一覧</h3>
-      <ul>
-        {events.map((element) => 
-          <li key={element.id}>
-            {element.event_name} {element.address}
-            <button onClick={ () => {
-              setSelectedEventName(element.event_name);
-              setSelectedEventAddress(element.address);
-              setModalIsOpen(true);
-              }}>詳細情報
-            </button>
-            <Modal 
-              isOpen={modalIsOpen} 
-              onRequestClose = {() => setModalIsOpen(false)}
-            >
-              <p>Modal</p>
-              <p>{selectedEventName}</p>
-              <p>{selectedEventAddress}</p>
-              <button onClick={()=>{
-                handleClickDeleteEvent(selectedEventName)
-                setModalIsOpen(false);
-                }}>delete
-              </button>
-            </Modal>
-          </li>)
-        }
-      </ul>
+      <p>{events[0].event_name}</p>
       <GoogleMap 
             // GoogleMapタグのattitude
                 mapContainerStyle={mapContainerStyle}
@@ -178,8 +142,7 @@ function HomePage(props) {
                         onCloseClick = {() => { setSelected(null) }}
                     >
                         <div>
-                            <h2>Marker Spotted!</h2>
-                            <p>Spotted {formatRelative(selected.time, new Date())}</p>
+                            <h2>Event!</h2>
                         </div>
                     </InfoWindow>
                 ) : null}
