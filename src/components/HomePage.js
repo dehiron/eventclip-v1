@@ -74,7 +74,7 @@ function HomePage(props) {
   //******for use of google map component
 
   useEffect(()=>{
-    const fetchDataForMarkers = async () => {
+    const fetchData = async () => {
       try {
         const results = [];
         const response = await axios.get("/api/events")
@@ -95,7 +95,7 @@ function HomePage(props) {
         console.log(error)
       }
     }
-    fetchDataForMarkers();
+    fetchData();
   }, [modalIsOpen])
 
   //displaying contents
