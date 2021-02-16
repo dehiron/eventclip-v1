@@ -49,7 +49,7 @@ function HomePage(props) {
     googleMapsApiKey: apiKey,
     libraries
   });
-  const [markers, setMarkers] = useState([]);
+
   const [selected, setSelected] = useState(null); //選択されたマーカー情報
   //選択したマーカーのステート管理（？）
   const mapRef = useRef();
@@ -65,21 +65,10 @@ function HomePage(props) {
   useEffect(()=>{
     const fetchData = async () => {
       try {
-        const results = [];
         const response = await axios.get("/api/events")
         const allEvents = response.data;
         setEvents(allEvents);
         setLoading(false);
-        let counter = 0;
-        for (const event of allEvents){
-          console.log(counter);
-          const geoCodeInfo = await getGeocode({address:event.address});
-          const {lat,lng} = await getLatLng(geoCodeInfo[0]);
-          results.push({lat:lat, lng:lng, time:new Date()});
-          counter = counter + 1;
-          //参考文献：https://tomokazu-kozuma.com/how-to-use-async-await-promise-all-effectively-in-loop-processing-of-for-statement/
-        }
-        setMarkers(results);
       } catch(error){
         console.log(error)
       }

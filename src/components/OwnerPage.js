@@ -2,6 +2,18 @@ import React, {useState} from "react";
 import axios from 'axios';
 import './Styles.css';
 
+// 入力された住所からlatitude/longitudeを自動で生成してテーブルに入れる際に使いそうなコード
+// let counter = 0;
+// for (const event of allEvents){
+//   console.log(counter);
+//   const geoCodeInfo = await getGeocode({address:event.address});
+//   const {lat,lng} = await getLatLng(geoCodeInfo[0]);
+//   results.push({lat:lat, lng:lng, time:new Date()});
+//   counter = counter + 1;
+//   //参考文献：https://tomokazu-kozuma.com/how-to-use-async-await-promise-all-effectively-in-loop-processing-of-for-statement/
+// }
+// setMarkers(results);
+
 function OwnerPage(props) {
 
     const [eventName, setEventName] = useState("")
