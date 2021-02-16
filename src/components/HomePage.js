@@ -17,7 +17,7 @@ const mapContainerStyle = {
     width: '100vw',
     height: '100vh'
 };
-const center = {
+const center = { //tokyoに指定
     lat: 35.681236,
     lng: 139.767125
 };
@@ -74,21 +74,13 @@ function HomePage(props) {
   //******for use of google map component
 
   useEffect(()=>{
-    const fetchData = async () => {
-      await axios.get("/api/events")
-      .then((response) => 
-          setEvents(response.data),
-          setLoading(false))
-    }
-    fetchData();
-  }, [modalIsOpen])
-
-  useEffect(()=>{
     const fetchDataForMarkers = async () => {
       try {
         const results = [];
         const response = await axios.get("/api/events")
         const allEvents = response.data;
+        setEvents(allEvents);
+        setLoading(false);
         let counter = 0;
         for (const event of allEvents){
           console.log(counter)
