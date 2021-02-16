@@ -23,7 +23,7 @@ function OwnerPage(props) {
     const [img4, setImg4] = useState("")
     const [img5, setImg5] = useState("")
 
-    const handleClickToHome = () => {
+    const handleClickToHomePage = () => {
         props.history.goBack();
     }
 
@@ -79,7 +79,7 @@ function OwnerPage(props) {
                 <input placeholder="画像5" onChange={e => setImg5(e.target.value)}></input>
             </ul>
             <button onClick={handleRegisterEvent}>イベント登録</button>
-            <button onClick={handleClickToHome}>Homeに戻る</button>
+            <button onClick={handleClickToHomePage}>Homeに戻る</button>
       </div>
     )
 };

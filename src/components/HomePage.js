@@ -30,7 +30,7 @@ const options = {
 
 
 Modal.setAppElement("#root")
-function Home(props) {
+function HomePage(props) {
 
   //state群
   const [isLoading, setLoading] = useState(true)
@@ -42,6 +42,9 @@ function Home(props) {
   //関数群
   const handleClickToOwnerPage = () => {
       props.history.push("/OwnerPage");
+  }
+  const handleClickToEventsPage = () => {
+    props.history.push("/EventsPage");
   }
   async function handleClickDeleteEvent(event_name){
     // e.preventDefault();
@@ -86,10 +89,13 @@ function Home(props) {
         const results = [];
         const response = await axios.get("/api/events")
         const allEvents = response.data;
+        let counter = 0;
         for (const event of allEvents){
+          console.log(counter)
           const geoCodeInfo = await getGeocode({address:event.address});
           const {lat,lng} = await getLatLng(geoCodeInfo[0]);
           results.push({lat:lat, lng:lng, time:new Date()});
+          counter = counter + 1;
           //参考文献：https://tomokazu-kozuma.com/how-to-use-async-await-promise-all-effectively-in-loop-processing-of-for-statement/
         }
         setMarkers(results);
@@ -118,7 +124,8 @@ function Home(props) {
       <Search panTo = { panTo } />
       <Locate panTo = { panTo } />
       <h2>Upcoming Events!</h2>
-      <p className="link-to-OwnerPage" onClick={ handleClickToOwnerPage }>新規イベント登録はこちら</p>
+      <h3 className="link-to-OwnerPage" onClick={ handleClickToOwnerPage }>新規イベント登録はこちら</h3>
+      <h3 className="link-to-OwnerPage" onClick={ handleClickToEventsPage }>イベント一覧</h3>
       <ul>
         {events.map((element) => 
           <li key={element.id}>
@@ -164,6 +171,7 @@ function Home(props) {
                             // anchor: new window.google.maps.Point(15,15),
                             scaledSize: new window.google.maps.Size(35,35)
                         }}
+                        animation = {window.google.maps.Animation.DROP}
                         onClick = {() => {
                             setSelected(marker)
                         }}
@@ -258,4 +266,4 @@ function Search({ panTo }) {
   ); 
 }
 
-export default Home; 
+export default HomePage; 
