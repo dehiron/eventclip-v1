@@ -1,5 +1,5 @@
 exports.up = async function(knex) {
-    
+
     await knex.schema.dropTableIfExists('events')
 
     let now = new Date();
@@ -17,6 +17,8 @@ exports.up = async function(knex) {
         table.string('event_name_kana').notNullable();
         table.string('genre').notNullable();
         table.string('address').notNullable();
+        table.decimal('latitude', [16], [8]);
+        table.decimal('longitude', [16], [8]);
         table.string('tel').notNullable();
         table.string('email')
         table.string('prefecture').notNullable();
