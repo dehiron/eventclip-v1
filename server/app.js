@@ -32,6 +32,8 @@ app.post("/api/event/name", (req, res) => {
 
     const genre = eventData.genre;
     const address = eventData.address;
+    const latitude = eventData.latitude;
+    const longitude = eventData.longitude;
     const tel = eventData.tel;
     const email = eventData.email;
     const prefecture = eventData.prefecture;
@@ -56,6 +58,8 @@ app.post("/api/event/name", (req, res) => {
                 event_name_kana: eventNameKana,
                 genre: genre,
                 address:address,
+                latitude: latitude,
+                longitude: longitude,
                 tel: tel,
                 email:email,
                 prefecture: prefecture,

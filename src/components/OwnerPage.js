@@ -1,18 +1,7 @@
 import React, {useState} from "react";
 import axios from 'axios';
+import { getGeocode, getLatLng } from "use-places-autocomplete";
 import './Styles.css';
-
-// 入力された住所からlatitude/longitudeを自動で生成してテーブルに入れる際に使いそうなコード
-// let counter = 0;
-// for (const event of allEvents){
-//   console.log(counter);
-//   const geoCodeInfo = await getGeocode({address:event.address});
-//   const {lat,lng} = await getLatLng(geoCodeInfo[0]);
-//   results.push({lat:lat, lng:lng, time:new Date()});
-//   counter = counter + 1;
-//   //参考文献：https://tomokazu-kozuma.com/how-to-use-async-await-promise-all-effectively-in-loop-processing-of-for-statement/
-// }
-// setMarkers(results);
 
 function OwnerPage(props) {
 
@@ -42,11 +31,19 @@ function OwnerPage(props) {
     async function handleRegisterEvent(e){
         e.preventDefault();
 
+        //ジオコーディング
+        //getGeocode関数の問題（らしい）で時々エラーが返るけどちゃんと機能してる。
+        const geoCodeInfo = await getGeocode({address:address});
+        const {lat,lng} = await getLatLng(geoCodeInfo[0]);
+
+        //body作る
         const body = new FormData();
         body.append('event_name', eventName);
         body.append('event_name_kana', eventNameKana);
         body.append('genre', genre);
         body.append('address', address);
+        body.append('latitude', lat);
+        body.append('longitude', lng);
         body.append('tel', tel);
         body.append('email', email);
         body.append('prefecture', prefecture);
