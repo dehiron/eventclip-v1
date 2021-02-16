@@ -107,7 +107,6 @@ function HomePage(props) {
       <h2>Upcoming Events!</h2>
       <h3 className="link-to-OwnerPage" onClick={ handleClickToOwnerPage }>新規イベント登録はこちら</h3>
       <h3 className="link-to-OwnerPage" onClick={ handleClickToEventsPage }>イベント一覧</h3>
-      <p>{events[0].event_name}</p>
       <GoogleMap 
             // GoogleMapタグのattitude
                 mapContainerStyle={mapContainerStyle}
@@ -117,10 +116,10 @@ function HomePage(props) {
                 onLoad = {onMapLoad}
             >
                  {/* GoogleMapタグの中身=マーカーの見た目について */}
-                 {markers.map((marker) => (
+                 {events.map((event) => (
                     <Marker
-                        key = {marker.time.toISOString()}
-                        position = {{ lat: marker.lat, lng: marker.lng }}
+                        key = {event.event_name}
+                        position = {{ lat: parseFloat(event.latitude), lng: parseFloat(event.longitude) }}
                         icon={{
                             url: `/bluepin.svg`,
                             // origin: new window.google.maps.Point(0,0),
@@ -129,7 +128,7 @@ function HomePage(props) {
                         }}
                         animation = {window.google.maps.Animation.DROP}
                         onClick = {() => {
-                            setSelected(marker)
+                            setSelected(event)
                         }}
 
 
@@ -138,11 +137,14 @@ function HomePage(props) {
 
                 {selected ? (
                     <InfoWindow 
-                        position = {{ lat: selected.lat, lng: selected.lng }}
+                        position = {{ lat: parseFloat(selected.latitude), lng: parseFloat(selected.longitude) }}
                         onCloseClick = {() => { setSelected(null) }}
                     >
                         <div>
                             <h2>Event!</h2>
+                            <img src={selected.img1} alt=""/>
+                            <p>{selected.description}</p>
+                            <p>{selected.start_time}</p>
                         </div>
                     </InfoWindow>
                 ) : null}
