@@ -59,10 +59,8 @@ function OwnerPage(props) {
         body.append('img4', img4);
         body.append('img5', img5);
 
-        console.log(body.event_name) //undefinedが返る
-
         await axios.post('/api/event/name', body)
-        .then((response) => response);
+        .then((response) => console.log(response));
     }
 
     return (
