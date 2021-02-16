@@ -28,11 +28,11 @@ exports.up = async function(knex) {
         table.string('end_time').defaultTo('00:00');
         table.text('description')
         table.string('owner_id').notNullable();
-        table.string('img1').notNullable().defaultTo('https:dl.dropboxusercontent.com/s/t1u9z09klzlfm33/garden2.jpg')
-        table.string('img2').notNullable().defaultTo('https:dl.dropboxusercontent.com/s/nq75n7md589rpfs/noimage.png')
-        table.string('img3').notNullable().defaultTo('https:dl.dropboxusercontent.com/s/nq75n7md589rpfs/noimage.png')
-        table.string('img4').notNullable().defaultTo('https:dl.dropboxusercontent.com/s/nq75n7md589rpfs/noimage.png')
-        table.string('img5').notNullable().defaultTo('https:dl.dropboxusercontent.com/s/nq75n7md589rpfs/noimage.png')
+        table.string('img1').notNullable().defaultTo('https://eventclip.s3-ap-northeast-1.amazonaws.com/garden2.jpg')
+        table.string('img2').notNullable().defaultTo('https://eventclip.s3-ap-northeast-1.amazonaws.com/noimage.png')
+        table.string('img3').notNullable().defaultTo('https://eventclip.s3-ap-northeast-1.amazonaws.com/noimage.png')
+        table.string('img4').notNullable().defaultTo('https://eventclip.s3-ap-northeast-1.amazonaws.com/noimage.png')
+        table.string('img5').notNullable().defaultTo('https://eventclip.s3-ap-northeast-1.amazonaws.com/noimage.png')
         table.timestamp('created_at').defaultTo( year + '-' + month + '-' + day + ' ' + hour + ':' + min + ':' + sec )
         table.timestamp('updated_at').defaultTo( year + '-' + month + '-' + day + ' ' + hour + ':' + min + ':' + sec )
   })
