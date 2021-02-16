@@ -99,7 +99,7 @@ function HomePage(props) {
       <GoogleMap 
             // GoogleMapタグのattitude
                 mapContainerStyle={mapContainerStyle}
-                zoom = {10}
+                zoom = {12.5}
                 center = {center}
                 options = {options}
                 onLoad = {onMapLoad}
@@ -131,6 +131,7 @@ function HomePage(props) {
                     >
                         <div>
                             <h2>Event!</h2>
+                            console.log({selected.img1})
                             <img src={selected.img1} alt=""/>
                             <p>{selected.description}</p>
                             <p>{selected.start_time}</p>
@@ -194,15 +195,13 @@ function Search({ panTo }) {
           >
               <ComboboxInput 
                   value = {value} 
-                  onChange = {(e) => {
-                      setValue(e.target.value)
-              }}
-              disabled = {!ready}
-              placeholder = "Enter an address" 
+                  onChange = {(e) => {setValue(e.target.value)}}
+                  disabled = {!ready}
+                  placeholder = "Enter an address" 
               />
               <ComboboxPopover>
                   <ComboboxList>
-                      {status === "OK" && data.map(({ id, description },key) =>　(
+                      {status === "OK" && data.map(({ id, description }) =>　(
                           <ComboboxOption key={id} value={description} />
                       ))}
                   </ComboboxList>
