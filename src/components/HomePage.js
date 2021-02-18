@@ -19,14 +19,6 @@ function HomePage(props) {
   const [isLoading, setLoading] = useState(true)
   const [events, setEvents] = useState([]);
 
-  //関数群
-  const handleClickToOwnerPage = () => {
-      props.history.push("/OwnerPage");
-  }
-  const handleClickToEventsPage = () => {
-    props.history.push("/EventsPage");
-  }
-
   useEffect(()=>{
     const fetchData = async () => {
       try {
@@ -47,10 +39,8 @@ function HomePage(props) {
   } 
   return (
     <div>
-      <Header />
-      <h2>Upcoming Events!</h2>
-      <h3 className="link-to-OwnerPage" onClick={ handleClickToOwnerPage }>オーナーの方はこちら</h3>
-      <h3 className="link-to-OwnerPage" onClick={ handleClickToEventsPage }>イベント一覧</h3>
+      <Header 
+      />
       <Map events = {events}/>
     </div>
   );

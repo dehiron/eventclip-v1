@@ -16,15 +16,11 @@ function App() {
           />
           <Route
             exact path={'/OwnerPage'}
-            render = {props => (
-              <OwnerPage {...props}/>
-            )}
+            render = {props => (<OwnerPage {...props}/>)}
           />
           <Route
             exact path={'/EventsPage'}
-            render = {props => (
-              <EventsPage {...props}/>
-            )}
+            render = {props => (<EventsPage {...props}/>)}
           />
         </Switch>
       </BrowserRouter>

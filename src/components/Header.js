@@ -1,15 +1,25 @@
 //Component
+import { withRouter } from 'react-router-dom';
 
 function Header (props){
+
+    const handleClickToOwnerPage = () => {
+        props.history.push("/OwnerPage");
+    }
+    const handleClickToEventsPage = () => {
+        props.history.push("/EventsPage");
+    }
+
     return(
         <div className = "header">
-            <h1 className="app-title">eventclip
-            <span role="img" aria-label="clip">
-                🖇
-                </span>
-            </h1>
+            <div className = "app-title">
+                <img src="../logo.png" alt=""/>
+            </div>
+            <div id="link-to" className="to-eventspage" onClick={ handleClickToEventsPage }>イベント一覧</div>
+            <div id="link-to" className="to-ownerpage" onClick={ handleClickToOwnerPage }>イベント登録</div>
+            <div id="link-to" className="to-loginpage" onClick={ null }>ログイン/新規登録</div>
         </div>
     )
 };
 
-export default Header;
+export default withRouter(Header);
