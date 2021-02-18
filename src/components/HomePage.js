@@ -3,11 +3,10 @@ import axios from 'axios';
 import Modal from 'react-modal';
 import './Styles.css'
 import { GoogleMap, useLoadScript, Marker, InfoWindow } from "@react-google-maps/api";
-import usePlacesAutocomplete, { getGeocode, getLatLng } from "use-places-autocomplete";
-import { Combobox, ComboboxInput, ComboboxPopover, ComboboxList, ComboboxOption} from "@reach/combobox";
 import "@reach/combobox/styles.css"
 import mapStyles from "./MapStyles";
-// import { formatRelative } from "date-fns";
+import AddressSearchBar from "./AddressSearchBar";
+import CurrentLocator from "./CurrentLocator";
 require('dotenv').config();
 
 //******defining variables, for use of google map component
@@ -91,8 +90,8 @@ function HomePage(props) {
             🖇
         </span>
       </h1>
-      <Search panTo = { panTo } />
-      <Locate panTo = { panTo } />
+      <AddressSearchBar panTo = { panTo } />
+      <CurrentLocator panTo = { panTo } />
       <h2>Upcoming Events!</h2>
       <h3 className="link-to-OwnerPage" onClick={ handleClickToOwnerPage }>オーナーの方はこちら</h3>
       <h3 className="link-to-OwnerPage" onClick={ handleClickToEventsPage }>イベント一覧</h3>
@@ -140,74 +139,6 @@ function HomePage(props) {
             </GoogleMap>
     </div>
   );
-}
-
-// 現在地に飛ぶ用
-function Locate({ panTo }) {
-  return (
-      <button className="locate" onClick={()=> {
-          navigator.geolocation.getCurrentPosition(
-              (positions) => { //sucessの場合
-                  panTo ({
-                      lat: positions.coords.latitude,
-                      lng: positions.coords.longitude,
-                  });
-              }, 
-              () => null, options //failの場合
-          )
-      }}>
-      <img src="compass.svg" alt="compass - locate me" />
-  </button>
-  )
-};
-
-
-// Search Bar
-function Search({ panTo }) {
-  const {
-      ready, 
-      value, 
-      suggestions:{status, data}, 
-      setValue, 
-      clearSuggestions
-  } = usePlacesAutocomplete({
-      requestOptions: {
-          location:{ lat:() => 35.681236, lng:() => 139.767125 },
-          radius: 200 * 1000,
-      }
-  });
-
-  return(
-      <div className="search">
-          <Combobox 
-              onSelect={async (address) => {
-                  setValue(address, false); // falseを設定するのはusePlacesAutocomplete特有のやり方みたい
-                  clearSuggestions(); //選んだ瞬間候補がなくなる
-                  try{
-                      const results = await getGeocode({ address });
-                      const { lat, lng } = await getLatLng(results[0]);
-                      panTo({ lat,lng });
-                  } catch(error){
-                      console.log("Error!")
-                  }
-              }}
-          >
-              <ComboboxInput 
-                  value = {value} 
-                  onChange = {(e) => {setValue(e.target.value)}}
-                  disabled = {!ready}
-                  placeholder = "Enter an address" 
-              />
-              <ComboboxPopover>
-                  <ComboboxList>
-                      {status === "OK" && data.map(({ id, description }) =>　(
-                          <ComboboxOption key={id} value={description} />
-                      ))}
-                  </ComboboxList>
-              </ComboboxPopover>
-          </Combobox>
-      </div>
-  ); 
 }
 
 export default HomePage; 
