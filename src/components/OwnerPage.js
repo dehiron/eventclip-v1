@@ -30,60 +30,65 @@ function OwnerPage(props) {
 
     async function handleRegisterEvent(e){
         e.preventDefault();
+        try {
+            //ジオコーディング
+            //getGeocode関数の問題（らしい）で時々エラーが返るけどちゃんと機能してる。
+            const geoCodeInfo = await getGeocode({address:address});
+            const {lat,lng} = await getLatLng(geoCodeInfo[0]);
 
-        //ジオコーディング
-        //getGeocode関数の問題（らしい）で時々エラーが返るけどちゃんと機能してる。
-        const geoCodeInfo = await getGeocode({address:address});
-        const {lat,lng} = await getLatLng(geoCodeInfo[0]);
+            //body作る
+            const body = new FormData();
+            body.append('event_name', eventName);
+            body.append('event_name_kana', eventNameKana);
+            body.append('genre', genre);
+            body.append('address', address);
+            body.append('latitude', lat);
+            body.append('longitude', lng);
+            body.append('tel', tel);
+            body.append('email', email);
+            body.append('prefecture', prefecture);
+            body.append('city', city);
+            body.append('date', date);
+            body.append('start_time', startTime);
+            body.append('end_time', endTime);
+            body.append('description', description);
+            body.append('owner_id', ownerId);
+            body.append('img1', img1);
+            body.append('img2', img2);
+            body.append('img3', img3);
+            body.append('img4', img4);
+            body.append('img5', img5);
 
-        //body作る
-        const body = new FormData();
-        body.append('event_name', eventName);
-        body.append('event_name_kana', eventNameKana);
-        body.append('genre', genre);
-        body.append('address', address);
-        body.append('latitude', lat);
-        body.append('longitude', lng);
-        body.append('tel', tel);
-        body.append('email', email);
-        body.append('prefecture', prefecture);
-        body.append('city', city);
-        body.append('date', date);
-        body.append('start_time', startTime);
-        body.append('end_time', endTime);
-        body.append('description', description);
-        body.append('owner_id', ownerId);
-        body.append('img1', img1);
-        body.append('img2', img2);
-        body.append('img3', img3);
-        body.append('img4', img4);
-        body.append('img5', img5);
-
-        await axios.post('/api/event/name', body)
-        .then((response) => console.log(response));
+            await axios.post('/api/event/name', body)
+            .then((response) => console.log(response));
+        } catch(error){
+            console.log(error)
+        }
     }
 
     return (
         <div>
-            <ul>
-                <input placeholder="イベント名称" onChange={e => setEventName(e.target.value)}></input>
-                <input placeholder="イベント名称かな" onChange={e => setEventNameKana(e.target.value)}></input>
-                <input placeholder="ジャンル" onChange={e => setGenre(e.target.value)}></input>
-                <input placeholder="住所" onChange={e => setAddress(e.target.value)}></input>
-                <input placeholder="電話番号" onChange={e => setTel(e.target.value)}></input>
-                <input placeholder="Eメール" onChange={e => setEmail(e.target.value)}></input>
-                <input placeholder="県" onChange={e => setPrefecture(e.target.value)}></input>
-                <input placeholder="市" onChange={e => setCity(e.target.value)}></input>
-                <input placeholder="日付" onChange={e => setDate(e.target.value)}></input>
-                <input placeholder="開始時刻" onChange={e => setStartTime(e.target.value)}></input>
-                <input placeholder="終了時刻" onChange={e => setEndTime(e.target.value)}></input>
-                <input placeholder="詳細情報" onChange={e => setDescription(e.target.value)}></input>
-                <input placeholder="オーナーID" onChange={e => setOwnerId(e.target.value)}></input>
-                <input placeholder="画像1" onChange={e => setImg1(e.target.value)}></input>
-                <input placeholder="画像2" onChange={e => setImg2(e.target.value)}></input>
-                <input placeholder="画像3" onChange={e => setImg3(e.target.value)}></input>
-                <input placeholder="画像4" onChange={e => setImg4(e.target.value)}></input>
-                <input placeholder="画像5" onChange={e => setImg5(e.target.value)}></input>
+            <h2>イベント登録はこちらから</h2>
+
+            <ul className = "all-events">
+               <li><p>イベント名称：<input placeholder="例：第一回大江戸花火大会" onChange={e => setEventName(e.target.value)}></input></p></li>
+                <li><p>イベント名称かな：<input placeholder="だいいっかいおおえどはなびたいかい" onChange={e => setEventNameKana(e.target.value)}></input></p></li>
+                <li><p>ジャンル：<input placeholder="例：イベント" onChange={e => setGenre(e.target.value)}></input></p></li>
+                <li><p>住所：<input placeholder="例：東京都渋谷区渋谷0-0-0" onChange={e => setAddress(e.target.value)}></input></p></li>
+                <li><p>電話番号：<input placeholder="例：0300000000" onChange={e => setTel(e.target.value)}></input></p></li>
+                <li><p>Eメール：<input placeholder="例：test@gmail.com" onChange={e => setEmail(e.target.value)}></input></p></li>
+                <li><p>県：<input placeholder="例：東京都" onChange={e => setPrefecture(e.target.value)}></input></p></li>
+                <li><p>市：<input placeholder="例：渋谷区" onChange={e => setCity(e.target.value)}></input></p></li>
+                <li><p>日付：<input placeholder="例：20210421" onChange={e => setDate(e.target.value)}></input></p></li>
+                <li><p>開始時刻：<input placeholder="例：11:00" onChange={e => setStartTime(e.target.value)}></input></p></li>
+                <li><p>終了時刻" <input placeholder="例：16:00" onChange={e => setEndTime(e.target.value)}></input></p></li>
+                <li><p>詳細情報" <input placeholder="例：花火！" onChange={e => setDescription(e.target.value)}></input></p></li>
+                <li><p>オーナーID：<input placeholder="例：hide_owner" onChange={e => setOwnerId(e.target.value)}></input></p></li>
+                <li><p>画像1：<input placeholder="例：" onChange={e => setImg1(e.target.value)}></input></p></li>
+                <li><p>画像2：<input placeholder="例：" onChange={e => setImg2(e.target.value)}></input></p></li>
+                <li><p>画像3：<input placeholder="例：" onChange={e => setImg3(e.target.value)}></input></p></li>
+                <li><p>画像4：<input placeholder="例：" onChange={e => setImg4(e.target.value)}></input></p></li>
+                <li><p>画像5：<input placeholder="例：" onChange={e => setImg5(e.target.value)}></input></p></li>
             </ul>
             <button onClick={handleRegisterEvent}>イベント登録</button>
             <button onClick={handleClickToHomePage}>Homeに戻る</button>

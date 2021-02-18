@@ -48,3 +48,7 @@
     width: 30px;
     cursor: pointer;
 }
+
+.all-events {
+    list-style: none;
+}

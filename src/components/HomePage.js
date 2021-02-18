@@ -94,7 +94,7 @@ function HomePage(props) {
       <Search panTo = { panTo } />
       <Locate panTo = { panTo } />
       <h2>Upcoming Events!</h2>
-      <h3 className="link-to-OwnerPage" onClick={ handleClickToOwnerPage }>新規イベント登録はこちら</h3>
+      <h3 className="link-to-OwnerPage" onClick={ handleClickToOwnerPage }>オーナーの方はこちら</h3>
       <h3 className="link-to-OwnerPage" onClick={ handleClickToEventsPage }>イベント一覧</h3>
       <GoogleMap 
             // GoogleMapタグのattitude
@@ -131,7 +131,6 @@ function HomePage(props) {
                     >
                         <div>
                             <h2>Event!</h2>
-                            console.log({selected.img1})
                             <img src={selected.img1} alt=""/>
                             <p>{selected.description}</p>
                             <p>{selected.start_time}</p>

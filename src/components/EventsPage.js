@@ -21,6 +21,7 @@ function OwnerPage(props) {
     }).then((response) => response);
     }
     const handleClickToHomePage = () => {
+        window.location.reload(); //あまり良くない
         props.history.goBack();
     }
 
@@ -31,6 +32,7 @@ function OwnerPage(props) {
             setEvents(response.data),
             setLoading(false))
         }
+        
         fetchData();
     }, [modalIsOpen])
 
