@@ -1,3 +1,5 @@
+//Component
+
 import './Styles.css'
 import "@reach/combobox/styles.css"
 import mapStyles from "./MapStyles";

@@ -1,3 +1,5 @@
+//Page
+
 import React, {useState} from "react";
 import axios from 'axios';
 import { getGeocode, getLatLng } from "use-places-autocomplete";
@@ -81,8 +83,8 @@ function OwnerPage(props) {
                 <li><p>市：<input placeholder="例：渋谷区" onChange={e => setCity(e.target.value)}></input></p></li>
                 <li><p>日付：<input placeholder="例：20210421" onChange={e => setDate(e.target.value)}></input></p></li>
                 <li><p>開始時刻：<input placeholder="例：11:00" onChange={e => setStartTime(e.target.value)}></input></p></li>
-                <li><p>終了時刻" <input placeholder="例：16:00" onChange={e => setEndTime(e.target.value)}></input></p></li>
-                <li><p>詳細情報" <input placeholder="例：花火！" onChange={e => setDescription(e.target.value)}></input></p></li>
+                <li><p>終了時刻：<input placeholder="例：16:00" onChange={e => setEndTime(e.target.value)}></input></p></li>
+                <li><p>詳細情報：<input placeholder="例：花火！" onChange={e => setDescription(e.target.value)}></input></p></li>
                 <li><p>オーナーID：<input placeholder="例：hide_owner" onChange={e => setOwnerId(e.target.value)}></input></p></li>
                 <li><p>画像1：<input placeholder="例：" onChange={e => setImg1(e.target.value)}></input></p></li>
                 <li><p>画像2：<input placeholder="例：" onChange={e => setImg2(e.target.value)}></input></p></li>
