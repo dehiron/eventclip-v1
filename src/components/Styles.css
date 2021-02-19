@@ -1,12 +1,12 @@
 
 .bootstrap-navbar{
     background-color:whitesmoke;
-    height: 5rem;
+    min-height: 5rem;
 }
 
 .listed-event-container {
     position: relative;
-    padding-top: 5rem;
+    padding-top: 7rem;
 }
 
 .listed-event{
@@ -15,12 +15,12 @@
 
 .map {
     position: relative;
-    padding-top: 5rem;
+    padding-top: 7rem;
 }
 
 .address-search-bar {
     position: absolute;
-    top: 6rem;
+    top: 8rem;
     left: 50%;
     transform: translateX(-50%);
     width: 30%;
@@ -35,7 +35,7 @@
 
 .current-locator {
     position: absolute;
-    top: 6rem;
+    top: 8rem;
     right: 1rem;
     background: none;
     border: none;
