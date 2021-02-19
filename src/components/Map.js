@@ -17,8 +17,8 @@ require('dotenv').config();
 const apiKey = process.env.REACT_APP_GOOGLE_MAPS_API_KEY;
 const libraries = ["places"];
 const mapContainerStyle = {
-    width: '100vw',
-    height: '100vh'
+    // width: '100vw', //これがあるとbootstrapのグリッドが正常に機能しない
+    height: '100vh',
 };
 const center = { //tokyoに指定、最終的にはユーザーの現在地がデフォルトで入る様にする
     lat: 35.681236,

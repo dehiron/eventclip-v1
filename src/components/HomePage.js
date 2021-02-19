@@ -9,6 +9,7 @@ import { Container, Row, Col } from 'react-bootstrap';
 //componentsのインポート
 import Header from "./Header";
 import Map from "./Map";
+import EventCards from "./EventCards";
 //componentsのインポート
 require('dotenv').config();
 
@@ -41,11 +42,11 @@ function HomePage(props) {
   return (
     <Container fluid> 
     {/* ここをfluidにしないと変な余白が生まれる */}
-      <Row>
-        
         <Header />
-        <Map events = {events}/>
-      </Row>
+        <Row>
+          <Col md={{span:3, order:1}} sm={{span:0, order:2}} xs={{span:0, order: 2}}><EventCards className="t1" /></Col>
+          <Col md={{span:9, order:2}} sm={{span:12, order:1}} xs={{span:12, order: 1}}><Map events={events}/></Col>
+        </Row>
     </Container>
   );
 }

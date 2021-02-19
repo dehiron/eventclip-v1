@@ -4,10 +4,13 @@
     height: 5rem;
 }
 
-.test-child {
+.listed-event-container {
     position: relative;
     padding-top: 5rem;
-    width: 100px;
+}
+
+.listed-event{
+    padding-top: 5px;
 }
 
 .map {
