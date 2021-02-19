@@ -39,8 +39,7 @@ function HomePage(props) {
   } 
   return (
     <div>
-      <Header 
-      />
+      <Header />
       <Map events = {events}/>
     </div>
   );
