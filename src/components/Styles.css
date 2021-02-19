@@ -1,15 +1,23 @@
 
 .bootstrap-navbar{
     background-color:whitesmoke;
+    height: 5rem;
+}
+
+.test-child {
+    position: relative;
+    padding-top: 5rem;
+    width: 100px;
 }
 
 .map {
     position: relative;
+    padding-top: 5rem;
 }
 
 .address-search-bar {
     position: absolute;
-    top: 1rem;
+    top: 6rem;
     left: 50%;
     transform: translateX(-50%);
     width: 30%;
@@ -18,13 +26,13 @@
 }
 .address-search-bar input {
     padding: 0.5rem;
-    font-size: 1.5rem;
+    font-size: 1.2rem;
     width: 100%;
 }
 
 .current-locator {
     position: absolute;
-    top: 1rem;
+    top: 6rem;
     right: 1rem;
     background: none;
     border: none;

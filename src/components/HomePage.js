@@ -5,9 +5,10 @@ import axios from 'axios';
 import Modal from 'react-modal';
 import './Styles.css'
 import "@reach/combobox/styles.css"
+import { Container, Row, Col } from 'react-bootstrap';
 //componentsのインポート
 import Header from "./Header";
-import Map from "./Map"
+import Map from "./Map";
 //componentsのインポート
 require('dotenv').config();
 
@@ -38,10 +39,14 @@ function HomePage(props) {
     return <div> Loading... </div>
   } 
   return (
-    <div>
-      <Header />
-      <Map events = {events}/>
-    </div>
+    <Container fluid> 
+    {/* ここをfluidにしないと変な余白が生まれる */}
+      <Row>
+        
+        <Header />
+        <Map events = {events}/>
+      </Row>
+    </Container>
   );
 }
 
