@@ -44,7 +44,7 @@ function HomePage(props) {
     {/* ここをfluidにしないと変な余白が生まれる */}
         <Header />
         <Row>
-          <Col md={{span:3, order:1}} sm={{span:0, order:2}} xs={{span:0, order: 2}}><EventCards className="t1" /></Col>
+          <Col md={{span:3, order:1}} sm={{span:0, order:2}} xs={{span:0, order: 2}}><EventCards events={events} /></Col>
           <Col md={{span:9, order:2}} sm={{span:12, order:1}} xs={{span:12, order: 1}}><Map events={events}/></Col>
         </Row>
     </Container>
