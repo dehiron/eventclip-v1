@@ -16,8 +16,10 @@ function OwnerPage(props) {
     const [prefecture, setPrefecture] = useState("")
     const [city, setCity] = useState("")
     const [date, setDate] = useState("")
-    const [startTime, setStartTime] = useState("")
-    const [endTime, setEndTime] = useState("")
+    const [startTimeHour, setStartTimeHour] = useState("")
+    const [startTimeMin, setStartTimeMin] = useState("")
+    const [endTimeHour, setEndTimeHour] = useState("")
+    const [endTimeMin, setEndTimeMin] = useState("")
     const [description, setDescription] = useState("")
     const [ownerId, setOwnerId] = useState("")
     const [img1, setImg1] = useState("")
@@ -51,8 +53,8 @@ function OwnerPage(props) {
             body.append('prefecture', prefecture);
             body.append('city', city);
             body.append('date', date);
-            body.append('start_time', startTime);
-            body.append('end_time', endTime);
+            body.append('start_time', startTimeHour+":"+startTimeMin);
+            body.append('end_time', endTimeHour+":"+endTimeMin);
             body.append('description', description);
             body.append('owner_id', ownerId);
             body.append('img1', img1);
@@ -82,8 +84,83 @@ function OwnerPage(props) {
                 <li><p>県：<input placeholder="例：東京都" onChange={e => setPrefecture(e.target.value)}></input></p></li>
                 <li><p>市：<input placeholder="例：渋谷区" onChange={e => setCity(e.target.value)}></input></p></li>
                 <li><p>日付：<input placeholder="例：20210421" onChange={e => setDate(e.target.value)}></input></p></li>
-                <li><p>開始時刻：<input placeholder="例：11:00" onChange={e => setStartTime(e.target.value)}></input></p></li>
-                <li><p>終了時刻：<input placeholder="例：16:00" onChange={e => setEndTime(e.target.value)}></input></p></li>
+                <li><p>開始時刻：
+                    <select name="hour" onChange={e => setStartTimeHour(e.target.value)}>
+                        <option value="Hour">Hour</option>
+                        <option>00</option>
+                        <option>01</option>
+                        <option>02</option>
+                        <option>03</option>
+                        <option>04</option>
+                        <option>05</option>
+                        <option>06</option>
+                        <option>07</option>
+                        <option>08</option>
+                        <option>09</option>
+                        <option>10</option>
+                        <option>11</option>
+                        <option>12</option>
+                        <option>13</option>
+                        <option>14</option>
+                        <option>15</option>
+                        <option>16</option>
+                        <option>17</option>
+                        <option>18</option>
+                        <option>19</option>
+                        <option>20</option>
+                        <option>21</option>
+                        <option>22</option>
+                        <option>23</option>
+                        <option>24</option>
+                    </select>
+                    <span> : </span>
+                    <select name="min" onChange={e => setStartTimeMin(e.target.value)}>
+                        <option value="Min">Min</option>
+                        <option>00</option>
+                        <option>30</option>
+                    </select>
+                    </p>
+                </li>
+                <li><p>終了時刻：
+                    <select name="hour" onChange={e => setEndTimeHour(e.target.value)}>
+                        <option value="Hour">Hour</option>
+                        <option>00</option>
+                        <option>01</option>
+                        <option>02</option>
+                        <option>03</option>
+                        <option>04</option>
+                        <option>05</option>
+                        <option>06</option>
+                        <option>07</option>
+                        <option>08</option>
+                        <option>09</option>
+                        <option>10</option>
+                        <option>11</option>
+                        <option>12</option>
+                        <option>13</option>
+                        <option>14</option>
+                        <option>15</option>
+                        <option>16</option>
+                        <option>17</option>
+                        <option>18</option>
+                        <option>19</option>
+                        <option>20</option>
+                        <option>21</option>
+                        <option>22</option>
+                        <option>23</option>
+                        <option>24</option>
+                    </select>
+                    <span> : </span>
+                    <select name="min" onChange={e => setEndTimeMin(e.target.value)}>
+                        <option value="Min">Min</option>
+                        <option>00</option>
+                        <option>30</option>
+                    </select>
+                    </p>
+                </li>
+
+                {/* <li><p>開始時刻：<input placeholder="例：11:00" onChange={e => setStartTime(e.target.value)}></input></p></li> */}
+                {/* <li><p>終了時刻：<input placeholder="例：16:00" onChange={e => setEndTime(e.target.value)}></input></p></li> */}
                 <li><p>詳細情報：<input placeholder="例：花火！" onChange={e => setDescription(e.target.value)}></input></p></li>
                 <li><p>オーナーID：<input placeholder="例：hide_owner" onChange={e => setOwnerId(e.target.value)}></input></p></li>
                 <li><p>画像1：<input placeholder="例：" onChange={e => setImg1(e.target.value)}></input></p></li>
