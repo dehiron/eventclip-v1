@@ -15,15 +15,19 @@ function Header (props){
         <Navbar className="bootstrap-navbar" expand="md" fixed="top">
             <Navbar.Brand href="#"> <img src="../logo.png" alt="logo"/> </Navbar.Brand>
             <Navbar.Toggle aria-controls="basic-navbar-nav"/>
-            <Navbar.Collapse className="justify-content-end">
+            {/* hrefでコードの見た目良くできるけど、イベント登録ページでのAPIでエラーが起きるのでonClickを使う。 */}
+            <Navbar.Collapse>
                 <Nav>
-                    {/* hrefでコードの見た目良くできるけど、イベント登録ページでのAPIでエラーが起きるのでonClickを使う。 */}
                     <Nav.Item>
                         <Nav.Link onClick={ handleClickToEventsPage }>イベント一覧</Nav.Link>
                     </Nav.Item>
                     <Nav.Item>
                         <Nav.Link onClick={ handleClickToOwnerPage }>イベント登録</Nav.Link>
                     </Nav.Item>
+                </Nav>
+            </Navbar.Collapse>
+            <Navbar.Collapse className="justify-content-end">
+                <Nav>
                     <Nav.Item>
                         <Nav.Link onClick={ null }>ログイン/新規登録</Nav.Link>
                     </Nav.Item>
