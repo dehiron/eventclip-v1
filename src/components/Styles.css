@@ -1,12 +1,15 @@
 
 .bootstrap-navbar{
     background-color:whitesmoke;
-    min-height: 5rem;
+    min-height: 10%;
 }
+
 
 .listed-event-container {
     position: relative;
-    padding-top: 7rem;
+    padding-top: 8rem;
+    overflow-y: scroll;
+    height: 95vh;
 }
 
 .listed-event{

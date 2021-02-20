@@ -13,12 +13,11 @@ require('dotenv').config();
 
 
 //******defining variables, for use of google map component
-//******二つ目で定義しているlibrariesの変数は、functionを宣言する前に書かないとエラーとなるので注意。
 const apiKey = process.env.REACT_APP_GOOGLE_MAPS_API_KEY;
-const libraries = ["places"];
+const libraries = ["places"];　//functionを宣言する前に書かないとエラーとなるので注意。
 const mapContainerStyle = {
     // width: '100vw', //これがあるとbootstrapのグリッドが正常に機能しない
-    height: '100vh',
+    height: "82vh", //改良の余地あり。Styles.cssのnavbar min-heightと関連してる。
 };
 const center = { //tokyoに指定、最終的にはユーザーの現在地がデフォルトで入る様にする
     lat: 35.681236,
@@ -29,7 +28,6 @@ const options = {
     disableDefaultUI: true,
     zoomControl: true
 };
-//******二つ目で定義しているlibrariesの変数は、functionを宣言する前に書かないとエラーとなるので注意。
 //******defining variables, for use of google map component
 
 

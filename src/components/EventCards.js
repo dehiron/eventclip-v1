@@ -1,5 +1,5 @@
 //Component
-import { Card, Container, Button, Row, Col } from 'react-bootstrap';
+import { Card, Container, Button, } from 'react-bootstrap';
 
 
 
@@ -7,7 +7,7 @@ function EventCards(props){
 
     return(
         <Container className="listed-event-container">
-
+        
             {/* (event) => の後に {} 要らない */}
             {props.events.map((event) => 
                 <Card className="listed-event">
@@ -23,7 +23,7 @@ function EventCards(props){
                 </Card.Body>
                 </Card>
             )}
-            
+        
         </Container>
     );
 };
