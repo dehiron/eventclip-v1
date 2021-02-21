@@ -20,10 +20,10 @@ function EventCards(props){
                     {event.description}
                     </Card.Text>
                     <Card.Text>
-                    {event.start_date} ~  {event.end_date}
+                    開始: {event.start_date}  {event.start_time}
                     </Card.Text>
                     <Card.Text>
-                    {event.start_time} ~  {event.end_time}
+                    終了: {event.end_date}  {event.end_time}
                     </Card.Text>
                     <Button variant="primary">Read More</Button>
                 </Card.Body>

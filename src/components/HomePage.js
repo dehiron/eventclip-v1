@@ -10,6 +10,7 @@ import { Container, Row, Col } from 'react-bootstrap';
 import Header from "./Header";
 import Map from "./Map";
 import EventCards from "./EventCards";
+import Filters from "./Filters";
 //componentsのインポート
 require('dotenv').config();
 
@@ -44,8 +45,9 @@ function HomePage(props) {
     {/* ここをfluidにしないと変な余白が生まれる */}
         <Header />
         <Row>
-          <Col md={{span:3, order:1}} sm={{span:0, order:2}} xs={{span:0, order: 2}}><EventCards events={events} /></Col>
-          <Col md={{span:9, order:2}} sm={{span:12, order:1}} xs={{span:12, order: 1}}><Map events={events}/></Col>
+          <Col lg={{span:3, order:1}} md={{span:3, order:1}} sm={{span:0, order:2}} xs={{span:0, order: 2}}><Filters /></Col>
+          <Col lg={{span:6, order:2}} md={{span:6, order:2}} sm={{span:12, order:1}} xs={{span:12, order: 1}}><Map events={events}/></Col>
+          <Col lg={{span:3, order:3}} md={{span:3, order:3}} sm={{span:0, order:3}} xs={{span:0, order: 3}}><EventCards events={events} /></Col>
         </Row>
     </Container>
   );

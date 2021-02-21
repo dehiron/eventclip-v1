@@ -4,12 +4,21 @@
     min-height: 10%;
 }
 
+.filters-container {
+    position: relative;
+    margin-top: 7rem;
+    padding-top: 1rem;
+    overflow-y: scroll;
+    height: 82vh;
+    /* border: 1px solid blue; */
+}
 
 .listed-event-container {
     position: relative;
-    padding-top: 8rem;
+    margin-top: 7rem;
     overflow-y: scroll;
-    height: 95vh;
+    height: 82vh;
+    /* border: 1px solid blue; */
 }
 
 .listed-event{
@@ -18,12 +27,13 @@
 
 .map {
     position: relative;
-    padding-top: 7rem;
+    margin-top: 7rem;
+    /* border: 1px solid blue; */
 }
 
 .address-search-bar {
     position: absolute;
-    top: 8rem;
+    top: 1rem;
     left: 50%;
     transform: translateX(-50%);
     width: 30%;
@@ -38,7 +48,7 @@
 
 .current-locator {
     position: absolute;
-    top: 8rem;
+    top: 1rem;
     right: 1rem;
     background: none;
     border: none;
