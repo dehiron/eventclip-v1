@@ -66,9 +66,9 @@ function OwnerPage(props) {
             body.append('email', email);
             body.append('prefecture', prefecture);
             body.append('city', city);
-            body.append('start_date', startTimeYear+"/"+startTimeMonth+"/"+startTimeDay);
+            body.append('start_date', startTimeYear+"-"+startTimeMonth+"-"+startTimeDay);
             body.append('start_time', startTimeHour+":"+startTimeMin);
-            body.append('end_date', endTimeYear+"/"+endTimeMonth+"/"+endTimeDay);
+            body.append('end_date', endTimeYear+"-"+endTimeMonth+"-"+endTimeDay);
             body.append('end_time', endTimeHour+":"+endTimeMin);
             body.append('description', description);
             body.append('owner_id', ownerId);
