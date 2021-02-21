@@ -53,3 +53,10 @@
     list-style: none;
 }
 
+.registered-address{
+    display: block;
+}
+
+input{
+    width: 400px
+}

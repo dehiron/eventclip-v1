@@ -17,11 +17,13 @@ function OwnerPage(props) {
     const [eventName, setEventName] = useState("")
     const [eventNameKana, setEventNameKana] = useState("")
     const [genre, setGenre] = useState("")
-    const [address, setAddress] = useState("")
+    // const [address, setAddress] = useState("")
     const [tel, setTel] = useState("")
     const [email, setEmail] = useState("")
     const [prefecture, setPrefecture] = useState("")
     const [city, setCity] = useState("")
+    const [addressDetail1, setAddressDetail1] = useState("")
+    const [addressDetail2, setAddressDetail2] = useState("")
     const [startTimeYear, setStartTimeYear] = useState("Year")
     const [startTimeMonth, setStartTimeMonth] = useState("Month")
     const [startTimeDay, setStartTimeDay] = useState("Day")
@@ -49,7 +51,7 @@ function OwnerPage(props) {
         try {
             //ジオコーディング
             //getGeocode関数の問題（らしい）で時々エラーが返るけどちゃんと機能してる。
-            const geoCodeInfo = await getGeocode({address:address});
+            const geoCodeInfo = await getGeocode({address:prefecture+city+addressDetail1+addressDetail2});
             const {lat,lng} = await getLatLng(geoCodeInfo[0]);
 
             //body作る
@@ -57,7 +59,7 @@ function OwnerPage(props) {
             body.append('event_name', eventName);
             body.append('event_name_kana', eventNameKana);
             body.append('genre', genre);
-            body.append('address', address);
+            body.append('address', prefecture+city+addressDetail1+addressDetail2);
             body.append('latitude', lat);
             body.append('longitude', lng);
             body.append('tel', tel);
@@ -91,7 +93,15 @@ function OwnerPage(props) {
                <li><p>イベント名称：<input placeholder="例：第一回大江戸花火大会" onChange={e => setEventName(e.target.value)}></input></p></li>
                 <li><p>イベント名称かな：<input placeholder="だいいっかいおおえどはなびたいかい" onChange={e => setEventNameKana(e.target.value)}></input></p></li>
                 <li><p>ジャンル：<input placeholder="例：イベント" onChange={e => setGenre(e.target.value)}></input></p></li>
-                <li><p>住所：<input placeholder="例：東京都渋谷区渋谷0-0-0" onChange={e => setAddress(e.target.value)}></input></p></li>
+                {/* <li><p>住所：<input placeholder="例：東京都渋谷区渋谷0-0-0" onChange={e => setAddress(e.target.value)}></input></p></li> */}
+                {/* searchBar参考にして入力しやすい様にする */}
+                <li><p>住所：
+                    <label className="registered-address"><input placeholder="県を入力（例：東京都）" onChange={e => setPrefecture(e.target.value)}></input></label>
+                    <label className="registered-address"><input placeholder="市区町村を入力（例：渋谷区）" onChange={e => setCity(e.target.value)}></input></label>
+                    <label className="registered-address"><input placeholder="番地以降を入力（例：渋谷1-2-3）" onChange={e => setAddressDetail1(e.target.value)}></input></label>
+                    <label className="registered-address"><input placeholder="（該当する場合）詳細を入力（例：渋谷ビル101）" onChange={e => setAddressDetail2(e.target.value)}></input></label>
+                    </p>
+                </li>
                 <li><p>電話番号：<input placeholder="例：0300000000" onChange={e => setTel(e.target.value)}></input></p></li>
                 <li><p>Eメール：<input placeholder="例：test@gmail.com" onChange={e => setEmail(e.target.value)}></input></p></li>
                 <li><p>県：<input placeholder="例：東京都" onChange={e => setPrefecture(e.target.value)}></input></p></li>
