@@ -38,8 +38,9 @@ app.post("/api/event/name", (req, res) => {
     const email = eventData.email;
     const prefecture = eventData.prefecture;
     const city = eventData.city;
-    const date = eventData.date;
+    const startDate = eventData.start_date;
     const startTime = eventData.start_time;
+    const endDate = eventData.end_date;
     const endTime = eventData.end_time;
     const description = eventData.description;
     const ownerId = eventData.owner_id;
@@ -64,8 +65,9 @@ app.post("/api/event/name", (req, res) => {
                 email:email,
                 prefecture: prefecture,
                 city: city,
-                date: date,
+                start_date: startDate,
                 start_time: startTime,
+                end_date: endDate,
                 end_time: endTime,
                 description: description,
                 owner_id: ownerId,

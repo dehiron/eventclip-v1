@@ -20,6 +20,9 @@ function EventCards(props){
                     {event.description}
                     </Card.Text>
                     <Card.Text>
+                    {event.start_date} ~  {event.end_date}
+                    </Card.Text>
+                    <Card.Text>
                     {event.start_time} ~  {event.end_time}
                     </Card.Text>
                     <Button variant="primary">Read More</Button>

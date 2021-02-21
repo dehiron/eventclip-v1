@@ -5,6 +5,13 @@ import axios from 'axios';
 import { getGeocode, getLatLng } from "use-places-autocomplete";
 import './Styles.css';
 
+//カレンダーで選べる様にする
+const year = ["2021","2022","2023","2024","2025","2026","2027","2028","2029","2030","2031"]
+const month = ["01","02","03","04","05","06","07","08","09","10","11","12"]
+const day = ["01","02","03","04","05","06","07","08","09","10","11","12","13","14","15","16","17","18","19","20","21","22","23","24","25","26","27","28","29","30","31"]
+const hour = ["00","01","02","03","04","05","06","07","08","09","10","11","12","13","14","15","16","17","18","19","20","21","22","23","24"]
+const min = ["00","30"]
+
 function OwnerPage(props) {
 
     const [eventName, setEventName] = useState("")
@@ -15,9 +22,14 @@ function OwnerPage(props) {
     const [email, setEmail] = useState("")
     const [prefecture, setPrefecture] = useState("")
     const [city, setCity] = useState("")
-    const [date, setDate] = useState("")
+    const [startTimeYear, setStartTimeYear] = useState("Year")
+    const [startTimeMonth, setStartTimeMonth] = useState("Month")
+    const [startTimeDay, setStartTimeDay] = useState("Day")
     const [startTimeHour, setStartTimeHour] = useState("")
     const [startTimeMin, setStartTimeMin] = useState("")
+    const [endTimeYear, setEndTimeYear] = useState("Year")
+    const [endTimeMonth, setEndTimeMonth] = useState("Month")
+    const [endTimeDay, setEndTimeDay] = useState("Day")
     const [endTimeHour, setEndTimeHour] = useState("")
     const [endTimeMin, setEndTimeMin] = useState("")
     const [description, setDescription] = useState("")
@@ -52,8 +64,9 @@ function OwnerPage(props) {
             body.append('email', email);
             body.append('prefecture', prefecture);
             body.append('city', city);
-            body.append('date', date);
+            body.append('start_date', startTimeYear+"/"+startTimeMonth+"/"+startTimeDay);
             body.append('start_time', startTimeHour+":"+startTimeMin);
+            body.append('end_date', endTimeYear+"/"+endTimeMonth+"/"+endTimeDay);
             body.append('end_time', endTimeHour+":"+endTimeMin);
             body.append('description', description);
             body.append('owner_id', ownerId);
@@ -82,85 +95,65 @@ function OwnerPage(props) {
                 <li><p>電話番号：<input placeholder="例：0300000000" onChange={e => setTel(e.target.value)}></input></p></li>
                 <li><p>Eメール：<input placeholder="例：test@gmail.com" onChange={e => setEmail(e.target.value)}></input></p></li>
                 <li><p>県：<input placeholder="例：東京都" onChange={e => setPrefecture(e.target.value)}></input></p></li>
-                <li><p>市：<input placeholder="例：渋谷区" onChange={e => setCity(e.target.value)}></input></p></li>
-                <li><p>日付：<input placeholder="例：20210421" onChange={e => setDate(e.target.value)}></input></p></li>
+                <li><p>市：<input placeholder="例：渋谷区" onChange={e => setCity(e.target.value)}></input></p></li>                
+                <li><p>開始日：
+                    <select name="Year" onChange={e => {setStartTimeYear(e.target.value); setEndTimeYear(e.target.value)}}>
+                        <option value="Year">{startTimeYear}</option>
+                        {year.map((year) => <option key={year}>{year}</option>)}
+                    </select>
+                    <span> / </span>
+                    <select name="Month" onChange={e => {setStartTimeMonth(e.target.value); setEndTimeMonth(e.target.value)}}>
+                        <option value="Month">Month</option>
+                        {month.map((month) => <option key={month}>{month}</option>)}
+                    </select>
+                    <span> / </span>
+                    <select name="Day" onChange={e => {setStartTimeDay(e.target.value); setEndTimeDay(e.target.value)}}>
+                        <option value="Day">Day</option>
+                        {day.map((day) => <option key={day}>{day}</option>)}
+                    </select>
+                    </p>
+                </li>
                 <li><p>開始時刻：
-                    <select name="hour" onChange={e => setStartTimeHour(e.target.value)}>
+                    <select name="Hour" onChange={e => setStartTimeHour(e.target.value)}>
                         <option value="Hour">Hour</option>
-                        <option>00</option>
-                        <option>01</option>
-                        <option>02</option>
-                        <option>03</option>
-                        <option>04</option>
-                        <option>05</option>
-                        <option>06</option>
-                        <option>07</option>
-                        <option>08</option>
-                        <option>09</option>
-                        <option>10</option>
-                        <option>11</option>
-                        <option>12</option>
-                        <option>13</option>
-                        <option>14</option>
-                        <option>15</option>
-                        <option>16</option>
-                        <option>17</option>
-                        <option>18</option>
-                        <option>19</option>
-                        <option>20</option>
-                        <option>21</option>
-                        <option>22</option>
-                        <option>23</option>
-                        <option>24</option>
+                        {hour.map((hour) => <option key={hour}>{hour}</option>)}
                     </select>
                     <span> : </span>
-                    <select name="min" onChange={e => setStartTimeMin(e.target.value)}>
+                    <select name="Min" onChange={e => setStartTimeMin(e.target.value)}>
                         <option value="Min">Min</option>
-                        <option>00</option>
-                        <option>30</option>
+                        {min.map((min) => <option key={min}>{min}</option>)}
+                    </select>
+                    </p>
+                </li>
+                <li><p>終了日：
+                    <select name="Year" onChange={e => setEndTimeYear(e.target.value)}>
+                        <option value="Year">{endTimeYear}</option>
+                        {year.map((year) => <option key={year}>{year}</option>)}
+                    </select>
+                    <span> / </span>
+                    <select name="Month" onChange={e => setEndTimeMonth(e.target.value)}>
+                        <option value="Month">{endTimeMonth}</option>
+                        {month.map((month) => <option key={month}>{month}</option>)}
+                    </select>
+                    <span> / </span>
+                    <select name="Day" onChange={e => setEndTimeDay(e.target.value)}>
+                        <option value="Day">{endTimeDay}</option>
+                        {day.map((day) => <option key={day}>{day}</option>)}
                     </select>
                     </p>
                 </li>
                 <li><p>終了時刻：
                     <select name="hour" onChange={e => setEndTimeHour(e.target.value)}>
                         <option value="Hour">Hour</option>
-                        <option>00</option>
-                        <option>01</option>
-                        <option>02</option>
-                        <option>03</option>
-                        <option>04</option>
-                        <option>05</option>
-                        <option>06</option>
-                        <option>07</option>
-                        <option>08</option>
-                        <option>09</option>
-                        <option>10</option>
-                        <option>11</option>
-                        <option>12</option>
-                        <option>13</option>
-                        <option>14</option>
-                        <option>15</option>
-                        <option>16</option>
-                        <option>17</option>
-                        <option>18</option>
-                        <option>19</option>
-                        <option>20</option>
-                        <option>21</option>
-                        <option>22</option>
-                        <option>23</option>
-                        <option>24</option>
+                        {hour.map((hour) => <option key={hour}>{hour}</option>)}
                     </select>
                     <span> : </span>
                     <select name="min" onChange={e => setEndTimeMin(e.target.value)}>
                         <option value="Min">Min</option>
-                        <option>00</option>
-                        <option>30</option>
+                        {min.map((min) => <option key={min}>{min}</option>)}
                     </select>
                     </p>
                 </li>
-
-                {/* <li><p>開始時刻：<input placeholder="例：11:00" onChange={e => setStartTime(e.target.value)}></input></p></li> */}
-                {/* <li><p>終了時刻：<input placeholder="例：16:00" onChange={e => setEndTime(e.target.value)}></input></p></li> */}
                 <li><p>詳細情報：<input placeholder="例：花火！" onChange={e => setDescription(e.target.value)}></input></p></li>
                 <li><p>オーナーID：<input placeholder="例：hide_owner" onChange={e => setOwnerId(e.target.value)}></input></p></li>
                 <li><p>画像1：<input placeholder="例：" onChange={e => setImg1(e.target.value)}></input></p></li>

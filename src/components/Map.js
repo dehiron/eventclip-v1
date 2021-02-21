@@ -99,7 +99,12 @@ function Map(props){
                                 <h2>Event!</h2>
                                 <img src={selected.img1} alt=""/>
                                 <p>{selected.description}</p>
+                                <p>開始時刻</p>
+                                <p>{selected.start_date}</p>
                                 <p>{selected.start_time}</p>
+                                <p>終了時刻</p>
+                                <p>{selected.end_date}</p>
+                                <p>{selected.end_time}</p>
                             </div>
                         </InfoWindow>
                     ) : null}

@@ -46,7 +46,7 @@ function OwnerPage(props) {
             <ul>
         {events.map((element) => 
           <li key={element.id}>
-            {element.event_name} {element.address}
+            {element.event_name}   {element.address}   {element.start_date} {element.start_time} ~ {element.end_date} {element.end_time}
             <button onClick={ () => {
               setSelectedEventName(element.event_name);
               setSelectedEventAddress(element.address);
