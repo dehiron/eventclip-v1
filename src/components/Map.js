@@ -2,7 +2,11 @@
 
 import React, {useState, useRef, useCallback} from "react"
 import './Styles.css'
-import { GoogleMap, useLoadScript, Marker, InfoWindow } from "@react-google-maps/api";
+import { 
+    GoogleMap, 
+    // useLoadScript,
+    Marker, 
+    InfoWindow } from "@react-google-maps/api";
 import "@reach/combobox/styles.css"
 import mapStyles from "./MapStyles";
 //componentsのインポート
@@ -13,8 +17,9 @@ require('dotenv').config();
 
 
 //******defining variables, for use of google map component
-const apiKey = process.env.REACT_APP_GOOGLE_MAPS_API_KEY;
-const libraries = ["places"];　//functionを宣言する前に書かないとエラーとなるので注意。
+// index.html内に書き込むことによって不要になった
+// const apiKey = process.env.REACT_APP_GOOGLE_MAPS_API_KEY;
+// const libraries = ["places"];　//functionを宣言する前に書かないとエラーとなるので注意。
 const mapContainerStyle = {
     // width: '100vw', //これがあるとbootstrapのグリッドが正常に機能しない
     height: "82vh", //改良の余地あり。Styles.cssのnavbar min-heightと関連してる。
@@ -34,10 +39,10 @@ const options = {
 function Map(props){
 
     //******for use of google map component
-    const { isLoaded, loadError } = useLoadScript({
-        googleMapsApiKey: apiKey,
-        libraries
-    });
+    // const { isLoaded, loadError } = useLoadScript({
+    //     googleMapsApiKey: apiKey,
+    //     libraries
+    // });
 
     const [selected, setSelected] = useState(null); //選択されたマーカー情報
     //選択したマーカーのステート管理（？）
@@ -52,14 +57,14 @@ function Map(props){
     //******for use of google map component
 
 
-    if (loadError){
-        return <div> Error loading maps</div>
-    } else if (!isLoaded){
-        return <div> Loading maps</div>
-    }
+    // if (loadError){
+    //     return <div> Error loading maps</div>
+    // } else if (!isLoaded){
+    //     return <div> Loading maps</div>
+    // }
     return(
         <div className = "map">
-            <AddressSearchBar panTo = { panTo } />
+            <AddressSearchBar panTo = { panTo } selectedLocation = {props.selectedLocation}/>
             <CurrentLocator panTo = { panTo } />
             <div>
             <GoogleMap 

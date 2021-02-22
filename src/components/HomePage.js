@@ -21,6 +21,7 @@ function HomePage(props) {
   //state群
   const [isLoading, setLoading] = useState(true)
   const [events, setEvents] = useState([]);
+  const [selectedLocation, setSelectedLocation] = useState("");
 
   useEffect(()=>{
     const fetchData = async () => {
@@ -45,9 +46,15 @@ function HomePage(props) {
     {/* ここをfluidにしないと変な余白が生まれる */}
         <Header />
         <Row>
-          <Col lg={{span:3, order:1}} md={{span:3, order:1}} sm={{span:0, order:2}} xs={{span:0, order: 2}}><Filters /></Col>
-          <Col lg={{span:6, order:2}} md={{span:6, order:2}} sm={{span:12, order:1}} xs={{span:12, order: 1}}><Map events={events}/></Col>
-          <Col lg={{span:3, order:3}} md={{span:3, order:3}} sm={{span:0, order:3}} xs={{span:0, order: 3}}><EventCards events={events} /></Col>
+          <Col lg={{span:3, order:1}} md={{span:3, order:1}} sm={{span:0, order:2}} xs={{span:0, order: 2}}>
+            <Filters setSelectedLocation={setSelectedLocation} />
+          </Col>
+          <Col lg={{span:6, order:2}} md={{span:6, order:2}} sm={{span:12, order:1}} xs={{span:12, order: 1}}>
+            <Map events={events} selectedLocation={selectedLocation} />
+          </Col>
+          <Col lg={{span:3, order:3}} md={{span:3, order:3}} sm={{span:0, order:3}} xs={{span:0, order: 3}}>
+            <EventCards events={events} />
+          </Col>
         </Row>
     </Container>
   );
