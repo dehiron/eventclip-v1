@@ -1,11 +1,11 @@
 //Component
-import { Container, Col, Button, Form} from 'react-bootstrap';
-import { useState } from 'react';
+import { Container, Col, Button, Form, InputGroup} from 'react-bootstrap';
+import { useState} from 'react';
 import axios from 'axios';
 
 function Filters(props){
 
-    const [locationCandidate, setLocationCandidate] = useState("東京")
+    const [locationCandidate, setLocationCandidate] = useState(null)
     const [selectedDate, setSelectedDate] = useState("")
     const [selectedGenres, setSelectedGenres] = useState("")
     
@@ -29,9 +29,19 @@ function Filters(props){
                 <Col md>
                   <Form.Group>
                     <Form.Label>ロケーションで検索</Form.Label>
-                    <Form.Control 
-                        onChange={(e) => { setLocationCandidate(e.target.value) }} 
-                        placeholder="例：渋谷区" />
+                    <InputGroup>
+                        <Form.Control
+                            onChange={(e) => { setLocationCandidate(e.target.value) }} 
+                            placeholder="例：渋谷区" />
+                        <InputGroup.Append>
+                            <Button 
+                                variant="outline-secondary"
+                                onClick = {()=>console.log("useRef使ってcurrentLocatorを操る https://chaika.hatenablog.com/entry/2019/05/09/120000")}
+                            >
+                                現在地 🧭
+                            </Button>
+                        </InputGroup.Append>
+                    </InputGroup>
                   </Form.Group>
                 </Col>
                 <Col md>
