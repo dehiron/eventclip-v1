@@ -55,7 +55,6 @@ app.post("/api/event/name", (req, res) => {
     const eventData = req.body;
     const eventName = eventData.event_name;
     const eventNameKana = eventData.event_name_kana;
-
     const genre = eventData.genre;
     const address = eventData.address;
     const latitude = eventData.latitude;
@@ -112,6 +111,40 @@ app.post("/api/event/name", (req, res) => {
                     }
         })
 })
+
+//イベント更新用
+app.put("/api/event/id", (req,res) => {
+    try {
+        database("events")
+        .where({id: req.query.id})
+        .update({
+            event_name: eventName,
+            event_name_kana: eventNameKana,
+            genre: genre,
+            address:address,
+            latitude: latitude,
+            longitude: longitude,
+            tel: tel,
+            email:email,
+            prefecture: prefecture,
+            city: city,
+            start_date: startDate,
+            start_time: startTime,
+            end_date: endDate,
+            end_time: endTime,
+            description: description,
+            owner_id: ownerId,
+            img1: img1,
+            img2: img2,
+            img3: img3,
+            img4: img4,
+            img5: img5
+        })
+        .then((res => console.log(`event (id:${req.query.id}/name:${req.query.event_name}) updated`)));
+    } catch(error) {
+        console.log(error);
+    }
+});
 
 //イベント削除用
 app.delete("/api/event/id", (req,res) => {
