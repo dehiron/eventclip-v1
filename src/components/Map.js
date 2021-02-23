@@ -74,6 +74,7 @@ function Map(props){
                 center = {center}
                 options = {options}
                 onLoad = {onMapLoad}
+                onClick = {() => { setSelected(null) }}
                 >
                     {/* GoogleMapタグの中身=マーカーの見た目について */}
                     {props.events.map((event) => (
@@ -102,7 +103,7 @@ function Map(props){
                         >
                             <div>
                                 <h2>Event!</h2>
-                                <img src={selected.img1} alt=""/>
+                                <img src={selected.img1} alt=""　width="200px" height="120px"/>
                                 <p>{selected.description}</p>
                                 <p>開始時刻</p>
                                 <p>{selected.start_date}</p>
