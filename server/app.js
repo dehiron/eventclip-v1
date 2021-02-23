@@ -17,10 +17,26 @@ app.get("/api", (req,res) => {
     res.send("We did it!")
 })
 
-//all
+//動くけど、API実装方法違うかもしれない。検索後にURLが変わらないことによる弊害はないか注意しておく。
+//イベント情報Get用(all, filtered)
 app.get("/api/events", (req,res) => {
-    database("events").select().then((result) => {
-        res.send(result);
+    database("events").select().then((events) => {        
+        const results = [];
+        if (Object.keys(req.query).length > 0) { //日付が選択された場合
+            if (Object.keys(req.query).includes("date")){
+                //下のfilterだと効かないのでfor文使う
+                for (const event of events){
+                    if (event.start_date <= req.query.date && req.query.date <= event.end_date){
+                        results.push(event)
+                    }
+                }
+                // results = events.filter((event) => {
+                //     event.start_date <= req.query.date && req.query.date <= event.end_date
+                // })
+                events = results;
+            }
+        }
+        res.send(events);
     });
 });
 
@@ -50,37 +66,41 @@ app.post("/api/event/name", (req, res) => {
     const img4 = eventData.img4;
     const img5 = eventData.img5;
 
-    database("events").count('id').where({
-        event_name:eventName,
-    }).then(result => {
-        if (result[0].count === '0'){
-            database("events").insert({
-                event_name: eventName,
-                event_name_kana: eventNameKana,
-                genre: genre,
-                address:address,
-                latitude: latitude,
-                longitude: longitude,
-                tel: tel,
-                email:email,
-                prefecture: prefecture,
-                city: city,
-                start_date: startDate,
-                start_time: startTime,
-                end_date: endDate,
-                end_time: endTime,
-                description: description,
-                owner_id: ownerId,
-                img1: img1,
-                img2: img2,
-                img3: img3,
-                img4: img4,
-                img5: img5
-            }).then(res => console.log("success"))
-        } else {
-            console.log("event already registered")
-        }
-    })
+    database("events")
+        .count('id')
+        .where({
+            event_name:eventName,})
+        .then(result => {
+                if (result[0].count === '0'){
+                    database("events")
+                        .insert({
+                            event_name: eventName,
+                            event_name_kana: eventNameKana,
+                            genre: genre,
+                            address:address,
+                            latitude: latitude,
+                            longitude: longitude,
+                            tel: tel,
+                            email:email,
+                            prefecture: prefecture,
+                            city: city,
+                            start_date: startDate,
+                            start_time: startTime,
+                            end_date: endDate,
+                            end_time: endTime,
+                            description: description,
+                            owner_id: ownerId,
+                            img1: img1,
+                            img2: img2,
+                            img3: img3,
+                            img4: img4,
+                            img5: img5
+                        })
+                        .then(res => console.log("success"))
+                    } else {
+                        console.log("event already registered")
+                    }
+        })
 })
 
 //イベント削除用
