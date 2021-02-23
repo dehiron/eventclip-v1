@@ -23,7 +23,6 @@ app.get("/api/events", (req,res) => {
     database("events").select().then((events) => {        
         
         if (Object.keys(req.query).length > 0) { //日付が選択された場合 or ジャンルが選択された場合
-            console.log("req.query",req.query)
             if (Object.keys(req.query).includes("date")){ //該当する日付を持つイベントを抽出
                 //filterだと効かないのでfor文使う
                 const resultsFilteredByDate = [];
@@ -33,7 +32,6 @@ app.get("/api/events", (req,res) => {
                     }
                 }
                 events = resultsFilteredByDate;
-                console.log("filter by date", events.map((event)=>event.id))
             } 
             if (Object.keys(req.query).includes("genre") && req.query.genre !== ""){　//該当する日付を持つイベントを抽出
                 const resultsFilteredByGenre = [];
@@ -45,7 +43,6 @@ app.get("/api/events", (req,res) => {
                     }
                 }
                 events = resultsFilteredByGenre;
-                console.log("filter by genre", events.map((event)=>event.id))
                 
             }
         }
@@ -117,15 +114,14 @@ app.post("/api/event/name", (req, res) => {
 })
 
 //イベント削除用
-app.delete("/api/event/name", (req,res) => {
-    console.log(req.query.event_name)
+app.delete("/api/event/id", (req,res) => {
     try {
         database("events")
-        .where({event_name: req.query.event_name})
+        .where({id: req.query.id})
         .del()
-        .then((res => console.log("deleted")));
-    } catch {
-        console.log("event already registered")
+        .then((res => console.log(`event (id:${req.query.id}/name:${req.query.event_name}) deleted`)));
+    } catch(error) {
+        console.log(error);
     }
 });
 
