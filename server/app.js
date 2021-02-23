@@ -23,8 +23,8 @@ app.get("/api/events", (req,res) => {
     database("events").select().then((events) => {        
         
         if (Object.keys(req.query).length > 0) { //日付が選択された場合 or ジャンルが選択された場合
-            console.log(req.query)
-            if (Object.keys(req.query).includes("date")){
+            console.log("req.query",req.query)
+            if (Object.keys(req.query).includes("date")){ //該当する日付を持つイベントを抽出
                 //filterだと効かないのでfor文使う
                 const resultsFilteredByDate = [];
                 for (const event of events){
@@ -35,11 +35,13 @@ app.get("/api/events", (req,res) => {
                 events = resultsFilteredByDate;
                 console.log("filter by date", events.map((event)=>event.id))
             } 
-            if (Object.keys(req.query).includes("genre") && req.query.genre !== ""){
+            if (Object.keys(req.query).includes("genre") && req.query.genre !== ""){　//該当する日付を持つイベントを抽出
                 const resultsFilteredByGenre = [];
                 for (const event of events){
-                    if (event.genre === req.query.genre){
-                        resultsFilteredByGenre.push(event);
+                    for (const genre of req.query.genre.split(",")){
+                        if (event.genre === genre){
+                            resultsFilteredByGenre.push(event);
+                        }
                     }
                 }
                 events = resultsFilteredByGenre;
