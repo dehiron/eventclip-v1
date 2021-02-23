@@ -21,19 +21,30 @@ app.get("/api", (req,res) => {
 //イベント情報Get用(all, filtered)
 app.get("/api/events", (req,res) => {
     database("events").select().then((events) => {        
-        const results = [];
-        if (Object.keys(req.query).length > 0) { //日付が選択された場合
+        
+        if (Object.keys(req.query).length > 0) { //日付が選択された場合 or ジャンルが選択された場合
+            console.log(req.query)
             if (Object.keys(req.query).includes("date")){
-                //下のfilterだと効かないのでfor文使う
+                //filterだと効かないのでfor文使う
+                const resultsFilteredByDate = [];
                 for (const event of events){
                     if (event.start_date <= req.query.date && req.query.date <= event.end_date){
-                        results.push(event)
+                        resultsFilteredByDate.push(event);
                     }
                 }
-                // results = events.filter((event) => {
-                //     event.start_date <= req.query.date && req.query.date <= event.end_date
-                // })
-                events = results;
+                events = resultsFilteredByDate;
+                console.log("filter by date", events.map((event)=>event.id))
+            } 
+            if (Object.keys(req.query).includes("genre") && req.query.genre !== ""){
+                const resultsFilteredByGenre = [];
+                for (const event of events){
+                    if (event.genre === req.query.genre){
+                        resultsFilteredByGenre.push(event);
+                    }
+                }
+                events = resultsFilteredByGenre;
+                console.log("filter by genre", events.map((event)=>event.id))
+                
             }
         }
         res.send(events);
