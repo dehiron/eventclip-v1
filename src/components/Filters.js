@@ -40,7 +40,8 @@ function Filters(props){
                                 onClick = {()=>{
                                     props.setCurrentLocation("abled");
                                     document.getElementById('test').value = ""; //入力値をリセット(Form.Controlのボックスから)
-                                    setLocationCandidate("") //入力値をリセット(ステート情報から)
+                                    props.setLocationCandidate("") //入力値をリセット(ステート情報から)
+                                    props.setSelectedLocation("") //入力値をリセット(ステート情報から)
                                 }
                             }
                             >

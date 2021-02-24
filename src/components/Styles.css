@@ -14,9 +14,9 @@
     position: relative;
     margin-top: 7rem;
     padding-top: 1rem;
+    padding-bottom: 1rem;
     overflow-y: scroll;
-    height: 82vh;
-    /* border: 1px solid blue; */
+    border: 1px solid skyblue;
 }
 
 .listed-event-container {
