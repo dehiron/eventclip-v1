@@ -33,11 +33,11 @@ app.get("/api/events", (req,res) => {
                 }
                 events = resultsFilteredByDate;
             } 
-            if (Object.keys(req.query).includes("genre") && req.query.genre !== ""){　//該当する日付を持つイベントを抽出
+            if (Object.keys(req.query).includes("category") && req.query.category !== ""){　//該当する日付を持つイベントを抽出
                 const resultsFilteredByGenre = [];
                 for (const event of events){
-                    for (const genre of req.query.genre.split(",")){
-                        if (event.genre === genre){
+                    for (const category of req.query.category.split(",")){
+                        if (event.category === category){
                             resultsFilteredByGenre.push(event);
                         }
                     }
@@ -55,7 +55,7 @@ app.post("/api/event/name", (req, res) => {
     const eventData = req.body;
     const eventName = eventData.event_name;
     const eventNameKana = eventData.event_name_kana;
-    const genre = eventData.genre;
+    const category = eventData.category;
     const address = eventData.address;
     const latitude = eventData.latitude;
     const longitude = eventData.longitude;
@@ -85,7 +85,7 @@ app.post("/api/event/name", (req, res) => {
                         .insert({
                             event_name: eventName,
                             event_name_kana: eventNameKana,
-                            genre: genre,
+                            category: category,
                             address:address,
                             latitude: latitude,
                             longitude: longitude,
@@ -120,7 +120,7 @@ app.put("/api/event/id", (req,res) => {
         .update({
             event_name: eventName,
             event_name_kana: eventNameKana,
-            genre: genre,
+            category: category,
             address:address,
             latitude: latitude,
             longitude: longitude,

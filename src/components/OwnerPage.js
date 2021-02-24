@@ -16,7 +16,7 @@ function OwnerPage(props) {
 
     const [eventName, setEventName] = useState("")
     const [eventNameKana, setEventNameKana] = useState("")
-    const [genre, setGenre] = useState("")
+    const [category, setCategory] = useState("")
     // const [address, setAddress] = useState("")
     const [tel, setTel] = useState("")
     const [email, setEmail] = useState("")
@@ -58,7 +58,7 @@ function OwnerPage(props) {
             const body = new FormData();
             body.append('event_name', eventName);
             body.append('event_name_kana', eventNameKana);
-            body.append('genre', genre);
+            body.append('category', category);
             body.append('address', prefecture+city+addressDetail1+addressDetail2);
             body.append('latitude', lat);
             body.append('longitude', lng);
@@ -92,7 +92,7 @@ function OwnerPage(props) {
             <ul className = "all-events">
                <li><p>イベント名称：<input placeholder="例：第一回大江戸花火大会" onChange={e => setEventName(e.target.value)}></input></p></li>
                 <li><p>イベント名称かな：<input placeholder="だいいっかいおおえどはなびたいかい" onChange={e => setEventNameKana(e.target.value)}></input></p></li>
-                <li><p>ジャンル：<input placeholder="例：イベント" onChange={e => setGenre(e.target.value)}></input></p></li>
+                <li><p>ジャンル：<input placeholder="例：イベント" onChange={e => setCategory(e.target.value)}></input></p></li>
                 {/* <li><p>住所：<input placeholder="例：東京都渋谷区渋谷0-0-0" onChange={e => setAddress(e.target.value)}></input></p></li> */}
                 {/* searchBar参考にして入力しやすい様にする */}
                 <li><p>住所：
