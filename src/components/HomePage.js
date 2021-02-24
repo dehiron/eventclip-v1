@@ -22,7 +22,7 @@ function HomePage(props) {
   const [isLoading, setLoading] = useState(true)
   const [events, setEvents] = useState([]);
   const [selectedLocation, setSelectedLocation] = useState(""); //for filters component(find location)
-  const [currentLocation, setCurrentLocation] = useState("abled"); //for filters component(get current location) 
+  const [currentLocation, setCurrentLocation] = useState(""); //for filters component(get current location) 
   const [mapOrList, setMapOrList] = useState("Mapで表示");
 
   useEffect(()=>{

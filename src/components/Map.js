@@ -23,8 +23,8 @@ const mapContainerStyle = {
     height: "82vh", //改良の余地あり。Styles.cssのnavbar min-heightと関連してる。
 };
 const center = {
-    lat: 35.681236,
-    lng: 139.767125
+    lat: 38.204306,
+    lng: 139.684389
 };
 const options = {
     styles: mapStyles,
@@ -60,7 +60,7 @@ function Map(props){
             <GoogleMap 
                 // GoogleMapタグのattitude
                 mapContainerStyle={mapContainerStyle}
-                zoom = {5}
+                zoom = {5.6}
                 center = {center}
                 options = {options}
                 onLoad = {onMapLoad}
