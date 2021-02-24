@@ -23,6 +23,7 @@ function HomePage(props) {
   const [events, setEvents] = useState([]);
   const [selectedLocation, setSelectedLocation] = useState(""); //for filters component(find location)
   const [currentLocation, setCurrentLocation] = useState("abled"); //for filters component(get current location) 
+  const [mapOrList, setMapOrList] = useState("Mapで表示");
 
   useEffect(()=>{
     const fetchData = async () => {
@@ -45,24 +46,35 @@ function HomePage(props) {
   return (
     <Container fluid> 
     {/* ここをfluidにしないと変な余白が生まれる */}
-        <Header />
+        <Header mapOrList={mapOrList} setMapOrList={setMapOrList}/>
         <Row>
-          <Col lg={{span:3, order:1}} md={{span:3, order:1}} sm={{span:0, order:2}} xs={{span:0, order: 2}}>
+          <Col lg={{span:3, order:1}} md={{span:3, order:1}} sm={{span:12, order:1}} xs={{span:12, order: 1}}>
             <Filters 
               setSelectedLocation={setSelectedLocation}
               setCurrentLocation={setCurrentLocation}
               setEvents={setEvents} />
           </Col>
-          <Col lg={{span:6, order:2}} md={{span:6, order:2}} sm={{span:12, order:1}} xs={{span:12, order: 1}}>
-            <Map 
-              events={events} 
-              selectedLocation={selectedLocation}
-              currentLocation={currentLocation} />
-          </Col>
-          <Col lg={{span:3, order:3}} md={{span:3, order:3}} sm={{span:0, order:3}} xs={{span:0, order: 3}}>
-            <EventCards 
-              events={events} />
-          </Col>
+          {/* JSX内で条件分岐させる時は即時関数又はArrow関数で実装できる。最後の()が重要なので注意。 */}
+          {(() => {
+              if (mapOrList === "Mapで表示"){
+                return (
+                  <Col lg={{span:9, order:2}} md={{span:9, order:2}} sm={{span:0, order:2}} xs={{span:0, order: 2}}>
+                    <Map 
+                      events={events} 
+                      selectedLocation={selectedLocation}
+                      currentLocation={currentLocation} />
+                  </Col>
+                )
+              } else {
+                return (
+                  <Col lg={{span:9, order:2}} md={{span:9, order:2}} sm={{span:0, order:2}} xs={{span:0, order: 2}}>
+                    <EventCards 
+                      events={events} />
+                  </Col>
+                )
+              }
+            })()
+          }
         </Row>
     </Container>
   );

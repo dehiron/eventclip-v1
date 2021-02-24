@@ -4,6 +4,12 @@
     min-height: 10%;
 }
 
+#map-or-list{
+    color: grey;
+    background-color: white;
+    border-radius: 5px;
+}
+
 .filters-container {
     position: relative;
     margin-top: 7rem;
