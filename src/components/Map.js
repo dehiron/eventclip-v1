@@ -64,7 +64,11 @@ function Map(props){
                 center = {center}
                 options = {options}
                 onLoad = {onMapLoad}
-                onClick = {() => { setSelected(null) }}
+                onClick = {() => { 
+                    setSelected(null); 
+                    props.setCurrentLocation("disabled") }}
+                onCenterChanged= {() => { 
+                    props.setCurrentLocation("disabled") }}
                 >
                     {/* GoogleMapタグの中身=マーカーの見た目について */}
                     {props.events.map((event) => (

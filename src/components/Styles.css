@@ -10,9 +10,12 @@
     border-radius: 5px;
 }
 
+.hp-component-container {
+    margin-top: 7rem;
+}
+
 .filters-container {
     position: relative;
-    margin-top: 7rem;
     padding-top: 1rem;
     padding-bottom: 1rem;
     overflow-y: scroll;
@@ -21,7 +24,6 @@
 
 .listed-event-container {
     position: relative;
-    margin-top: 7rem;
     overflow-y: scroll;
     height: 82vh;
     /* border: 1px solid blue; */
@@ -33,8 +35,6 @@
 
 .map {
     position: relative;
-    margin-top: 7rem;
-    /* border: 1px solid blue; */
 }
 
 .address-search-bar {

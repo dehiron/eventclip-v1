@@ -31,7 +31,7 @@ function Filters(props){
                     <Form.Label>ロケーションで検索</Form.Label>
                     <InputGroup>
                         <Form.Control
-                            id = "test"
+                            id = "location-candidate"
                             onChange={(e) => { setLocationCandidate(e.target.value) }} 
                             placeholder="例：渋谷区" />
                         <InputGroup.Append>
@@ -39,7 +39,7 @@ function Filters(props){
                                 variant="outline-secondary"
                                 onClick = {()=>{
                                     props.setCurrentLocation("abled");
-                                    document.getElementById('test').value = ""; //入力値をリセット(Form.Controlのボックスから)
+                                    document.getElementById('location-candidate').value = ""; //入力値をリセット(Form.Controlのボックスから)
                                     setLocationCandidate("") //入力値をリセット(ステート情報から)
                                     props.setSelectedLocation("") //入力値をリセット(ステート情報から)
                                 }
