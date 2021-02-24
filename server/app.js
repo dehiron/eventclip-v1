@@ -34,15 +34,15 @@ app.get("/api/events", (req,res) => {
                 events = resultsFilteredByDate;
             } 
             if (Object.keys(req.query).includes("category") && req.query.category !== ""){　//該当する日付を持つイベントを抽出
-                const resultsFilteredByGenre = [];
+                const resultsFilteredByCategory = [];
                 for (const event of events){
                     for (const category of req.query.category.split(",")){
                         if (event.category === category){
-                            resultsFilteredByGenre.push(event);
+                            resultsFilteredByCategory.push(event);
                         }
                     }
                 }
-                events = resultsFilteredByGenre;
+                events = resultsFilteredByCategory;
                 
             }
         }
