@@ -27,20 +27,22 @@ function AddressSearchBar(props) {
     // });
 
 
-
+    //機能はするけどここのエラー解消されない。後で要チェック。(React Hook useEffect has a missing dependency: 'props' ~ )
     useEffect(()=>{
         const getSelectedLocation = async () => {
-          try {
-            //機能はするけどここのエラー解消されない。後で要チェック。
-            const results = await getGeocode({ address: props.selectedLocation });
-            const { lat, lng } = await getLatLng(results[0]);
-            props.panTo({ lat,lng });
-          } catch(error){
-            //エラー注意。検索結果が見つからない場合は"ZERO_RESULTS"が表示される。その場合ポップアップを表示する様にする。
-            console.log(error)
+            try {
+              const results = await getGeocode({ address: props.selectedLocation });
+              const { lat, lng } = await getLatLng(results[0]);
+              props.panTo({ lat,lng });
+            } catch(error){
+              //エラー注意。検索結果が見つからない場合は"ZERO_RESULTS"が表示される。その場合ポップアップを表示する様にする。
+              console.log(error)
+            }
           }
+        //ロケーション選択->現在値ボタンを押して入力したロケーションが消去された場合に対応。
+        if (props.selectedLocation !== ""){
+            getSelectedLocation();
         }
-        getSelectedLocation();
       }, [props.selectedLocation])
   
     return(

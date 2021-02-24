@@ -31,12 +31,18 @@ function Filters(props){
                     <Form.Label>ロケーションで検索</Form.Label>
                     <InputGroup>
                         <Form.Control
+                            id = "test"
                             onChange={(e) => { setLocationCandidate(e.target.value) }} 
                             placeholder="例：渋谷区" />
                         <InputGroup.Append>
                             <Button 
                                 variant="outline-secondary"
-                                onClick = {()=>console.log("useRef使ってcurrentLocatorを操る https://chaika.hatenablog.com/entry/2019/05/09/120000")}
+                                onClick = {()=>{
+                                    props.setCurrentLocation("abled");
+                                    document.getElementById('test').value = ""; //入力値をリセット(Form.Controlのボックスから)
+                                    setLocationCandidate("") //入力値をリセット(ステート情報から)
+                                }
+                            }
                             >
                                 現在地 🧭
                             </Button>
@@ -84,7 +90,8 @@ function Filters(props){
             <Container style={{display:"flex"}}>    
             <Button 
                 onClick={()=>{ 
-                    props.setSelectedLocation(locationCandidate); // Mapコンポーネントに渡してAPIとは関係なしにauto focusする
+                    props.setSelectedLocation(locationCandidate); // Mapコンポーネントに渡したAPIとは関係なしにauto focusする
+                    props.setCurrentLocation("disabled"); //ロケーション検索した場合は一度現在地取得用のstateを更新、次回また現在地取得ができる様にする
                     handleClickFetchFilteredEvent();　// こっちで検索結果に基づいたAPIが走る
                 }} 
                 variant="secondary" 
