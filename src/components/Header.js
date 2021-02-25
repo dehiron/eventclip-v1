@@ -8,10 +8,10 @@ function Header (props){
     
 
     const handleClickToOwnerPage = () => {
-        props.history.push("/OwnerPage");
+        props.history.push("/owner");
     }
     const handleClickToEventsPage = () => {
-        props.history.push("/EventsPage");
+        props.history.push("/events");
     }
 
     return(

@@ -1,6 +1,7 @@
 //Component
 
-import React, {useState, useRef, useCallback} from "react"
+import React, {useState, useRef, useCallback} from "react";
+import { Button } from "react-bootstrap";
 import './Styles.css'
 import { 
     GoogleMap, 
@@ -96,15 +97,15 @@ function Map(props){
                             onCloseClick = {() => { setSelected(null) }}
                         >
                             <div>
-                                <h2>Event!</h2>
+                                <h2>{selected.event_name}</h2>
                                 <img src={selected.img1} alt=""　width="200px" height="120px"/>
                                 <p>{selected.description}</p>
-                                <p>開始時刻</p>
-                                <p>{selected.start_date}</p>
-                                <p>{selected.start_time}</p>
-                                <p>終了時刻</p>
-                                <p>{selected.end_date}</p>
-                                <p>{selected.end_time}</p>
+                                <p>開催期間</p>
+                                <p><span>{selected.start_date}</span> ~ <span>{selected.end_date}</span></p>
+                                <p>開催時間</p>
+                                <p><span>{selected.start_time}</span> ~ <span>{selected.end_time}</span></p>
+                                
+                                <Button variant="primary" onClick = {()=> console.log(selected.id)}>詳細を見る</Button>
                             </div>
                         </InfoWindow>
                     ) : null}
