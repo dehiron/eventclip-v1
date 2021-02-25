@@ -41,7 +41,9 @@ function HomePage(props) {
 
   //displaying contents
   if (isLoading){
-    return <div> Loading... </div>
+    return <div className="loading-img">
+      <img src="loading.gif" alt=""/>
+    </div>
   } 
   return (
     <Container fluid> 
