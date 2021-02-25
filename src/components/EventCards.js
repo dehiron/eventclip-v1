@@ -1,7 +1,7 @@
 //Component
 import { Card, Container, Button, } from 'react-bootstrap';
 import { withRouter } from 'react-router-dom';
-
+import Image from 'react-image-resizer';
 
 function EventCards(props){
 
@@ -16,7 +16,7 @@ function EventCards(props){
             {/* (event) => の後に {} 要らない */}
             {props.events.map((event) => 
                 <Card className="listed-event" key = {event.event_name}>
-                <Card.Img src = {event.img1}/>
+                <Image src={event.img1} alt=""　width={300} height={200}/>
                 <Card.Body>
                     <Card.Title>
                     {event.event_name}

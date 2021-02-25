@@ -11,6 +11,7 @@ import {
 import "@reach/combobox/styles.css"
 import mapStyles from "./MapStyles";
 import { withRouter } from 'react-router-dom';
+import Image from 'react-image-resizer';
 //componentsのインポート
 import AddressSearchBar from "./AddressSearchBar";
 import CurrentLocator from "./CurrentLocator";
@@ -104,7 +105,7 @@ function Map(props){
                         >
                             <div>
                                 <h2>{selected.event_name}</h2>
-                                <img src={selected.img1} alt=""　width="200px" height="120px"/>
+                                <Image src={selected.img1} alt=""　width={300} height={200}/>
                                 <p>{selected.description}</p>
                                 <p>開催期間</p>
                                 <p><span>{selected.start_date}</span> ~ <span>{selected.end_date}</span></p>

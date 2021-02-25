@@ -1,4 +1,4 @@
-import { useParams } from 'react-router-dom';
+
 
 function EventPage(props){
     console.log(props.match.params.id)
