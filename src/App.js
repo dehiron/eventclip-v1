@@ -3,7 +3,7 @@ import { BrowserRouter, Switch, Route } from "react-router-dom";
 import HomePage from "./components/HomePage";
 import OwnerPage from "./components/OwnerPage";
 import EventsPage from "./components/EventsPage";
-import Event from "./components/Event.js";
+import EventPage from "./components/EventPage";
 
 function App() {
 
@@ -22,6 +22,11 @@ function App() {
           <Route
             exact path={'/events'}
             render = {props => (<EventsPage {...props}/>)}
+          />
+          <Route
+            // idではなく:idにしないとダメ
+            path={'/event/:id'}
+            render = {props => (<EventPage {...props}/>)}
           />
         </Switch>
       </BrowserRouter>

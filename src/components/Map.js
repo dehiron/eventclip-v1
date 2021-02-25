@@ -10,6 +10,7 @@ import {
     InfoWindow } from "@react-google-maps/api";
 import "@reach/combobox/styles.css"
 import mapStyles from "./MapStyles";
+import { withRouter } from 'react-router-dom';
 //componentsのインポート
 import AddressSearchBar from "./AddressSearchBar";
 import CurrentLocator from "./CurrentLocator";
@@ -40,6 +41,7 @@ function Map(props){
     // 元々ここでAPikeyを使ってisLoadedとloadErrorを定義していたけど、
     // index.html内に書き込むことによって不要になった
 
+    //******for use of google map component
     const [selected, setSelected] = useState(null); //選択されたマーカー情報
     //選択したマーカーのステート管理（？）
     const mapRef = useRef();
@@ -51,6 +53,11 @@ function Map(props){
         mapRef.current.setZoom(12);
     },[])
     //******for use of google map component
+
+    const handleClickToEventPage = (id) => {
+        console.log(id);
+        props.history.push(`/event/${id}`);
+    }
 
     //元々isLoadedとloadErrorがあった場所
     return(
@@ -86,11 +93,10 @@ function Map(props){
                         onClick = {() => {
                             setSelected(event)
                         }}
-
-
                     />
                     ))}
 
+                    {/* markerクリックした際のinfoWindo */}
                     {selected ? (
                         <InfoWindow 
                             position = {{ lat: parseFloat(selected.latitude), lng: parseFloat(selected.longitude) }}
@@ -104,8 +110,14 @@ function Map(props){
                                 <p><span>{selected.start_date}</span> ~ <span>{selected.end_date}</span></p>
                                 <p>開催時間</p>
                                 <p><span>{selected.start_time}</span> ~ <span>{selected.end_time}</span></p>
-                                
-                                <Button variant="primary" onClick = {()=> console.log(selected.id)}>詳細を見る</Button>
+                                <Button 
+                                    variant="primary" 
+                                    onClick = {()=> {
+                                        handleClickToEventPage(selected.id)
+                                    }}
+                                >
+                                    詳細を見る
+                                </Button>
                             </div>
                         </InfoWindow>
                     ) : null}
@@ -115,4 +127,4 @@ function Map(props){
     )
 };
 
-export default Map;
+export default withRouter(Map);

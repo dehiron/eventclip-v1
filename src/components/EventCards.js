@@ -1,9 +1,14 @@
 //Component
 import { Card, Container, Button, } from 'react-bootstrap';
-
+import { withRouter } from 'react-router-dom';
 
 
 function EventCards(props){
+
+    const handleClickToEventPage = (id) => {
+        console.log(id);
+        props.history.push(`/event/${id}`);
+    }
 
     return(
         <Container className="listed-event-container">
@@ -25,7 +30,14 @@ function EventCards(props){
                     <Card.Text>
                     終了: {event.end_date}  {event.end_time}
                     </Card.Text>
-                    <Button variant="primary">Read More</Button>
+                    <Button 
+                                    variant="primary" 
+                                    onClick = {()=> {
+                                        handleClickToEventPage(event.id)
+                                    }}
+                                >
+                                    詳細を見る
+                                </Button>
                 </Card.Body>
                 </Card>
             )}
@@ -34,4 +46,4 @@ function EventCards(props){
     );
 };
 
-export default EventCards;
+export default withRouter(EventCards);
