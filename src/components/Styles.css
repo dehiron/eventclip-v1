@@ -22,12 +22,9 @@
     border-radius: 5px;
 }
 
-.hp-component-container {
-    margin-top: 7rem;
-}
-
 .filters-container {
     position: relative;
+    margin-top: 7rem;
     padding-top: 1rem;
     padding-bottom: 1rem;
     overflow-y: scroll;
@@ -36,6 +33,7 @@
 
 .listed-event-container {
     position: relative;
+    margin-top: 7rem;
     overflow-y: scroll;
     height: 82vh;
     /* border: 1px solid blue; */
@@ -47,7 +45,26 @@
 
 .map {
     position: relative;
+    margin-top: 7rem;
 }
+
+/* メディアクエリ */
+@media (max-width: 767px) {
+    /* 横幅が767px(smサイズ)以下の場合に適用するスタイル */
+    .listed-event-container {
+        margin-top: 1rem;
+    }
+    .map {
+        margin-top: 1rem;
+    }
+}
+
+@media (max-width: 576px){
+    .filters-container {
+        margin-top:8rem;
+    }
+}
+/* メディアクエリ */
 
 .address-search-bar {
     position: absolute;

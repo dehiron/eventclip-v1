@@ -51,7 +51,7 @@ function HomePage(props) {
         <Header mapOrList={mapOrList} setMapOrList={setMapOrList}/>
         <Row>
           <Col 
-            className = "hp-component-container" 
+            // className = "hp-component-container" 
             lg={{span:3, order:1}} md={{span:3, order:1}} sm={{span:12, order:1}} xs={{span:12, order: 1}}>
             <Filters 
               setSelectedLocation={setSelectedLocation}
@@ -63,7 +63,7 @@ function HomePage(props) {
               if (mapOrList === "Mapで表示"){
                 return (
                   <Col 
-                    className = "hp-component-container" 
+                    // className = "hp-component-container" 
                     lg={{span:9, order:2}} md={{span:9, order:2}} sm={{span:0, order:2}} xs={{span:0, order: 2}}>
                     <Map 
                       events={events} 
@@ -75,7 +75,7 @@ function HomePage(props) {
               } else {
                 return (
                   <Col 
-                    className = "hp-component-container" 
+                    // className = "hp-component-container" 
                     lg={{span:9, order:2}} md={{span:9, order:2}} sm={{span:0, order:2}} xs={{span:0, order: 2}}>
                     <EventCards 
                       events={events} />
