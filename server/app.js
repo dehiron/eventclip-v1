@@ -53,27 +53,37 @@ app.get("/api/events", (req,res) => {
 //新規イベント登録用
 app.post("/api/event/name", (req, res) => {
     const eventData = req.body;
+
     const eventName = eventData.event_name;
-    const eventNameKana = eventData.event_name_kana;
+    const startDate = eventData.start_date;
+    const endDate = eventData.end_date;
+    const dateDetail = eventData.date_datail;
     const category = eventData.category;
+    const startTime = eventData.start_time;
+    const endTime = eventData.end_time;
+    const timeDetail = eventData.time_datail;
+    const state = eventData.state;
+    const prefecture = eventData.prefecture;
+    const city = eventData.city;
     const address = eventData.address;
     const latitude = eventData.latitude;
     const longitude = eventData.longitude;
+    const facilityName = eventData.facility_name;
     const tel = eventData.tel;
-    const email = eventData.email;
-    const prefecture = eventData.prefecture;
-    const city = eventData.city;
-    const startDate = eventData.start_date;
-    const startTime = eventData.start_time;
-    const endDate = eventData.end_date;
-    const endTime = eventData.end_time;
     const description = eventData.description;
+    const descriptionDetail = eventData.description_detail;
+    const parkSpots = eventData.park_spots;
+    const parkPrice = eventData.park_price;
+    const priceDetail = eventData.price_detail;
+    const creditCardInfo = eventData.credit_card_info;
     const ownerId = eventData.owner_id;
+    const tag = eventData.owner_tag;
     const img1 = eventData.img1;
     const img2 = eventData.img2;
     const img3 = eventData.img3;
     const img4 = eventData.img4;
     const img5 = eventData.img5;
+    const linkToHp = eventData.link_to_hp;
 
     database("events")
         .count('id')
@@ -84,26 +94,35 @@ app.post("/api/event/name", (req, res) => {
                     database("events")
                         .insert({
                             event_name: eventName,
-                            event_name_kana: eventNameKana,
+                            start_date: startDate,
+                            end_date: endDate,
+                            date_detail: dateDetail,
                             category: category,
-                            address:address,
-                            latitude: latitude,
-                            longitude: longitude,
-                            tel: tel,
-                            email:email,
+                            start_time: startTime,
+                            end_time: endTime,
+                            time_detail: timeDetail,
+                            state: state,
                             prefecture: prefecture,
                             city: city,
-                            start_date: startDate,
-                            start_time: startTime,
-                            end_date: endDate,
-                            end_time: endTime,
+                            address: address,
+                            latitude: latitude,
+                            longitude: longitude,
+                            facility_name: facilityName,
+                            tel: tel,
                             description: description,
+                            description_detail: descriptionDetail,
+                            park_spots: parkSpots,
+                            park_price: parkPrice,
+                            price_detail: priceDetail,
+                            credit_card_info: creditCardInfo,
                             owner_id: ownerId,
+                            tag: tag,
                             img1: img1,
                             img2: img2,
                             img3: img3,
                             img4: img4,
-                            img5: img5
+                            img5: img5,
+                            link_to_hp: linkToHp
                         })
                         .then(res => console.log("success"))
                     } else {
@@ -119,26 +138,35 @@ app.put("/api/event/id", (req,res) => {
         .where({id: req.query.id})
         .update({
             event_name: eventName,
-            event_name_kana: eventNameKana,
+            start_date: startDate,
+            end_date: endDate,
+            date_detail: dateDetail,
             category: category,
-            address:address,
-            latitude: latitude,
-            longitude: longitude,
-            tel: tel,
-            email:email,
+            start_time: startTime,
+            end_time: endTime,
+            time_detail: timeDetail,
+            state: state,
             prefecture: prefecture,
             city: city,
-            start_date: startDate,
-            start_time: startTime,
-            end_date: endDate,
-            end_time: endTime,
+            address: address,
+            latitude: latitude,
+            longitude: longitude,
+            facility_name: facilityName,
+            tel: tel,
             description: description,
+            description_detail: descriptionDetail,
+            park_spots: parkSpots,
+            park_price: parkPrice,
+            price_detail: priceDetail,
+            credit_card_info: creditCardInfo,
             owner_id: ownerId,
+            tag: tag,
             img1: img1,
             img2: img2,
             img3: img3,
             img4: img4,
-            img5: img5
+            img5: img5,
+            link_to_hp: linkToHp
         })
         .then((res => console.log(`event (id:${req.query.id}/name:${req.query.event_name}) updated`)));
     } catch(error) {
