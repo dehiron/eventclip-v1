@@ -56,7 +56,6 @@ function Map(props){
     //******for use of google map component
 
     const handleClickToEventPage = (id) => {
-        console.log(id);
         props.history.push(`/event/${id}`);
     }
 

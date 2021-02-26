@@ -23,7 +23,13 @@ function EventPage(props){
         fetchData();
     }, [])
 
-    const selectedEvent = events[props.match.params.id-1];
+    let selectedEvent = {};
+
+    for (const event of events){
+        if (event.id.toString() === props.match.params.id){
+            selectedEvent = event
+        }
+    }
 
     if (isLoading){
     return <div className="loading-img">

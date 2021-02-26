@@ -6,7 +6,6 @@ import Image from 'react-image-resizer';
 function EventCards(props){
 
     const handleClickToEventPage = (id) => {
-        console.log(id);
         props.history.push(`/event/${id}`);
     }
 
