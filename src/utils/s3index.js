@@ -2,11 +2,12 @@ import AWS from "aws-sdk";
 require('dotenv').config();
 
 const bucketName = "eventclip";
+const identityPoolId = "ap-northeast-1:64434ce8-30fa-4d88-881d-9b21297147bc";
 
 AWS.config.update({
   region: "ap-northeast-1",
   credentials: new AWS.CognitoIdentityCredentials({
-    IdentityPoolId: process.env.REACT_APP_IDENTITY_POOL_ID
+    IdentityPoolId: identityPoolId
   })
 });
 
