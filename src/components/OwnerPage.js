@@ -68,7 +68,6 @@ function OwnerPage(props) {
             //getGeocode関数の問題（らしい）で時々エラーが返るけどちゃんと機能してる。
             const geoCodeInfo = await getGeocode({address:prefecture+city+addressDetail1+addressDetail2});
             const {lat,lng} = await getLatLng(geoCodeInfo[0]);
-            console.log(img1);
 
             //body作る
             const body = new FormData();
