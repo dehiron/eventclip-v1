@@ -4,6 +4,8 @@ import React, {useState} from "react";
 import axios from 'axios';
 import { getGeocode, getLatLng } from "use-places-autocomplete";
 import './Styles.css';
+import Upload from "./Upload"
+import { saveObject } from "../utils/s3index.js";
 
 //カレンダーで選べる様にする
 const year = ["2021","2022","2023","2024","2025","2026","2027","2028","2029","2030","2031"]
@@ -13,6 +15,16 @@ const hour = ["00","01","02","03","04","05","06","07","08","09","10","11","12","
 const min = ["00","30"]
 
 function OwnerPage(props) {
+
+    const [img, setImg] = useState(undefined);
+    function uploadImage(img) {
+        setImg(img);
+    }
+
+    if (img !== undefined) {
+        saveObject(img);
+        setImg(undefined);
+    }
 
     const [eventName, setEventName] = useState("")
     // const [startDate, setStartDate] = useState("")
@@ -196,7 +208,7 @@ function OwnerPage(props) {
                 <li><p>クレジットカード利用可否：<input placeholder="例：可/不可" onChange={e => setCreditCardInfo(e.target.value)}></input></p></li>
                 <li><p>オーナーID：<input placeholder="例：hide_owner" onChange={e => setOwnerId(e.target.value)}></input></p></li>
                 <li><p>オーナーID：<input placeholder="例：['家族と','デートに','お一人様','癒されたい']" onChange={e => setTag(e.target.value)}></input></p></li>
-                <li><p>画像1：<input placeholder="例：" onChange={e => setImg1(e.target.value)}></input></p></li>
+                <li><p>画像1：<input placeholder="例：" onChange={e => setImg1(e.target.value)}></input></p><Upload uploadImage={uploadImage}/></li>
                 <li><p>画像2：<input placeholder="例：" onChange={e => setImg2(e.target.value)}></input></p></li>
                 <li><p>画像3：<input placeholder="例：" onChange={e => setImg3(e.target.value)}></input></p></li>
                 <li><p>画像4：<input placeholder="例：" onChange={e => setImg4(e.target.value)}></input></p></li>
