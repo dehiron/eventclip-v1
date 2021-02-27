@@ -15,6 +15,7 @@ import Image from 'react-image-resizer';
 //componentsのインポート
 import AddressSearchBar from "./AddressSearchBar";
 import CurrentLocator from "./CurrentLocator";
+import { getSuggestedQuery } from "@testing-library/react";
 //componentsのインポート
 require('dotenv').config();
 
@@ -32,7 +33,8 @@ const center = {
 const options = {
     styles: mapStyles,
     disableDefaultUI: true,
-    zoomControl: true
+    zoomControl: true,
+    gestureHandling: 'greedy'
 };
 //******defining variables, for use of google map component
 
