@@ -1,7 +1,7 @@
 //Component
 
 import React, {useState, useRef, useCallback} from "react";
-import { Button } from "react-bootstrap";
+import { Button, Carousel } from "react-bootstrap";
 import './Styles.css'
 import { 
     GoogleMap, 
@@ -75,7 +75,7 @@ function Map(props){
                 onClick = {() => { 
                     setSelected(null); 
                     props.setCurrentLocation("disabled") }}
-                onCenterChanged= {() => { 
+                    onCenterChanged= {() => { 
                     props.setCurrentLocation("disabled") }}
                 >
                     {/* GoogleMapタグの中身=マーカーの見た目について */}
@@ -99,12 +99,30 @@ function Map(props){
                     {/* markerクリックした際のinfoWindo */}
                     {selected ? (
                         <InfoWindow 
+                            className = "info-window"
                             position = {{ lat: parseFloat(selected.latitude), lng: parseFloat(selected.longitude) }}
                             onCloseClick = {() => { setSelected(null) }}
                         >
                             <div>
                                 <h2>{selected.event_name}</h2>
-                                <Image src={selected.img1} alt=""　width={300} height={200}/>
+                                {/* <Image src={selected.img1} alt=""　width={300} height={200}/> */}
+                                <Carousel>
+                                    <Carousel.Item>
+                                        <Image src={selected.img1} alt=""　width={300} height={200}/>
+                                    </Carousel.Item>
+                                    <Carousel.Item>
+                                        <Image src={selected.img2} alt=""　width={300} height={200}/>
+                                    </Carousel.Item>
+                                    <Carousel.Item>
+                                        <Image src={selected.img3} alt=""　width={300} height={200}/>
+                                    </Carousel.Item>
+                                    <Carousel.Item>
+                                        <Image src={selected.img4} alt=""　width={300} height={200}/>
+                                    </Carousel.Item>
+                                    <Carousel.Item>
+                                        <Image src={selected.img5} alt=""　width={300} height={200}/>
+                                    </Carousel.Item>
+                                </Carousel>
                                 <p>{selected.description}</p>
                                 <p>開催期間</p>
                                 <p><span>{selected.start_date}</span> ~ <span>{selected.end_date}</span></p>

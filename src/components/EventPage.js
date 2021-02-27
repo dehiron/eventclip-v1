@@ -1,7 +1,7 @@
 import React, {useState, useEffect} from "react"
 import axios from 'axios';
-import {Button, Row, Col} from 'react-bootstrap';
-
+import {Button, Row, Col, Carousel} from 'react-bootstrap';
+import Image from 'react-image-resizer';
 
 function EventPage(props){
 
@@ -43,7 +43,24 @@ function EventPage(props){
                 <h2>{selectedEvent.event_name}</h2>
                 <Row>
                     <Col>
-                        <img src = {selectedEvent.img1} alt=""/>
+                        {/* <img src = {selectedEvent.img1} alt=""/> */}
+                        <Carousel>
+                            <Carousel.Item>
+                                <Image src={selectedEvent.img1} alt=""　width={500} height={400}/>
+                            </Carousel.Item>
+                            <Carousel.Item>
+                                <Image src={selectedEvent.img2} alt=""　width={500} height={400}/>
+                            </Carousel.Item>
+                            <Carousel.Item>
+                                <Image src={selectedEvent.img3} alt=""　width={500} height={400}/>
+                            </Carousel.Item>
+                            <Carousel.Item>
+                                <Image src={selectedEvent.img4} alt=""　width={500} height={400}/>
+                            </Carousel.Item>
+                            <Carousel.Item>
+                                <Image src={selectedEvent.img5} alt=""　width={500} height={400}/>
+                            </Carousel.Item>
+                        </Carousel>
                     </Col>
                     <Col >
                         <h4><span>{selectedEvent.description}</span></h4>
