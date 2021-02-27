@@ -16,16 +16,9 @@ const min = ["00","30"]
 
 function OwnerPage(props) {
 
-    const [img, setImg] = useState(undefined);
-    function uploadImage(img) {
-        setImg(img);
-    }
+    const time = new Date();
 
-    if (img !== undefined) {
-        saveObject(img);
-        setImg(undefined);
-    }
-
+    //state群
     const [eventName, setEventName] = useState("")
     // const [startDate, setStartDate] = useState("")
     const [startTimeYear, setStartTimeYear] = useState("Year")
@@ -62,20 +55,31 @@ function OwnerPage(props) {
     const [creditCardInfo, setCreditCardInfo] = useState("")
     const [ownerId, setOwnerId] = useState("")
     const [tag, setTag] = useState("")
-    const [img1, setImg1] = useState("https://eventclip.s3-ap-northeast-1.amazonaws.com/noimage.png")
-    const [img2, setImg2] = useState("https://eventclip.s3-ap-northeast-1.amazonaws.com/noimage.png")
-    const [img3, setImg3] = useState("https://eventclip.s3-ap-northeast-1.amazonaws.com/noimage.png")
-    const [img4, setImg4] = useState("https://eventclip.s3-ap-northeast-1.amazonaws.com/noimage.png")
-    const [img5, setImg5] = useState("https://eventclip.s3-ap-northeast-1.amazonaws.com/noimage.png")
+    // オーナーが写真を選ばなければ自動でnoimageの画像になる様に設定
+    const [img1, setImg1] = useState("")
+    const [img2, setImg2] = useState("")
+    const [img3, setImg3] = useState("")
+    const [img4, setImg4] = useState("")
+    const [img5, setImg5] = useState("")
     const [linkToHp, setLinkToHp] = useState("")
-
+    
+    //関数群
     const handleClickToHomePage = () => {
         props.history.goBack();
     }
-
+    async function uploadImage(img){
+        if (img !== undefined　&& img !== ""){
+            await saveObject(img,time);
+            console.log(`imgアップロード成功、S3保存先URL：https://eventclip.s3-ap-northeast-1.amazonaws.com/${time.toISOString()}${img1.name}`)
+        }
+    }
     async function handleRegisterEvent(e){
         e.preventDefault();
         try {
+
+            //Uploadコンポーネントでセットされた画像ファイルをS3にアップロード
+            uploadImage(img1);
+
             //ジオコーディング
             //getGeocode関数の問題（らしい）で時々エラーが返るけどちゃんと機能してる。
             const geoCodeInfo = await getGeocode({address:prefecture+city+addressDetail1+addressDetail2});
@@ -107,7 +111,7 @@ function OwnerPage(props) {
             body.append('credit_card_info', creditCardInfo);
             body.append('owner_id', ownerId);
             body.append('tag', tag);
-            body.append('img1', img1);
+            (img1 === "" || img1 === undefined) ? body.append('img1', "https://eventclip.s3-ap-northeast-1.amazonaws.com/noimage.png") : body.append('img1', "https://eventclip.s3-ap-northeast-1.amazonaws.com/" + time.toISOString() + img1.name);
             body.append('img2', img2);
             body.append('img3', img3);
             body.append('img4', img4);
@@ -208,7 +212,7 @@ function OwnerPage(props) {
                 <li><p>クレジットカード利用可否：<input placeholder="例：可/不可" onChange={e => setCreditCardInfo(e.target.value)}></input></p></li>
                 <li><p>オーナーID：<input placeholder="例：hide_owner" onChange={e => setOwnerId(e.target.value)}></input></p></li>
                 <li><p>オーナーID：<input placeholder="例：['家族と','デートに','お一人様','癒されたい']" onChange={e => setTag(e.target.value)}></input></p></li>
-                <li><p>画像1：<input placeholder="例：" onChange={e => setImg1(e.target.value)}></input></p><Upload uploadImage={uploadImage}/></li>
+                <li><p>画像1：</p><Upload setImg1 = {setImg1}/></li>
                 <li><p>画像2：<input placeholder="例：" onChange={e => setImg2(e.target.value)}></input></p></li>
                 <li><p>画像3：<input placeholder="例：" onChange={e => setImg3(e.target.value)}></input></p></li>
                 <li><p>画像4：<input placeholder="例：" onChange={e => setImg4(e.target.value)}></input></p></li>

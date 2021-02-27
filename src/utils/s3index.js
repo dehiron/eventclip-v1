@@ -53,11 +53,12 @@ export function getSingleObject(key) {
   return getSingleObject;
 }
 
-export function saveObject(file) {
+export function saveObject(file,time) {
+  time = time.toISOString() + file.name;
   const saveObject = new Promise((resolve, reject) => {
     bucket.putObject(
       {
-        Key: file.name,
+        Key: time,
         Body: file,
         ACL: "public-read"
       },
@@ -66,11 +67,9 @@ export function saveObject(file) {
           console.error("error: ", error);
           return;
         }
-
         resolve(data);
       }
     );
   });
-
   return saveObject;
 }
