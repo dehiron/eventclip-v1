@@ -4,7 +4,7 @@ import React, {useState} from "react";
 import axios from 'axios';
 import { getGeocode, getLatLng } from "use-places-autocomplete";
 import './Styles.css';
-import Upload from "./Upload"
+import {Upload1, Upload2, Upload3, Upload4, Upload5,} from "./Upload"
 import { saveObject } from "../utils/s3index.js";
 
 //カレンダーで選べる様にする
@@ -56,6 +56,7 @@ function OwnerPage(props) {
     const [ownerId, setOwnerId] = useState("")
     const [tag, setTag] = useState("")
     // オーナーが写真を選ばなければ自動でnoimageの画像になる様に設定
+    // 注意：オーナーがまとめてアップロードできる様に、リファクタリング必要
     const [img1, setImg1] = useState("")
     const [img2, setImg2] = useState("")
     const [img3, setImg3] = useState("")
@@ -70,7 +71,7 @@ function OwnerPage(props) {
     async function uploadImage(img){
         if (img !== undefined　&& img !== ""){
             await saveObject(img,time);
-            console.log(`imgアップロード成功、S3保存先URL：https://eventclip.s3-ap-northeast-1.amazonaws.com/${time.toISOString()}${img1.name}`)
+            console.log(`imgアップロード成功、S3保存先URL：https://eventclip.s3-ap-northeast-1.amazonaws.com/${time.toISOString()}${img.name}`)
         }
     }
     async function handleRegisterEvent(e){
@@ -78,7 +79,8 @@ function OwnerPage(props) {
         try {
 
             //Uploadコンポーネントでセットされた画像ファイルをS3にアップロード
-            uploadImage(img1);
+            //注意：オーナーがまとめてアップロードできる様に、リファクタリング必要
+            [img1,img2,img3,img4,img5].map((img) => uploadImage(img))
 
             //ジオコーディング
             //getGeocode関数の問題（らしい）で時々エラーが返るけどちゃんと機能してる。
@@ -112,10 +114,10 @@ function OwnerPage(props) {
             body.append('owner_id', ownerId);
             body.append('tag', tag);
             (img1 === "" || img1 === undefined) ? body.append('img1', "https://eventclip.s3-ap-northeast-1.amazonaws.com/noimage.png") : body.append('img1', "https://eventclip.s3-ap-northeast-1.amazonaws.com/" + time.toISOString() + img1.name);
-            body.append('img2', img2);
-            body.append('img3', img3);
-            body.append('img4', img4);
-            body.append('img5', img5);
+            (img2 === "" || img2 === undefined) ? body.append('img2', "https://eventclip.s3-ap-northeast-1.amazonaws.com/noimage.png") : body.append('img2', "https://eventclip.s3-ap-northeast-1.amazonaws.com/" + time.toISOString() + img2.name);
+            (img3 === "" || img3 === undefined) ? body.append('img3', "https://eventclip.s3-ap-northeast-1.amazonaws.com/noimage.png") : body.append('img3', "https://eventclip.s3-ap-northeast-1.amazonaws.com/" + time.toISOString() + img3.name);
+            (img4 === "" || img4 === undefined) ? body.append('img4', "https://eventclip.s3-ap-northeast-1.amazonaws.com/noimage.png") : body.append('img4', "https://eventclip.s3-ap-northeast-1.amazonaws.com/" + time.toISOString() + img4.name);
+            (img5 === "" || img5 === undefined) ? body.append('img5', "https://eventclip.s3-ap-northeast-1.amazonaws.com/noimage.png") : body.append('img5', "https://eventclip.s3-ap-northeast-1.amazonaws.com/" + time.toISOString() + img5.name);
             body.append('link_to_hp', linkToHp);
             
             await axios.post('/api/event/name', body)
@@ -212,11 +214,11 @@ function OwnerPage(props) {
                 <li><p>クレジットカード利用可否：<input placeholder="例：可/不可" onChange={e => setCreditCardInfo(e.target.value)}></input></p></li>
                 <li><p>オーナーID：<input placeholder="例：hide_owner" onChange={e => setOwnerId(e.target.value)}></input></p></li>
                 <li><p>オーナーID：<input placeholder="例：['家族と','デートに','お一人様','癒されたい']" onChange={e => setTag(e.target.value)}></input></p></li>
-                <li><p>画像1：</p><Upload setImg1 = {setImg1}/></li>
-                <li><p>画像2：<input placeholder="例：" onChange={e => setImg2(e.target.value)}></input></p></li>
-                <li><p>画像3：<input placeholder="例：" onChange={e => setImg3(e.target.value)}></input></p></li>
-                <li><p>画像4：<input placeholder="例：" onChange={e => setImg4(e.target.value)}></input></p></li>
-                <li><p>画像5：<input placeholder="例：" onChange={e => setImg5(e.target.value)}></input></p></li>
+                <li><p>画像1：</p><Upload1 setImg1 = {setImg1}/></li>
+                <li><p>画像2：</p><Upload2 setImg2 = {setImg2}/></li>
+                <li><p>画像3：</p><Upload3 setImg3 = {setImg3}/></li>
+                <li><p>画像4：</p><Upload4 setImg4 = {setImg4}/></li>
+                <li><p>画像5：</p><Upload5 setImg5 = {setImg5}/></li>
                 <li><p>公式HPリンク：<input placeholder="例：XXXXXXXX.com" onChange={e => setLinkToHp(e.target.value)}></input></p></li>
             </ul>
             <button onClick={handleRegisterEvent}>イベント登録</button>
