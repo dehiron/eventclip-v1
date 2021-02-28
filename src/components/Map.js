@@ -15,7 +15,6 @@ import Image from 'react-image-resizer';
 //componentsのインポート
 import AddressSearchBar from "./AddressSearchBar";
 import CurrentLocator from "./CurrentLocator";
-import { getSuggestedQuery } from "@testing-library/react";
 //componentsのインポート
 require('dotenv').config();
 
@@ -35,6 +34,10 @@ const options = {
     disableDefaultUI: true,
     zoomControl: true,
     gestureHandling: 'greedy'
+};
+const optionsInfoWindow = {
+    maxWidth: 330,
+    
 };
 //******defining variables, for use of google map component
 
@@ -57,9 +60,11 @@ function Map(props){
     },[])
     //******for use of google map component
 
+    //******イベント単体ページに飛ぶための関数
     const handleClickToEventPage = (id) => {
         props.history.push(`/event/${id}`);
     }
+    //******イベント単体ページに飛ぶための関数
 
     //元々isLoadedとloadErrorがあった場所
     return(
@@ -103,6 +108,7 @@ function Map(props){
                         <InfoWindow 
                             className = "info-window"
                             position = {{ lat: parseFloat(selected.latitude), lng: parseFloat(selected.longitude) }}
+                            options = {optionsInfoWindow}
                             onCloseClick = {() => { setSelected(null) }}
                         >
                             <div>
