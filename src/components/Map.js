@@ -16,7 +16,6 @@ import Image from 'react-image-resizer';
 //componentsのインポート
 import AddressSearchBar from "./AddressSearchBar";
 import CurrentLocator from "./CurrentLocator";
-import OwnerPage from "./OwnerPage";
 //componentsのインポート
 require('dotenv').config();
 
@@ -72,7 +71,6 @@ function Map(props){
     }
     //******イベント単体ページに飛ぶための関数
 
-    //元々isLoadedとloadErrorがあった場所
     return(
         <div className = "map">
             <AddressSearchBar panTo = { panTo } selectedLocation = {props.selectedLocation}/>
@@ -92,79 +90,74 @@ function Map(props){
                     props.setCurrentLocation("disabled") }}
                 >
                     {/* GoogleMapタグの中身=マーカーの見た目について */}
-
                     <MarkerClusterer options={optionsForMarkerCluster}>
-
-                        {(clusterer) => 
-                            props.events.map((event) => (
-                                <Marker
-                                    key = {event.event_name}
-                                    clusterer = {clusterer}
-                                    position = {{ lat: parseFloat(event.latitude), lng: parseFloat(event.longitude) }}
-                                    icon={{
-                                        url: `/bluepin.svg`,
-                                        // origin: new window.google.maps.Point(0,0),
-                                        // anchor: new window.google.maps.Point(15,15),
-                                        scaledSize: new window.google.maps.Size(35,35)
+                        {(clusterer) => {
+                            return (
+                                props.events.map((event) => (
+                                    
+                                    <Marker
+                                        key = {event.event_name}
+                                        clusterer = {clusterer}
+                                        position = {{ lat: parseFloat(event.latitude), lng: parseFloat(event.longitude) }}
+                                        icon={{
+                                            url: `/bluepin.svg`,
+                                            // origin: new window.google.maps.Point(0,0),
+                                            // anchor: new window.google.maps.Point(15,15),
+                                            scaledSize: new window.google.maps.Size(35,35)
+                                        }}
+                                        animation = {window.google.maps.Animation.DROP}
+                                        onClick = {async () => {
+                                            setSelected(event);
+                                        }}
+                                    /> 
+                                ))
+                            );  
+                        }}
+                    </MarkerClusterer>
+                    {/* MarkerClustererとInfoWindowを同列にする必要がある */}
+                    {selected ? (
+                        <InfoWindow 
+                            className = "info-window"
+                            position = {{ lat: parseFloat(selected.latitude), lng: parseFloat(selected.longitude) }}
+                            options = {optionsInfoWindow}
+                            onCloseClick = {() => { setSelected(null) }}
+                        >
+                            <div>
+                                <h2>{selected.event_name}</h2>
+                                {/* <Image src={selected.img1} alt=""　width={300} height={200}/> */}
+                                <Carousel>
+                                    <Carousel.Item>
+                                        <Image src={selected.img1} alt=""　width={300} height={200}/>
+                                    </Carousel.Item>
+                                    <Carousel.Item>
+                                        <Image src={selected.img2} alt=""　width={300} height={200}/>
+                                    </Carousel.Item>
+                                    <Carousel.Item>
+                                        <Image src={selected.img3} alt=""　width={300} height={200}/>
+                                    </Carousel.Item>
+                                    <Carousel.Item>
+                                        <Image src={selected.img4} alt=""　width={300} height={200}/>
+                                    </Carousel.Item>
+                                    <Carousel.Item>
+                                        <Image src={selected.img5} alt=""　width={300} height={200}/>
+                                    </Carousel.Item>
+                                </Carousel>
+                                <p>{selected.description}</p>
+                                <p>開催期間</p>
+                                <p><span>{selected.start_date}</span> ~ <span>{selected.end_date}</span></p>
+                                <p>開催時間</p>
+                                <p><span>{selected.start_time}</span> ~ <span>{selected.end_time}</span></p>
+                                <Button 
+                                    variant="primary" 
+                                    onClick = {()=> {
+                                        handleClickToEventPage(selected.id)
                                     }}
-                                    animation = {window.google.maps.Animation.DROP}
-                                    onClick = {() => {
-                                        setSelected(event);
-                                        console.log(event.id);
-                                        handleClickToEventPage(event.id);
-                                    }}
-                                />
-                            ))
-                        }
-                        
-                        {/* {(()=>{
-                            if (selected !== null){
-                                return (
-                                    <InfoWindow 
-                                        className = "info-window"
-                                        position = {{ lat: parseFloat(selected.latitude), lng: parseFloat(selected.longitude) }}
-                                        options = {optionsInfoWindow}
-                                        onCloseClick = {() => { setSelected(null) }}
-                                    >
-                                    <div>
-                                        <h2>{selected.event_name}</h2>
-                                        <Carousel>
-                                            <Carousel.Item>
-                                                <Image src={selected.img1} alt=""　width={300} height={200}/>
-                                            </Carousel.Item>
-                                            <Carousel.Item>
-                                                <Image src={selected.img2} alt=""　width={300} height={200}/>
-                                            </Carousel.Item>
-                                            <Carousel.Item>
-                                                <Image src={selected.img3} alt=""　width={300} height={200}/>
-                                            </Carousel.Item>
-                                            <Carousel.Item>
-                                                <Image src={selected.img4} alt=""　width={300} height={200}/>
-                                            </Carousel.Item>
-                                            <Carousel.Item>
-                                                <Image src={selected.img5} alt=""　width={300} height={200}/>
-                                            </Carousel.Item>
-                                        </Carousel>
-                                        <p>{selected.description}</p>
-                                        <p>開催期間</p>
-                                        <p><span>{selected.start_date}</span> ~ <span>{selected.end_date}</span></p>
-                                        <p>開催時間</p>
-                                        <p><span>{selected.start_time}</span> ~ <span>{selected.end_time}</span></p>
-                                        <Button 
-                                            variant="primary" 
-                                            onClick = {()=> {
-                                                handleClickToEventPage(selected.id)
-                                            }}
-                                        >
-                                            詳細を見る
-                                        </Button>
-                                    </div>
-                                    </InfoWindow>
-                                )
-                            } 
-                        })()} */}
-
-                </MarkerClusterer>
+                                >
+                                    詳細を見る
+                                </Button>
+                            </div>
+                        </InfoWindow>
+                    ) : null}
             </GoogleMap>
             </div>
             </div>
@@ -172,50 +165,3 @@ function Map(props){
 };
 
 export default withRouter(Map);
-
-
-
-
-// {selected ? (
-//     <InfoWindow 
-//         className = "info-window"
-//         position = {{ lat: parseFloat(selected.latitude), lng: parseFloat(selected.longitude) }}
-//         options = {optionsInfoWindow}
-//         onCloseClick = {() => { setSelected(null) }}
-//     >
-//         <div>
-//             <h2>{selected.event_name}</h2>
-//             {/* <Image src={selected.img1} alt=""　width={300} height={200}/> */}
-//             <Carousel>
-//                 <Carousel.Item>
-//                     <Image src={selected.img1} alt=""　width={300} height={200}/>
-//                 </Carousel.Item>
-//                 <Carousel.Item>
-//                     <Image src={selected.img2} alt=""　width={300} height={200}/>
-//                 </Carousel.Item>
-//                 <Carousel.Item>
-//                     <Image src={selected.img3} alt=""　width={300} height={200}/>
-//                 </Carousel.Item>
-//                 <Carousel.Item>
-//                     <Image src={selected.img4} alt=""　width={300} height={200}/>
-//                 </Carousel.Item>
-//                 <Carousel.Item>
-//                     <Image src={selected.img5} alt=""　width={300} height={200}/>
-//                 </Carousel.Item>
-//             </Carousel>
-//             <p>{selected.description}</p>
-//             <p>開催期間</p>
-//             <p><span>{selected.start_date}</span> ~ <span>{selected.end_date}</span></p>
-//             <p>開催時間</p>
-//             <p><span>{selected.start_time}</span> ~ <span>{selected.end_time}</span></p>
-//             <Button 
-//                 variant="primary" 
-//                 onClick = {()=> {
-//                     handleClickToEventPage(selected.id)
-//                 }}
-//             >
-//                 詳細を見る
-//             </Button>
-//         </div>
-//     </InfoWindow>
-// ) : null}
