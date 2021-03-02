@@ -160,7 +160,7 @@ function Map(props){
                     ) : null}
             </GoogleMap>
             </div>
-            </div>
+        </div>
     )
 };
 
