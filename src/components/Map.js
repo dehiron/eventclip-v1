@@ -23,7 +23,7 @@ require('dotenv').config();
 
 const mapContainerStyle = {
     // width: '100vw', //これがあるとbootstrapのグリッドが正常に機能しない
-    height: "82vh", //改良の余地あり。Styles.cssのnavbar min-heightと関連してる。
+    height: "70vh", //改良の余地あり。Styles.cssのnavbar min-heightと関連してる。
 };
 const center = {
     lat: 38.204306,

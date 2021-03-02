@@ -1,5 +1,5 @@
 //Component
-import { Container, Col, Button, Form, InputGroup} from 'react-bootstrap';
+import { Container, Col, Row, Button, Form, InputGroup} from 'react-bootstrap';
 import { useState} from 'react';
 import axios from 'axios';
 
@@ -25,8 +25,8 @@ function Filters(props){
 
     return (
         <Form className="filters-container">
-            <Col>
-                <Col md>
+            <Row>
+                <Col md={{span:5}}>
                   <Form.Group>
                     <Form.Label>ロケーションで検索</Form.Label>
                     <InputGroup>
@@ -51,7 +51,7 @@ function Filters(props){
                     </InputGroup>
                   </Form.Group>
                 </Col>
-                <Col md>
+                <Col md={{span:4}}>
                   <Form.Group>
                     <Form.Label>日時で検索</Form.Label>
                     <Form.Control 
@@ -59,7 +59,7 @@ function Filters(props){
                         type="date" />
                   </Form.Group>
                 </Col>
-                <Col md>
+                <Col md={{span:3}}>
                   <Form.Group>
                     <Form.Label>ジャンルで検索</Form.Label>
                     {/* ハードコーディング。最終的にはevent.categoryに置き換える */}
@@ -87,19 +87,22 @@ function Filters(props){
                     ))}
                   </Form.Group>
                 </Col>
-            </Col>
-            <Container style={{display:"flex"}}>    
-            <Button 
-                onClick={()=>{ 
-                    props.setSelectedLocation(locationCandidate); // Mapコンポーネントに渡したAPIとは関係なしにauto focusする
-                    props.setCurrentLocation("disabled"); //ロケーション検索した場合は一度現在地取得用のstateを更新、次回また現在地取得ができる様にする
-                    handleClickFetchFilteredEvent();　// こっちで検索結果に基づいたAPIが走る
-                }} 
-                variant="secondary" 
-                style={{marginLeft: "auto"}}>
-                    検索
-            </Button>
+            </Row>
+            
+            <Container className="search-button-wrapper">    
+                <Button 
+                    className = "search-button"
+                    onClick={()=>{ 
+                        props.setSelectedLocation(locationCandidate); // Mapコンポーネントに渡したAPIとは関係なしにauto focusする
+                        props.setCurrentLocation("disabled"); //ロケーション検索した場合は一度現在地取得用のstateを更新、次回また現在地取得ができる様にする
+                        handleClickFetchFilteredEvent();　// こっちで検索結果に基づいたAPIが走る
+                    }} 
+                    variant="secondary">
+                        検索
+                </Button>
             </Container>
+            
+            
             
         </Form>
     )

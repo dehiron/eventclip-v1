@@ -25,17 +25,24 @@
 .filters-container {
     position: relative;
     margin-top: 7rem;
-    padding-top: 1rem;
-    padding-bottom: 1rem;
+    padding-top: 0.5rem;
     overflow-y: scroll;
-    border: 1px solid skyblue;
+    /* border: 1px solid skyblue; */
+}
+
+.search-button-wrapper {
+    text-align: center;
+}
+
+.search-button {
+    width: 70%;
 }
 
 .listed-event-container {
     position: relative;
-    margin-top: 7rem;
+    margin-top: 1rem;
     overflow-y: scroll;
-    height: 82vh;
+    height: 70vh;
     /* border: 1px solid blue; */
 }
 
@@ -45,7 +52,7 @@
 
 .map {
     position: relative;
-    margin-top: 7rem;
+    margin-top: 1rem;
 }
 
 /* メディアクエリ */
