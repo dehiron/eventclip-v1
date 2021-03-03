@@ -15,7 +15,8 @@ exports.up = async function(knex) {
         table.increments()
         table.string('owner_id').notNullable();
         table.string('password').notNullable();
-        table.string('owner_name').notNullable();
+        table.string('owner_firstname').notNullable();
+        table.string('owner_lastname').notNullable();
         table.string('date_of_birth').notNullable();
         table.string('tel').notNullable();
         table.string('email').notNullable();
