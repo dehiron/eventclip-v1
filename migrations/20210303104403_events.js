@@ -35,7 +35,7 @@ exports.up = async function(knex) {
         table.text('park_price');
         table.text('price_detail');
         table.string('credit_card_info');
-        table.integer('owner_id').references('id').inTable('owners'); //ownersテーブルの[owner_id]ではなく[id]を参照しているので注意。
+        table.integer('owner_id').references('id').inTable('owners').onDelete('CASCADE').index(); //ownersテーブルの[owner_id]ではなく[id]を参照しているので注意。
         table.specificType('tag','text Array');
         table.string('img1').notNullable().defaultTo('https://eventclip.s3-ap-northeast-1.amazonaws.com/garden2.jpg')
         table.string('img2').notNullable().defaultTo('https://eventclip.s3-ap-northeast-1.amazonaws.com/noimage.png')

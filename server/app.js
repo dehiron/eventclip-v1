@@ -17,10 +17,15 @@ app.get("/api", (req,res) => {
     res.send("We did it!")
 })
 
-//動くけど、API実装方法違うかもしれない。検索後にURLが変わらないことによる弊害はないか注意しておく。
+//注意：eventsとownersの順番が逆で気持ち悪いが動く
+//注意：leftJoinを使うべきなのかinnerJoinを使うべきなのか
 //イベント情報Get用(all, filtered)
 app.get("/api/events", (req,res) => {
-    database("events").select().then((events) => {        
+    database.select("*")
+    .from("owners")
+    .leftJoin("events","owners.id","events.owner_id")
+    // .where({"owners.id":1})
+    .then((events) => {
         
         if (Object.keys(req.query).length > 0) { //日付が選択された場合 or ジャンルが選択された場合
             if (Object.keys(req.query).includes("date")){ //該当する日付を持つイベントを抽出
@@ -46,6 +51,7 @@ app.get("/api/events", (req,res) => {
                 
             }
         }
+        // console.log("line50",events)
         res.send(events);
     });
 });

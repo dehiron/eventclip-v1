@@ -13,7 +13,7 @@ exports.up = async function(knex) {
 
     await knex.schema.createTable('owners', table => {
         table.increments()
-        table.string('owner_id').notNullable();
+        table.string('owner_pref_id').notNullable();
         table.string('password').notNullable();
         table.string('owner_firstname').notNullable();
         table.string('owner_lastname').notNullable();

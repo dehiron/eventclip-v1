@@ -27,7 +27,7 @@ function EventPage(props){
 
     for (const event of events){
         if (event.id.toString() === props.match.params.id){
-            selectedEvent = event
+            selectedEvent = event;
         }
     }
 
@@ -80,8 +80,11 @@ function EventPage(props){
                 <h6>料金情報：<span>{selectedEvent.price_detail}</span></h6>
                 <h6>駐車場情報：<span>{selectedEvent.park_spots}</span> <span>{selectedEvent.park_price}</span></h6>
                 <h6>詳細住所：<span>{selectedEvent.address}</span></h6>
+                <h6>詳細施設：<span>{selectedEvent.facility_name}</span></h6>
                 <h6>電話番号：<span>{selectedEvent.tel}</span></h6>
+                <h6>主催：<span>{selectedEvent.organization}</span></h6>
                 <Button variant="primary" >予約する</Button>
+
 
             </Col>
             
