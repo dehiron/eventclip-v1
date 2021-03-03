@@ -41,7 +41,9 @@ function Header (props){
     const handleClickToEventsPage = () => {
         props.history.push("/events");
     }
-    
+    const handleClickToLoginPage = () => {
+        props.history.push("/login");
+    }
 
 
     return(
@@ -69,7 +71,7 @@ function Header (props){
                 </Nav> */}
                 <Nav>
                     <Nav.Item>
-                        <Nav.Link onClick={ null }>ログイン/新規登録</Nav.Link>
+                        <Nav.Link onClick={ handleClickToLoginPage }>ログイン/新規登録</Nav.Link>
                     </Nav.Item>
                 </Nav>
             </Navbar.Collapse>

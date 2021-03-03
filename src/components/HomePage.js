@@ -41,9 +41,11 @@ function HomePage(props) {
 
   //displaying contents
   if (isLoading){
-    return <div className="loading-img">
-      <img src="loading.gif" alt=""/>
+    return (
+    <div className="loading-img" style={{position:"relative"}}>
+        <img src="loading.gif" alt="" />
     </div>
+    )
   } 
   return (
     <Container fluid> {/* ここをfluidにしないと変な余白が生まれる */} 
