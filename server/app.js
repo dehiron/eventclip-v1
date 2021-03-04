@@ -94,7 +94,7 @@ app.post("/api/event/name", (req, res) => {
     database("events")
         .count('id')
         .where({
-            event_name:eventName,})
+            event_name:eventName})
         .then(result => {
                 if (result[0].count === '0'){
                     database("events")
@@ -128,11 +128,55 @@ app.post("/api/event/name", (req, res) => {
                             img3: img3,
                             img4: img4,
                             img5: img5,
-                            link_to_hp: linkToHp
+                            link_to_hp: linkToHp,
+                            created_at: new Date(),
+                            updated_at: new Date(),
                         })
                         .then(res => console.log("success"))
                     } else {
                         console.log("event already registered")
+                    }
+        })
+})
+
+//新規オーナー登録用
+app.post("/api/owner/id", (req, res) => {
+    const ownerData = req.body;
+
+    const ownerFirstName = ownerData.owner_firstname;
+    const ownerLastName = ownerData.owner_lastname;
+    const ownerTel = ownerData.owner_tel;
+    const ownerEmail = ownerData.owner_email;
+    const ownerPrefId = ownerData.owner_pref_id;
+    const ownerPassword = ownerData.owner_password;
+    const dateOfBirth = ownerData.date_of_birth;
+    const organization = ownerData.organization;
+
+    database("owners")
+        .count('id')
+        .where({
+            owner_pref_id:ownerPrefId})
+        .then(
+            result => {
+                if (result[0].count === '0'){
+                    database("owners")
+                        .insert({
+                            owner_firstname: ownerFirstName,
+                            owner_lastname: ownerLastName,
+                            tel: ownerTel,
+                            email: ownerEmail,
+                            owner_pref_id: ownerPrefId,
+                            password: ownerPassword,
+                            date_of_birth: dateOfBirth,
+                            organization: organization,
+                            created_at: new Date() ,
+                            updated_at: new Date() ,
+                        })
+                        .then(res => {
+                            console.log(`success! owner_id:${ownerPrefId} is created`)
+                        })
+                    } else {
+                        console.log("owner already exists")
                     }
         })
 })

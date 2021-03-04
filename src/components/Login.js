@@ -24,11 +24,11 @@ function Login(props){
                         <Form.Control type="password" />
                         </Form.Group>
                     </Col>
-                    <Button style={{ borderColor:"turquoise", backgroundColor:"darkturquoise", width:"80%", marginTop:"2rem" }}>ログイン</Button>
+                    <Button style={{ borderColor:"turquoise", backgroundColor:"darkturquoise", width:"80%", padding:"0.5rem", marginTop:"2rem" }}>ログイン</Button>
                 </Form>
             </Container>
             <h4 style={{margin:"2.5rem"}}>アカウントをお持ちでない方はこちら</h4>
-            <h4 style={{color:"darkturquoise", backgroundColor:"white", padding:"0.5rem", borderRadius:"5px", width:"30%"}}>新規登録</h4>
+            <Button style={{color:"darkturquoise", borderColor:"white", backgroundColor:"white", width:"30%", padding:"0.5rem", borderRadius:"5px" }}>新規登録</Button>
             </header>
         </div>
     )

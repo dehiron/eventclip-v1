@@ -1,13 +1,19 @@
-import { Container, Form, Col, Button } from 'react-bootstrap';
-import './Styles.css'
-import HeaderOwnerLoginPage from './HeaderOwnerLoginPage'
+import { useState } from 'react';
+import { Container, Form, Col, Button} from 'react-bootstrap';
+import './Styles.css';
+import HeaderOwnerLoginPage from './HeaderOwnerLoginPage';
+import OwnerSignupForm from './OwnerSignupForm';
 
 
 function OwnerLogin(props){
+
+    const [signupShow, setSignupShow] = useState(false)
+    
+
     return(
         <div className="App">
             <HeaderOwnerLoginPage />
-            <header className="App-header" style={{minHeight:"100vh", position:"relative", backgroundColor:"black"}}>
+            <header className="App-header" style={{minHeight:"100vh", position:"relative", backgroundColor:"#333333"}}>
             <img src="../logo.png" alt="logo" style={{ marginBottom: "0rem"}}/>
             <h3 style={{ marginTop: "1rem", marginBottom: "1rem", color:"darkturquoise"}}>ログイン</h3>
             <Container className = "login-window" style={{width:"50%"}}>
@@ -28,8 +34,11 @@ function OwnerLogin(props){
                 </Form>
             </Container>
             <h4 style={{margin:"2.5rem"}}>アカウントをお持ちでない方はこちら</h4>
-            <h4 style={{color:"darkturquoise", backgroundColor:"white", padding:"0.5rem", borderRadius:"5px", width:"30%"}}>新規登録</h4>
+            <Button onClick={()=> setSignupShow(true)} style={{color:"darkturquoise", borderColor:"white", backgroundColor:"white", width:"30%", padding:"0.5rem", borderRadius:"5px" }}>新規登録</Button>
             </header>
+
+            <OwnerSignupForm signupShow = {signupShow} setSignupShow = {setSignupShow}/>
+
         </div>
     )
 }

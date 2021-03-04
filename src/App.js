@@ -6,6 +6,7 @@ import EventsPage from "./components/EventsPage";
 import EventPage from "./components/EventPage";
 import Login from "./components/Login";
 import OwnerLogin from "./components/OwnerLogin";
+import Signup from "./components/Signup";
 
 function App() {
 
@@ -33,6 +34,10 @@ function App() {
           <Route
             exact path={'/login'}
             render = {props => (<Login {...props}/>)}
+          />
+          <Route
+            exact path={'/signup'}
+            render = {props => (<Signup {...props}/>)}
           />
           <Route
             exact path={'/ownerlogin'}

@@ -17,10 +17,10 @@ exports.up = async function(knex) {
         table.string('password').notNullable();
         table.string('owner_firstname').notNullable();
         table.string('owner_lastname').notNullable();
-        table.string('date_of_birth').notNullable();
+        table.string('date_of_birth');
         table.string('tel').notNullable();
         table.string('email').notNullable();
-        table.string('organization').notNullable();
+        table.string('organization');
         table.timestamp('created_at').defaultTo( year + '-' + month + '-' + day + ' ' + hour + ':' + min + ':' + sec )
         table.timestamp('updated_at').defaultTo( year + '-' + month + '-' + day + ' ' + hour + ':' + min + ':' + sec )
   })
