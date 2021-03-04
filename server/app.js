@@ -140,7 +140,7 @@ app.post("/api/event/name", (req, res) => {
 })
 
 //新規オーナー登録用
-app.post("/api/owner/id", (req, res) => {
+app.post("/api/owner/register", (req, res) => {
     const ownerData = req.body;
 
     const ownerFirstName = ownerData.owner_firstname;
@@ -179,6 +179,46 @@ app.post("/api/owner/id", (req, res) => {
                         console.log("owner already exists")
                     }
         })
+})
+
+//オーナーログイン用
+app.post("/api/owner/login", (req, res) => {
+    const ownerData = req.body;
+
+    const inputOwnerPrefId = ownerData.input_owner_pref_id;
+    const inputPassword = ownerData.input_password;
+
+    const a = [];
+
+    async function test(id,pass){
+        await database("owners")
+        .count('id')
+        .where({owner_pref_id:id})
+        .then(result => {
+            a.push(result[0].count);
+        });
+
+        if (parseFloat(a) !== 0){
+            database("owners")
+            .select()
+            .where({owner_pref_id:id})
+            .then(result => {
+                if (result[0].password === pass){
+                    res.sendStatus(200)
+                } else {
+                    res.sendStatus(401)
+                }
+            })
+        } else {
+            res.sendStatus(204)
+        }
+
+    };
+
+    test(inputOwnerPrefId,inputPassword)
+
+    
+        
 })
 
 //イベント更新用

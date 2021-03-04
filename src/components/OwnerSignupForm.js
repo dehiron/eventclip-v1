@@ -37,7 +37,7 @@ function OwnerSignupForm(props){
             body.append("date_of_birth", ownerDobYear+"-"+ownerDobMonth+"-"+ownerDobDay);
             body.append("organization", ownerOrganization);
             
-            await axios.post('/api/owner/id', body)
+            await axios.post('/api/owner/register', body)
             .then((response) => console.log(response));
         } catch(error){
             console.log(error);

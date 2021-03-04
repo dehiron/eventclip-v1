@@ -24,6 +24,8 @@ function HomePage(props) {
   const [selectedLocation, setSelectedLocation] = useState(""); //for filters component(find location)
   const [currentLocation, setCurrentLocation] = useState(""); //for filters component(get current location) 
   const [mapOrList, setMapOrList] = useState("Mapで表示");
+  // const [isLoggedInAsOwner, setIsLoggedInAsOwner] = useState(false);
+
 
   useEffect(()=>{
     const fetchData = async () => {
@@ -51,7 +53,7 @@ function HomePage(props) {
     <Container fluid> {/* ここをfluidにしないと変な余白が生まれる */} 
         <Col>
 
-        <Header mapOrList={mapOrList} setMapOrList={setMapOrList}/>
+        <Header mapOrList={mapOrList} setMapOrList={setMapOrList} />
           
         <Filters 
           setSelectedLocation={setSelectedLocation}

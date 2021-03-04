@@ -1,15 +1,37 @@
 import { useState } from 'react';
 import { Container, Form, Col, Button} from 'react-bootstrap';
+import axios from 'axios';
 import './Styles.css';
 import HeaderOwnerLoginPage from './HeaderOwnerLoginPage';
 import OwnerSignupForm from './OwnerSignupForm';
-
+import { withRouter } from 'react-router-dom';
 
 function OwnerLogin(props){
 
-    const [signupShow, setSignupShow] = useState(false)
-    
+    const [signupShow, setSignupShow] = useState(false);
+    const [inputOwnerPrefId, setInputOwnerPrefId] = useState(false);
+    const [inputPassword, setInputPassword] = useState(false);
 
+    async function handleClickToLogin(e){
+        e.preventDefault();
+        try{
+            const body = new FormData();
+            body.append("input_owner_pref_id", inputOwnerPrefId);
+            body.append("input_password", inputPassword);
+            
+            await axios.post('/api/owner/login', body)
+            .then(response => {
+                if(response.status === 200){
+                    props.history.replace("/")
+                } else {
+                    console.log(response.status)
+                }
+            })
+        } catch(error){
+            console.log(error)
+        }
+    }
+    
     return(
         <div className="App">
             <HeaderOwnerLoginPage />
@@ -21,16 +43,21 @@ function OwnerLogin(props){
                     <Col md>
                         <Form.Group controlId="formEmail" >
                         <Form.Label >メールアドレスまたはユーザー名</Form.Label>
-                        <Form.Control type="email" />
+                        <Form.Control type="email" onChange={(e)=>{setInputOwnerPrefId(e.target.value)}}/>
                         </Form.Group>
                     </Col>
                     <Col md>
                         <Form.Group controlId="formPassword" >
                         <Form.Label className="login-input">パスワード</Form.Label>
-                        <Form.Control type="password" />
+                        <Form.Control type="password" onChange={(e)=>{setInputPassword(e.target.value)}}/>
                         </Form.Group>
                     </Col>
-                    <Button style={{ borderColor:"turquoise", backgroundColor:"darkturquoise", width:"80%", marginTop:"2rem" }}>ログイン</Button>
+                    <Button 
+                        style={{ borderColor:"turquoise", backgroundColor:"darkturquoise", width:"80%", marginTop:"2rem" }} 
+                        onClick={ handleClickToLogin }
+                    >
+                        ログイン
+                    </Button>
                 </Form>
             </Container>
             <h4 style={{margin:"2.5rem"}}>アカウントをお持ちでない方はこちら</h4>
@@ -41,6 +68,7 @@ function OwnerLogin(props){
 
         </div>
     )
+    
 }
 
-export default OwnerLogin;
+export default withRouter(OwnerLogin);

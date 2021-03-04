@@ -71,7 +71,7 @@ function Header (props){
                 </Nav> */}
                 <Nav>
                     <Nav.Item>
-                        <Nav.Link onClick={ handleClickToLoginPage }>ログイン/新規登録</Nav.Link>
+                        <Nav.Link onClick={ handleClickToLoginPage } >ログイン/新規登録</Nav.Link>
                     </Nav.Item>
                 </Nav>
             </Navbar.Collapse>
