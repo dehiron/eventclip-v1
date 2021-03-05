@@ -1,7 +1,5 @@
 //注意：オーナーがまとめてアップロードできる様に、リファクタリング必要
 
-
-
 function Upload1(props){
     return(
         <div className="file-upload">

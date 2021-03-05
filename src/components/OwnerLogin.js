@@ -2,8 +2,8 @@ import { useState } from 'react';
 import { Container, Form, Col, Button} from 'react-bootstrap';
 import axios from 'axios';
 import './Styles.css';
-import HeaderOwnerLoginPage from './HeaderOwnerLoginPage';
-import OwnerSignupForm from './OwnerSignupForm';
+import HeaderOwnerLoginPage from './headers/HeaderOwnerLoginPage';
+import OwnerSignup from './OwnerSignup';
 import { withRouter } from 'react-router-dom';
 
 function OwnerLogin(props){
@@ -64,7 +64,7 @@ function OwnerLogin(props){
             <Button onClick={()=> setSignupShow(true)} style={{color:"darkturquoise", borderColor:"white", backgroundColor:"white", width:"30%", padding:"0.5rem", borderRadius:"5px" }}>新規登録</Button>
             </header>
 
-            <OwnerSignupForm signupShow = {signupShow} setSignupShow = {setSignupShow}/>
+            <OwnerSignup signupShow = {signupShow} setSignupShow = {setSignupShow}/>
 
         </div>
     )

@@ -1,6 +1,6 @@
 import { Container, Form, Col, Button} from 'react-bootstrap';
 import './Styles.css'
-import HeaderLoginPage from './HeaderLoginPage'
+import HeaderLoginPage from './headers/HeaderLoginPage'
 
 
 function Login(props){
