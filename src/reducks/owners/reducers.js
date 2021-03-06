@@ -12,6 +12,11 @@ function OwnersReducer(state = initialState.owners, action){
                 //上書きの概念に気をつける。...stateを書く理由。
                 //actionから渡されてないステートに関しては、現在のストアの状態＝...stateのままでいいという指向が取り入れられてる。
             }
+        case Actions.SIGN_OUT:
+            return {
+                ...state,
+                ...action.payload
+            }
         default:
             return state
     };

@@ -6,7 +6,7 @@ import { useSelector } from 'react-redux';
 
 function Header (props){
 
-    const selector = useSelector((state) => state)
+    const selector = useSelector((state) => state);
 
     const handleClickToOwnerPage = () => {
         props.history.push("/owner");
@@ -42,13 +42,19 @@ function Header (props){
                 </Nav>
                 <Nav>
                     {(()=>{
-                        if (selector.owners.owner_pref_id !== ""){
+                        if (selector.owners.isSignedIn){
                             return (
                                 <Nav.Item>
-                                    <Nav.Link onClick={ handleClickToOwnerMypage } >マイページ</Nav.Link>
+                                    <Nav.Link onClick={() => {
+                                        handleClickToOwnerMypage(selector.owners.id);
+                                        //注意：ユーザーとしてログインしている時のロジック考える必要有り。
+                                    }} 
+                                    >
+                                        マイページ
+                                    </Nav.Link>
                                 </Nav.Item>
                             )
-                        } else { //注意：ここに後でユーザーマイページも入れる。
+                        } else { //注意：後でここの前にelseifでユーザーマイページも入れる。
                             return (
                                 <Nav.Item>
                                     <Nav.Link onClick={ handleClickToLoginPage } >ログイン/新規登録</Nav.Link>

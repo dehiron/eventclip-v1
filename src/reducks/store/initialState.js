@@ -9,6 +9,7 @@ const initialState = {
     },
     owners: {
         isSignedIn: false,
+        id: "",
         owner_pref_id: "",
         owner_firstname:"",
     }

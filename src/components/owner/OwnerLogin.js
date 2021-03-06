@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch} from 'react-redux';
 import { signInAction } from '../../reducks/owners/actions';
 import { Container, Form, Col, Button} from 'react-bootstrap';
 import axios from 'axios';
@@ -15,10 +15,8 @@ function OwnerLogin(props){
     const [inputPassword, setInputPassword] = useState(false);
 
     const dispatch = useDispatch();
-    const selector = useSelector((state) => state);
 
     async function handleClickToLogin(){
-        // e.preventDefault();
         try{
             const body = new FormData();
             body.append("input_owner_pref_id", inputOwnerPrefId);
@@ -28,9 +26,8 @@ function OwnerLogin(props){
             .then(response => {
                 if(response.status === 200){
                     const ownerData = response.data;
-                    console.log(ownerData);
-                    console.log(selector.owners)
                     dispatch(signInAction({
+                        id:ownerData.id,
                         owner_pref_id:ownerData.owner_pref_id,
                         owner_firstname:ownerData.owner_firstname
                     }))
@@ -69,7 +66,7 @@ function OwnerLogin(props){
                         style={{ borderColor:"turquoise", backgroundColor:"darkturquoise", padding:"0.5rem", width:"80%", marginTop:"2rem" }} 
                         onClick={ 
                             () => {
-                                handleClickToLogin(); 
+                                handleClickToLogin(); //非同期処理で複雑なので外出しにしてる。
                             }
                         }
                     >

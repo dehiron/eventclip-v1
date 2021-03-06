@@ -20,6 +20,7 @@ function HomePage(props) {
 
   //storeの情報参照
   // const selector = useSelector((state) => state);
+  // console.log(selector.owners)
 
   //state群
   const [isLoading, setLoading] = useState(true)

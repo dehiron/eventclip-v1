@@ -1,26 +1,28 @@
-import { 
-    createStore as reduxCreateStore, 
-    combineReducers,
-    applyMiddleware 
-} from "redux";
-import thunk from 'redux-thunk';
-//reducersのインポート
-import OwnersReducer from "../owners/reducers.js";
-import EventsReducer from "../events/reducers.js";
-// import { UsersReducer } from  "../users/reducers.js";
+//注意：redux-persistを使ったconfigureStoreを作成したことにより、ここは使わなくなった
 
-function createStore(){
-    return reduxCreateStore(
-        combineReducers( {
-            owners: OwnersReducer,
-            events: EventsReducer,
-            // users: usersReducer,
-        }),
-        applyMiddleware(
-            thunk
-        )
-    );
-}
+// import { 
+//     createStore as reduxCreateStore, 
+//     combineReducers,
+//     applyMiddleware 
+// } from "redux";
+// import thunk from 'redux-thunk';
+// //reducersのインポート
+// import OwnersReducer from "../owners/reducers.js";
+// import EventsReducer from "../events/reducers.js";
+// // import { UsersReducer } from  "../users/reducers.js";
 
-export default createStore;
+// function createStore(){
+//     return reduxCreateStore(
+//         combineReducers( {
+//             owners: OwnersReducer,
+//             events: EventsReducer,
+//             // users: usersReducer,
+//         }),
+//         applyMiddleware(
+//             thunk
+//         )
+//     );
+// }
+
+// export default createStore;
 
