@@ -44,8 +44,8 @@
 
 .filters-container {
     position: relative;
-    margin-top: 7rem;
-    padding-top: 0.5rem;
+    padding-top: 7rem;
+    /* padding-top: 0.5rem; */
     overflow-y: scroll;
     /* border: 1px solid skyblue; */
 }

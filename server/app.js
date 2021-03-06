@@ -204,7 +204,7 @@ app.post("/api/owner/login", (req, res) => {
             .where({owner_pref_id:id})
             .then(result => {
                 if (result[0].password === pass){
-                    res.sendStatus(200)
+                    res.send(result[0]);
                 } else {
                     res.sendStatus(401)
                 }

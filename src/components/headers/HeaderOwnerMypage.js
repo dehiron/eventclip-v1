@@ -3,17 +3,17 @@
 import {Navbar} from 'react-bootstrap';
 import { withRouter } from 'react-router-dom';
 
-function HeaderOwnerSignupPage (props){
+function HeaderOwnerMypage (props){
 
     return(
         <Navbar className="bootstrap-navbar" expand="md" fixed="top">
             <Navbar.Brand href="/" > <img src="../logo.png" alt="logo"/> </Navbar.Brand>
             <Navbar.Toggle aria-controls="basic-navbar-nav"/>
             <Navbar.Collapse className="justify-content-end">
-                <Navbar.Brand>イベントオーナー専用サインアップページ</Navbar.Brand>
+                <Navbar.Brand>イベントオーナーマイページ</Navbar.Brand>
             </Navbar.Collapse>
         </Navbar>
     )
 };
 
-export default withRouter(HeaderOwnerSignupPage);
+export default withRouter(HeaderOwnerMypage);
