@@ -2,38 +2,11 @@
 // import {useState} from 'react';
 import {Navbar,Nav, NavDropdown} from 'react-bootstrap';
 import { withRouter } from 'react-router-dom';
-// import { getGeocode, getLatLng } from "use-places-autocomplete";
-// import address from "./nextvitz.js";
+import { useSelector } from 'react-redux';
 
 function Header (props){
 
-    //**************Seedアドレス取得用コード****************/
-    // const results = []
-    // const wait = (sec) => {
-    //     return new Promise((resolve, reject) => {
-    //       setTimeout(resolve, sec*1000);
-    //       //setTimeout(() => {reject(new Error("エラー！"))}, sec*1000);
-    //     });
-    //   };
-
-    // const generator = async () => {
-    //     for (let i = 800; i < 1000; i++){
-
-    //         if (i % 200 === 0　&& i !== 0){
-    //             console.log(results);
-    //             await wait (60)
-    //         }
-    //         await wait(1)
-    //         const geoCodeInfo = await getGeocode({address:address[i]});
-    //         const {lat,lng} = await getLatLng(geoCodeInfo[0]);
-    //         const result = {id:3010+1+i, event_name:`event${3010+1+i}`, start_date:'2021-01-20', end_date:'2031-06-20', date_detail:"開催期間についての補足情報", category:'スポット', start_time:'11:00', end_time:'17:00', time_detail:"開催時間についての補足情報", state:"関東", prefecture:'東京都', city:'渋谷区', address:address[i], latitude:lat, longitude:lng, facility_name:`event${3010+1+i}施設`, tel:'0300000000', description:'サンプル！', description_detail:"さらに詳しいイベントについての詳細説明",　park_spots:'有/30台',　park_price:'平日8:00~22:00 300円/10分 平日22:00~8:00 100円/60分 土日8:00~22:00 500円/10分 土日22:00~8:00 100円/60分', price_detail:"大人700円　子供300円", credit_card_info:"可", owner_id:1, tag:["家族と","デートに","お一人様","癒されたい","ワクワクする"], link_to_hp:'XXXXXXXX.com', img1:'https://picsum.photos/600/400'}
-            
-    //         results.push(result);
-    //     }
-    //     console.log(results);
-    // }
-    //**************Seedアドレス取得用コード****************/
-
+    const selector = useSelector((state) => state)
 
     const handleClickToOwnerPage = () => {
         props.history.push("/owner");
@@ -43,6 +16,9 @@ function Header (props){
     }
     const handleClickToLoginPage = () => {
         props.history.push("/login");
+    }
+    const handleClickToOwnerMypage = (id) => {
+        props.history.push(`/owner/${id}`)
     }
 
 
@@ -64,15 +40,22 @@ function Header (props){
                         <Nav.Link onClick={ handleClickToOwnerPage }>イベント登録</Nav.Link>
                     </Nav.Item>
                 </Nav>
-                {/* <Nav>
-                    <Nav.Item>
-                        <Nav.Link onClick={ generator }>Seed用アドレス取得</Nav.Link>
-                    </Nav.Item>
-                </Nav> */}
                 <Nav>
-                    <Nav.Item>
-                        <Nav.Link onClick={ handleClickToLoginPage } >ログイン/新規登録</Nav.Link>
-                    </Nav.Item>
+                    {(()=>{
+                        if (selector.owners.owner_pref_id !== ""){
+                            return (
+                                <Nav.Item>
+                                    <Nav.Link onClick={ handleClickToOwnerMypage } >マイページ</Nav.Link>
+                                </Nav.Item>
+                            )
+                        } else { //注意：ここに後でユーザーマイページも入れる。
+                            return (
+                                <Nav.Item>
+                                    <Nav.Link onClick={ handleClickToLoginPage } >ログイン/新規登録</Nav.Link>
+                                </Nav.Item>
+                            )
+                        }
+                    })()}
                 </Nav>
             </Navbar.Collapse>
         </Navbar>

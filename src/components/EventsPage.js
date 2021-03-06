@@ -17,13 +17,13 @@ function OwnerPage(props) {
 
     //関数群
     async function handleClickDeleteEvent(id,event_name){
-    // e.preventDefault();
-    await axios.delete('/api/event/id', {
-        params:{
-        id:id,
-        event_name:event_name
-        }
-    }).then((response) => response);
+      // e.preventDefault();
+      await axios.delete('/api/event/id', {
+          params:{
+          id:id,
+          event_name:event_name
+          }
+      }).then((response) => response);
     }
     const handleClickToHomePage = () => {
         window.location.reload(); //あまり良くない

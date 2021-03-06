@@ -7,6 +7,7 @@ import EventPage from "./components/EventPage";
 import Login from "./components/Login";
 import OwnerLogin from "./components/OwnerLogin";
 import Signup from "./components/Signup";
+import OwnerMypage from "./components/OwnerMypage";
 
 function App() {
 
@@ -42,6 +43,11 @@ function App() {
           <Route
             exact path={'/ownerlogin'}
             render = {props => (<OwnerLogin {...props}/>)}
+          />
+          <Route
+            // idではなく:idにしないとダメ
+            path={'/owner/:id'}
+            render = {props => (<OwnerMypage {...props}/>)}
           />
         </Switch>
       </BrowserRouter>
