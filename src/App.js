@@ -1,13 +1,12 @@
 import { BrowserRouter, Switch, Route } from "react-router-dom";
 // import React, {useState, useEffect} from "react";
 import HomePage from "./components/HomePage";
-import OwnerPage from "./components/OwnerPage";
-import EventsPage from "./components/EventsPage";
-import EventPage from "./components/EventPage";
-import Login from "./components/Login";
-import OwnerLogin from "./components/OwnerLogin";
-import Signup from "./components/Signup";
-import OwnerMypage from "./components/OwnerMypage";
+import OwnerPage from "./components/owner/OwnerPage";
+import EventsPage from "./components/event/EventsPage";
+import EventPage from "./components/event/EventPage";
+import UserLogin from "./components/user/UserLogin";
+import OwnerLogin from "./components/owner/OwnerLogin";
+import OwnerMypage from "./components/owner/OwnerMypage";
 
 function App() {
 
@@ -34,11 +33,7 @@ function App() {
           />
           <Route
             exact path={'/login'}
-            render = {props => (<Login {...props}/>)}
-          />
-          <Route
-            exact path={'/signup'}
-            render = {props => (<Signup {...props}/>)}
+            render = {props => (<UserLogin {...props}/>)}
           />
           <Route
             exact path={'/ownerlogin'}

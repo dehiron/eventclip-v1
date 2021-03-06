@@ -4,7 +4,7 @@ import React, {useState, useEffect} from "react";
 import axios from 'axios';
 // import { Card, Container, Button, Row, Col, CardGroup } from 'react-bootstrap';
 import Modal from 'react-modal';
-import './Styles.css';
+import '../Styles.css';
 
 function OwnerPage(props) {
     //state群

@@ -3,9 +3,9 @@
 import React, {useState} from "react";
 import axios from 'axios';
 import { getGeocode, getLatLng } from "use-places-autocomplete";
-import './Styles.css';
-import {Upload1, Upload2, Upload3, Upload4, Upload5,} from "./Upload"
-import { saveObject } from "../utils/s3index.js";
+import '../Styles.css';
+import {Upload1, Upload2, Upload3, Upload4, Upload5,} from "../awss3/Upload"
+import { saveObject } from "../awss3/s3index";
 
 //カレンダーで選べる様にする
 const year = ["2021","2022","2023","2024","2025","2026","2027","2028","2029","2030","2031"]

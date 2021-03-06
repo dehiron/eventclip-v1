@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { Form, Row, Col, Button, Modal } from 'react-bootstrap';
 import axios from 'axios';
-import './Styles.css'
+import '../Styles.css'
 
 const now = new Date();
 const nowYear = now.getYear();

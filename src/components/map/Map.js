@@ -2,7 +2,7 @@
 
 import React, {useState, useRef, useCallback} from "react";
 import { Button, Carousel } from "react-bootstrap";
-import './Styles.css'
+import '../Styles.css'
 import { 
     GoogleMap, 
     // useLoadScript,

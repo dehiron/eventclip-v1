@@ -1,7 +1,7 @@
 //Component
 
 import {useEffect} from "react"
-import './Styles.css'
+import '../Styles.css'
 import 
     // usePlacesAutocomplete, 
     { getGeocode, getLatLng } from "use-places-autocomplete";

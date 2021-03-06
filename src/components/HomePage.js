@@ -1,7 +1,7 @@
 //Page
 
 import React, {useState, useEffect} from "react"
-import { useSelector } from "react-redux";
+// import { useSelector } from "react-redux";
 import axios from 'axios';
 import Modal from 'react-modal';
 import './Styles.css'
@@ -9,8 +9,8 @@ import "@reach/combobox/styles.css"
 import { Container, Col } from 'react-bootstrap';
 //componentsのインポート
 import Header from "./headers/Header";
-import Map from "./Map";
-import EventCards from "./EventCards";
+import Map from "./map/Map";
+import EventCards from "./event/EventCards";
 import Filters from "./Filters";
 //componentsのインポート
 require('dotenv').config();
@@ -19,8 +19,7 @@ Modal.setAppElement("#root")
 function HomePage(props) {
 
   //storeの情報参照
-  const selector = useSelector((state) => state);
-  console.log(selector);
+  // const selector = useSelector((state) => state);
 
   //state群
   const [isLoading, setLoading] = useState(true)

@@ -1,9 +1,14 @@
+import { useState } from 'react';
 import { Container, Form, Col, Button} from 'react-bootstrap';
-import './Styles.css'
-import HeaderLoginPage from './headers/HeaderLoginPage'
+import '../Styles.css'
+import HeaderLoginPage from '../headers/HeaderLoginPage';
+import UserSignup from './UserSignup';
 
 
-function Login(props){
+function UserLogin(props){
+
+    const [signupShow, setSignupShow] = useState(false);
+
     return(
         <div className="App">
             <HeaderLoginPage />
@@ -24,14 +29,22 @@ function Login(props){
                         <Form.Control type="password" />
                         </Form.Group>
                     </Col>
-                    <Button style={{ borderColor:"turquoise", backgroundColor:"darkturquoise", width:"80%", padding:"0.5rem", marginTop:"2rem" }}>ログイン</Button>
+                    <Button 
+                            style={{ borderColor:"turquoise", backgroundColor:"darkturquoise", width:"80%", marginTop:"2rem" }} 
+                            onClick={() => {
+                                // 作成時はOwnerLogin.jsファイルを参照
+                            }}
+                        >
+                            ログイン
+                        </Button>
                 </Form>
             </Container>
             <h4 style={{margin:"2.5rem"}}>アカウントをお持ちでない方はこちら</h4>
-            <Button style={{color:"darkturquoise", borderColor:"white", backgroundColor:"white", width:"30%", padding:"0.5rem", borderRadius:"5px" }}>新規登録</Button>
+            <Button onClick={()=> setSignupShow(true)} style={{color:"darkturquoise", borderColor:"white", backgroundColor:"white", width:"30%", padding:"0.5rem", borderRadius:"5px" }}>新規登録</Button>
             </header>
+            <UserSignup signupShow = {signupShow} setSignupShow = {setSignupShow}/>
         </div>
     )
 }
 
-export default Login;
+export default UserLogin;

@@ -1,7 +1,7 @@
 //Component
 
 import {useEffect} from "react"
-import './Styles.css'
+import '../Styles.css'
 import "@reach/combobox/styles.css"
 import mapStyles from "./MapStyles";
 

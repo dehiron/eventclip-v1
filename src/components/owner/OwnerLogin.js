@@ -1,10 +1,10 @@
 import { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { signInAction } from '../reducks/owners/actions';
+import { signInAction } from '../../reducks/owners/actions';
 import { Container, Form, Col, Button} from 'react-bootstrap';
 import axios from 'axios';
-import './Styles.css';
-import HeaderOwnerLoginPage from './headers/HeaderOwnerLoginPage';
+import '../Styles.css';
+import HeaderOwnerLoginPage from '../headers/HeaderOwnerLoginPage';
 import OwnerSignup from './OwnerSignup';
 import OwnerPage from './OwnerPage';
 import { withRouter } from 'react-router-dom';
@@ -66,7 +66,7 @@ function OwnerLogin(props){
                             </Form.Group>
                         </Col>
                         <Button 
-                            style={{ borderColor:"turquoise", backgroundColor:"darkturquoise", width:"80%", marginTop:"2rem" }} 
+                            style={{ borderColor:"turquoise", backgroundColor:"darkturquoise", padding:"0.5rem", width:"80%", marginTop:"2rem" }} 
                             onClick={ 
                                 () => {
                                     handleClickToLogin(); 
