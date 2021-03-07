@@ -6,7 +6,7 @@ import axios from 'axios';
 import Modal from 'react-modal';
 import '../Styles.css';
 
-function OwnerPage(props) {
+function AllEventsList(props) {
     //state群
     const [isLoading, setLoading] = useState(true)
     const [events, setEvents] = useState([]);
@@ -100,4 +100,4 @@ function OwnerPage(props) {
       )
 };
 
-export default OwnerPage; 
+export default AllEventsList; 

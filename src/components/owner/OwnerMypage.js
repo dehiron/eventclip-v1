@@ -1,4 +1,4 @@
-import { Container } from "react-bootstrap";
+import { Container, Col, Button } from "react-bootstrap";
 import { useSelector, useDispatch } from "react-redux";
 import { logOutAction } from '../../reducks/owners/actions';
 import { persistor } from "../../reducks/store/configureStore";
@@ -14,17 +14,37 @@ function OwnerMypage (props) {
         <Container>
                 <HeaderOwnerMypage />
                 
-                <h2 style={{paddingTop:"7rem"}}>Owner: {ownerData.owner_pref_id}</h2>
+                <h2 style={{paddingTop:"7rem"}}>Hi {ownerData.owner_pref_id}, Welcome Back!</h2>
                 
-                <button onClick={()=>{props.history.push("/")}}>Homeに戻る</button>
-                <button onClick={()=>{
-                    persistor.purge(); //localstorageに保存された(condigure)Storeからのstateデータをクリア
-                    dispatch(logOutAction()); //store内のstateデータをクリア。operationsを使っての非同期処理は必要ないっぽい。
-                    props.history.replace("/") //HPに画面遷移
-                    }}
-                >
-                    ログアウト
-                </button>
+                <Col className="mb-3">
+                    <Button　
+                        onClick={()=>{
+                            props.history.push(`/owner/${ownerData.id}/eventregister`)
+                        }}
+                    >
+                        イベント登録
+                    </Button>
+                </Col>
+                <Col className="mb-3">
+                    <Button　
+                        onClick={()=>{
+                            props.history.push("/")
+                        }}
+                    >
+                        Homeに戻る
+                    </Button>
+                </Col>
+                <Col className="mb-3">
+                    <Button　
+                        onClick={()=>{
+                            persistor.purge(); //localstorageに保存された(condigure)Storeからのstateデータをクリア
+                            dispatch(logOutAction()); //store内のstateデータをクリア。operationsを使っての非同期処理は必要ないっぽい。
+                            props.history.replace("/") //HPに画面遷移
+                        }}
+                    >
+                        ログアウト
+                    </Button>
+                </Col>
         </Container>
     )
 }

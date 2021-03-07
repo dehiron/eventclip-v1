@@ -3,19 +3,19 @@
 import {Navbar} from 'react-bootstrap';
 import { withRouter } from 'react-router-dom';
 
-function HeaderOwnerLoginPage (props){
+function HeaderOwnerEventRegister (props){
 
     return(
         <Navbar className="bootstrap-navbar" expand="md" fixed="top">
             <Navbar.Brand href="/" >
-                <img src="/logo.png" alt="logo"/>
+                <img src = "/logo.png" alt="logo"/>
             </Navbar.Brand>
             <Navbar.Toggle aria-controls="basic-navbar-nav"/>
             <Navbar.Collapse className="justify-content-end">
-                <Navbar.Brand>イベントオーナー専用ログインページ</Navbar.Brand>
+                <Navbar.Brand>新規イベント登録ページ</Navbar.Brand>
             </Navbar.Collapse>
         </Navbar>
     )
 };
 
-export default withRouter(HeaderOwnerLoginPage);
+export default withRouter(HeaderOwnerEventRegister);

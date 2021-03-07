@@ -1,8 +1,8 @@
 import { BrowserRouter, Switch, Route } from "react-router-dom";
 // import React, {useState, useEffect} from "react";
 import HomePage from "./components/HomePage";
-import OwnerPage from "./components/owner/OwnerPage";
-import EventsPage from "./components/event/EventsPage";
+import OwnerEventRegister from "./components/owner/OwnerEventRegister";
+import AllEventsList from "./components/event/EventsPage";
 import EventPage from "./components/event/EventPage";
 import UserLogin from "./components/user/UserLogin";
 import OwnerLogin from "./components/owner/OwnerLogin";
@@ -19,12 +19,12 @@ function App() {
             render = {props => (<HomePage {...props}/>)}
           />
           <Route
-            exact path={'/owner'}
-            render = {props => (<OwnerPage {...props}/>)}
+            path={'/owner/:id/eventregister'}
+            render = {props => (<OwnerEventRegister {...props}/>)}
           />
           <Route
             exact path={'/events'}
-            render = {props => (<EventsPage {...props}/>)}
+            render = {props => (<AllEventsList {...props}/>)}
           />
           <Route
             // idではなく:idにしないとダメ

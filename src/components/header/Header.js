@@ -8,9 +8,6 @@ function Header (props){
 
     const selector = useSelector((state) => state);
 
-    const handleClickToOwnerPage = () => {
-        props.history.push("/owner");
-    }
     const handleClickToEventsPage = () => {
         props.history.push("/events");
     }
@@ -24,7 +21,9 @@ function Header (props){
 
     return(
         <Navbar className="bootstrap-navbar" expand="md" fixed="top">
-            <Navbar.Brand href="/" > <img src="../logo.png" alt="logo"/> </Navbar.Brand>
+            <Navbar.Brand href="/" > 
+                <img src="/logo.png" alt="logo"/>
+            </Navbar.Brand>
             {/* hrefでコードの見た目良くできるけど、イベント登録ページでのAPIでエラーが起きるのでonClickを使う。 */}
             <NavDropdown id="map-or-list" title={props.mapOrList}>
                 <NavDropdown.Item onSelect={()=>props.setMapOrList("Mapで表示")}>Mapで表示</NavDropdown.Item>
@@ -35,9 +34,6 @@ function Header (props){
                 <Nav>
                     <Nav.Item>
                         <Nav.Link onClick={ handleClickToEventsPage }>イベント一覧</Nav.Link>
-                    </Nav.Item>
-                    <Nav.Item>
-                        <Nav.Link onClick={ handleClickToOwnerPage }>イベント登録</Nav.Link>
                     </Nav.Item>
                 </Nav>
                 <Nav>

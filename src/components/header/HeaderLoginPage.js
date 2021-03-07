@@ -11,7 +11,9 @@ function HeaderLoginPage (props){
 
     return(
         <Navbar className="bootstrap-navbar" expand="md" fixed="top">
-            <Navbar.Brand href="/" > <img src="../logo.png" alt="logo"/> </Navbar.Brand>
+            <Navbar.Brand href="/" >
+                <img src="/logo.png" alt="logo"/>
+            </Navbar.Brand>
             <Navbar.Toggle aria-controls="basic-navbar-nav"/>
             <Navbar.Collapse className="justify-content-end">
                 <Nav>
@@ -21,6 +23,7 @@ function HeaderLoginPage (props){
                 </Nav>
             </Navbar.Collapse>
         </Navbar>
+        
     )
 };
 
