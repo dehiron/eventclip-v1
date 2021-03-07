@@ -9,7 +9,7 @@ function Header (props){
     const selector = useSelector((state) => state);
 
     const handleClickToEventsPage = () => {
-        props.history.push("/events");
+        props.history.push("/allevents");
     }
     const handleClickToLoginPage = () => {
         props.history.push("/login");

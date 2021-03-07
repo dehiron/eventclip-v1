@@ -32,7 +32,7 @@ function OwnerAllEventsList(props) {
     }
     const handleClickToHomePage = () => {
         window.location.reload(); //あまり良くない
-        props.history.goBack();
+        props.history.replace("/");
     }
 
     //style群
@@ -100,6 +100,7 @@ function OwnerAllEventsList(props) {
               </li>)
             }
           </ul>
+        <button onClick={() => {props.history.goBack()}}>マイページに戻る</button>  
         <button onClick={handleClickToHomePage}>Homeに戻る</button>
       </div>
       )

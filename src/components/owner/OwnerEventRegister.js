@@ -58,7 +58,7 @@ function OwnerEventRegister(props) {
     const [parkPrice, setParkPrice] = useState("")
     const [priceDetail, setPriceDetail] = useState("")
     const [creditCardInfo, setCreditCardInfo] = useState("")
-    const [ownerId, setOwnerId] = useState("")
+    // const [ownerId, setOwnerId] = useState("")
     const [tag, setTag] = useState("")
     // オーナーが写真を選ばなければ自動でnoimageの画像になる様に設定
     // 注意：オーナーがまとめてアップロードできる様に、リファクタリング必要
@@ -113,7 +113,7 @@ function OwnerEventRegister(props) {
             body.append('park_price', parkPrice);
             body.append('price_detail', priceDetail);
             body.append('credit_card_info', creditCardInfo);
-            body.append('owner_id', ownerId);
+            body.append('owner_id', ownerData.id);
             body.append('tag', tag);
             (img1 === "" || img1 === undefined) ? body.append('img1', "https://eventclip.s3-ap-northeast-1.amazonaws.com/noimage.png") : body.append('img1', "https://eventclip.s3-ap-northeast-1.amazonaws.com/" + time.toISOString() + img1.name);
             (img2 === "" || img2 === undefined) ? body.append('img2', "https://eventclip.s3-ap-northeast-1.amazonaws.com/noimage.png") : body.append('img2', "https://eventclip.s3-ap-northeast-1.amazonaws.com/" + time.toISOString() + img2.name);
@@ -224,7 +224,7 @@ function OwnerEventRegister(props) {
                         <li><p>駐車場料金：<input placeholder="例：平日8:00~22:00 300円/10分 平日22:00~8:00 100円/60分 土日8:00~22:00 500円/10分 土日22:00~8:00 100円/60分" onChange={e => setParkPrice(e.target.value)}></input></p></li>
                         <li><p>料金情報：<input placeholder="例：大人700円　子供300円" onChange={e => setPriceDetail(e.target.value)}></input></p></li>
                         <li><p>クレジットカード利用可否：<input placeholder="例：可/不可" onChange={e => setCreditCardInfo(e.target.value)}></input></p></li>
-                        <li><p>オーナーID：<input placeholder="例：1" onChange={e => setOwnerId(e.target.value)}></input></p></li>
+                        {/* <li><p>オーナーID：<input placeholder="例：1" onChange={e => setOwnerId(e.target.value)}></input></p></li> */}
                         <li><p>タグ：<input placeholder="例：['家族と','デートに','お一人様','癒されたい']" onChange={e => setTag(e.target.value)}></input></p></li>
                         <li><p>画像1：</p><Upload1 setImg1 = {setImg1}/></li>
                         <li><p>画像2：</p><Upload2 setImg2 = {setImg2}/></li>

@@ -20,7 +20,7 @@ function App() {
             render = {props => (<HomePage {...props}/>)}
           />
           <Route
-            exact path={'/events'}
+            exact path={'/allevents'}
             render = {props => (<AllEventsList {...props}/>)}
           />
           <Route
