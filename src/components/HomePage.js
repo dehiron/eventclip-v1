@@ -8,7 +8,7 @@ import './Styles.css'
 import "@reach/combobox/styles.css"
 import { Container, Col } from 'react-bootstrap';
 //componentsのインポート
-import Header from "./headers/Header";
+import Header from "./header/Header";
 import Map from "./map/Map";
 import EventCards from "./event/EventCards";
 import Filters from "./Filters";

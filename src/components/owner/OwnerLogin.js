@@ -4,7 +4,7 @@ import { logInAction } from '../../reducks/owners/actions';
 import { Container, Form, Col, Button} from 'react-bootstrap';
 import axios from 'axios';
 import '../Styles.css';
-import HeaderOwnerLoginPage from '../headers/HeaderOwnerLoginPage';
+import HeaderOwnerLoginPage from '../header/HeaderOwnerLoginPage';
 import OwnerSignup from './OwnerSignup';
 import { withRouter } from 'react-router-dom';
 

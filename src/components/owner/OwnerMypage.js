@@ -2,7 +2,7 @@ import { Container } from "react-bootstrap";
 import { useSelector, useDispatch } from "react-redux";
 import { logOutAction } from '../../reducks/owners/actions';
 import { persistor } from "../../reducks/store/configureStore";
-import HeaderOwnerMypage from "../headers/HeaderOwnerMypage";
+import HeaderOwnerMypage from "../header/HeaderOwnerMypage";
 
 function OwnerMypage (props) {
 

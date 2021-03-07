@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { Container, Form, Col, Button} from 'react-bootstrap';
 import '../Styles.css'
-import HeaderLoginPage from '../headers/HeaderLoginPage';
+import HeaderLoginPage from '../header/HeaderLoginPage';
 import UserSignup from './UserSignup';
 
 
