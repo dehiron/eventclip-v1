@@ -1,11 +1,11 @@
 //actionsは必ずプレーンなObjectを返す
 
-const SIGN_IN = "SIGN_IN";
-const signInAction = (ownerState) => {
+const LOG_IN = "LOG_IN";
+const logInAction = (ownerState) => {
     return {
-        type: "SIGN_IN",
+        type: "LOG_IN",
         payload: {
-            isSignedIn: true,
+            isLoggedIn: true,
             id: ownerState.id,
             owner_pref_id: ownerState.owner_pref_id,
             owner_firstname: ownerState.owner_firstname,
@@ -13,13 +13,13 @@ const signInAction = (ownerState) => {
     }
 };
 
-const SIGN_OUT = "SIGN_OUT";
-const signOutAction = () => {
+const LOG_OUT = "LOG_OUT";
+const logOutAction = () => {
     //サインアウト＝ステートを初期状態に戻す
     return {
-        type: "SIGN_OUT",
+        type: "LOG_OUT",
         payload: {
-            isSignedIn: false,
+            isLoggedIn: false,
             id: "",
             owner_pref_id: "",
             owner_firstname: "",
@@ -27,4 +27,4 @@ const signOutAction = () => {
     }
 };
 
-export { SIGN_IN, signInAction, SIGN_OUT, signOutAction }
+export { LOG_IN, logInAction, LOG_OUT, logOutAction }

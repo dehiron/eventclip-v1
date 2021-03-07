@@ -42,7 +42,7 @@ function Header (props){
                 </Nav>
                 <Nav>
                     {(()=>{
-                        if (selector.owners.isSignedIn){
+                        if (selector.owners.isLoggedIn){
                             return (
                                 <Nav.Item>
                                     <Nav.Link onClick={() => {

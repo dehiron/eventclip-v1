@@ -8,7 +8,7 @@ const initialState = {
 
     },
     owners: {
-        isSignedIn: false,
+        isLoggedIn: false,
         id: "",
         owner_pref_id: "",
         owner_firstname:"",
