@@ -1,12 +1,14 @@
-import {createSelector} from "reselect";
+//useSelectorをのHookを使っているので現段階ではここ定義した関数は特に使わない。
 
-//storeに入っているownersに関する全てのstateの情報
-const ownersSelector = (state) => state.owners;
+// import {createSelector} from "reselect";
 
-const getOwnerPrefId = createSelector(
-    [ownersSelector],
-    //storeに入っているownersの指定のstateを取り出す
-    state => state.owner_pref_id 
-)
+// //storeに入っているownersに関する全てのstateの情報
+// const ownersSelector = (state) => state.owners;
 
-export {getOwnerPrefId};
+// const getOwnerPrefId = createSelector(
+//     [ownersSelector],
+//     //storeに入っているownersの指定のstateを取り出す
+//     state => state.owner_pref_id 
+// )
+
+// export {getOwnerPrefId};
