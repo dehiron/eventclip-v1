@@ -26,10 +26,19 @@ function OwnerMypage (props) {
                     <Col className="mb-3">
                         <Button　
                             onClick={()=>{
+                                props.history.push(`/owner/${ownerData.id}/allevents`)
+                            }}
+                        >
+                            イベント管理
+                        </Button>
+                    </Col>
+                    <Col className="mb-3">
+                        <Button　
+                            onClick={()=>{
                                 props.history.push(`/owner/${ownerData.id}/eventregister`)
                             }}
                         >
-                            イベント登録
+                            新規イベント登録
                         </Button>
                     </Col>
                     <Col className="mb-3">

@@ -24,7 +24,7 @@ app.get("/api/events", (req,res) => {
     database.select("*")
     .from("owners")
     .leftJoin("events","owners.id","events.owner_id")
-    // .where({"owners.id":1})
+    // .where({"owners.id":xx})
     .then((events) => {
         
         if (Object.keys(req.query).length > 0) { //日付が選択された場合 or ジャンルが選択された場合
@@ -50,6 +50,17 @@ app.get("/api/events", (req,res) => {
                 events = resultsFilteredByCategory;
                 
             }
+            if (Object.keys(req.query).includes("id")){ //該当する[オーナー]idを持つイベントを抽出
+                const resultsFilteredByDate = [];
+                for (const event of events){
+                    //確実なreq.query.idの方をnumber化する
+                    if (event.owner_id === parseInt(req.query.id)){
+                        resultsFilteredByDate.push(event);
+                    }
+                }
+                events = resultsFilteredByDate;
+            } 
+            
         }
         // console.log("line50",events)
         res.send(events);
