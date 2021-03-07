@@ -1,12 +1,14 @@
-import {createSelector} from "reselect";
+//useSelectorをのHookを使っているので現段階ではここ定義した関数は特に使わない。
 
-//storeに入っているownersに関する全てのstateの情報
-const eventsSelector = (state) => state.events;
+// import {createSelector} from "reselect";
 
-const getEventId = createSelector(
-    [eventsSelector],
-    //storeに入っているownersの指定のstateを取り出す
-    state => state.event_id 
-)
+// //storeに入っているeventsに関する全てのstateの情報
+// const eventsSelector = (state) => state.events;
 
-export {getEventId};
+// const getEventId = createSelector(
+//     [eventsSelector],
+//     //storeに入っているownersの指定のstateを取り出す
+//     state => state.event_id 
+// )
+
+// export {getEventId};
