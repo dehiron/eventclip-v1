@@ -188,18 +188,18 @@ app.post("/api/owner/login", (req, res) => {
     const inputOwnerPrefId = ownerData.input_owner_pref_id;
     const inputPassword = ownerData.input_password;
 
-    const a = [];
+    const accountCounter = [];
 
-    async function test(id,pass){
+    async function confirmAuth(id,pass){
         await database("owners")
         .count('id')
         .where({owner_pref_id:id})
         .then(result => {
             // result は [ { count: '1' } ]
-            a.push(result[0].count);
+            accountCounter.push(result[0].count);
         });
 
-        if (parseFloat(a[0]) > 0){ //ユーザー数が１以上＝ユーザーが存在していた場合
+        if (parseFloat(accountCounter[0]) > 0){ //ユーザー数が１以上＝ユーザーが存在していた場合
             database("owners")
             .select()
             .where({owner_pref_id:id})
@@ -219,7 +219,7 @@ app.post("/api/owner/login", (req, res) => {
 
     };
 
-    test(inputOwnerPrefId,inputPassword)
+    confirmAuth(inputOwnerPrefId,inputPassword)
 
         
 })
