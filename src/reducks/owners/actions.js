@@ -8,7 +8,13 @@ const logInAction = (ownerState) => {
             isLoggedIn: true,
             id: ownerState.id,
             owner_pref_id: ownerState.owner_pref_id,
+            // owner_password: ownerState.owner_password,
             owner_firstname: ownerState.owner_firstname,
+            owner_lastname: ownerState.owner_lastname,
+            date_of_birth: ownerState.date_of_birth,
+            tel: ownerState.tel,
+            email: ownerState.email,
+            organization: ownerState.organization,
         }
     }
 };
@@ -23,6 +29,11 @@ const logOutAction = () => {
             id: "",
             owner_pref_id: "",
             owner_firstname: "",
+            owner_lastname: "",
+            date_of_birth: "",
+            tel: "",
+            email: "",
+            organization: "",
         }
     }
 };

@@ -27,13 +27,13 @@ function OwnerSignup(props){
         e.preventDefault();
         try{
             const body = new FormData();
-            body.append("owner_type", ownerType);
+            body.append("type", ownerType);
             body.append("owner_firstname", ownerFirstName);
             body.append("owner_lastname", ownerLastName);
-            body.append("owner_tel", ownerTel);
-            body.append("owner_email", ownerEmail);
+            body.append("tel", ownerTel);
+            body.append("email", ownerEmail);
             body.append("owner_pref_id", ownerPrefId);
-            body.append("owner_password", ownerPassword);
+            body.append("password", ownerPassword);
             body.append("date_of_birth", ownerDobYear+"-"+ownerDobMonth+"-"+ownerDobDay);
             body.append("organization", ownerOrganization);
             

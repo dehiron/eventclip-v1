@@ -145,10 +145,10 @@ app.post("/api/owner/register", (req, res) => {
 
     const ownerFirstName = ownerData.owner_firstname;
     const ownerLastName = ownerData.owner_lastname;
-    const ownerTel = ownerData.owner_tel;
-    const ownerEmail = ownerData.owner_email;
+    const ownerTel = ownerData.tel;
+    const ownerEmail = ownerData.email;
     const ownerPrefId = ownerData.owner_pref_id;
-    const ownerPassword = ownerData.owner_password;
+    const ownerPassword = ownerData.password;
     const dateOfBirth = ownerData.date_of_birth;
     const organization = ownerData.organization;
 
@@ -181,7 +181,7 @@ app.post("/api/owner/register", (req, res) => {
         })
 })
 
-//オーナーログイン用
+//オーナーログイン認証確認用
 app.post("/api/owner/login", (req, res) => {
     const ownerData = req.body;
 
@@ -221,7 +221,6 @@ app.post("/api/owner/login", (req, res) => {
 
     test(inputOwnerPrefId,inputPassword)
 
-    
         
 })
 

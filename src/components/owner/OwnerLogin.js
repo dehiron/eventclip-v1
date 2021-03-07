@@ -25,6 +25,7 @@ function OwnerLogin(props){
             const body = new FormData();
             body.append("input_owner_pref_id", inputOwnerPrefId);
             body.append("input_password", inputPassword);
+            //他の情報は現時点では認証に必要無いのでappendしない
             
             await axios.post('/api/owner/login', body)
             .then(response => {
@@ -33,7 +34,12 @@ function OwnerLogin(props){
                     dispatch(logInAction({
                         id:ownerData.id,
                         owner_pref_id:ownerData.owner_pref_id,
-                        owner_firstname:ownerData.owner_firstname
+                        owner_firstname:ownerData.owner_firstname,
+                        owner_lastname: ownerData.owner_lastname,
+                        date_of_birth: ownerData.date_of_birth,
+                        tel: ownerData.tel,
+                        email: ownerData.email,
+                        organization: ownerData.organization,
                     }))
                     props.history.replace(`/owner/${ownerData.id}`)
                 } else if (response.status === 204){

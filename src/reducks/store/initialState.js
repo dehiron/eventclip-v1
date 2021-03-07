@@ -11,7 +11,13 @@ const initialState = {
         isLoggedIn: false,
         id: "",
         owner_pref_id: "",
+        // owner_password: "",
         owner_firstname:"",
+        owner_lastname:"",
+        date_of_birth:"",
+        tel:"",
+        email:"",
+        organization:"",
     }
 
 }
