@@ -3,6 +3,7 @@ import { useSelector, useDispatch } from "react-redux";
 import { logOutAction } from '../../reducks/owners/actions';
 import { persistor } from "../../reducks/store/configureStore";
 import HeaderOwnerMypage from "../header/HeaderOwnerMypage";
+import OwnerLogin from "./OwnerLogin";
 
 function OwnerMypage (props) {
 
@@ -10,43 +11,50 @@ function OwnerMypage (props) {
     const selector = useSelector((state) => state);
     const ownerData = selector.owners;
 
-    return (
-        <Container>
-                <HeaderOwnerMypage />
-                
-                <h2 style={{paddingTop:"7rem"}}>Hi {ownerData.owner_pref_id}, Welcome Back!</h2>
-                
-                <Col className="mb-3">
-                    <Button　
-                        onClick={()=>{
-                            props.history.push(`/owner/${ownerData.id}/eventregister`)
-                        }}
-                    >
-                        イベント登録
-                    </Button>
-                </Col>
-                <Col className="mb-3">
-                    <Button　
-                        onClick={()=>{
-                            props.history.push("/")
-                        }}
-                    >
-                        Homeに戻る
-                    </Button>
-                </Col>
-                <Col className="mb-3">
-                    <Button　
-                        onClick={()=>{
-                            persistor.purge(); //localstorageに保存された(condigure)Storeからのstateデータをクリア
-                            dispatch(logOutAction()); //store内のstateデータをクリア。operationsを使っての非同期処理は必要ないっぽい。
-                            props.history.replace("/") //HPに画面遷移
-                        }}
-                    >
-                        ログアウト
-                    </Button>
-                </Col>
-        </Container>
-    )
+    if (!ownerData.isLoggedIn){
+        props.history.replace("/ownerlogin");
+        return (
+            <OwnerLogin />
+        )
+    } else {
+        return (
+            <Container>
+                    <HeaderOwnerMypage />
+                    
+                    <h2 style={{paddingTop:"7rem"}}>Hi {ownerData.owner_pref_id}, Welcome Back!</h2>
+                    
+                    <Col className="mb-3">
+                        <Button　
+                            onClick={()=>{
+                                props.history.push(`/owner/${ownerData.id}/eventregister`)
+                            }}
+                        >
+                            イベント登録
+                        </Button>
+                    </Col>
+                    <Col className="mb-3">
+                        <Button　
+                            onClick={()=>{
+                                props.history.push("/")
+                            }}
+                        >
+                            Homeに戻る
+                        </Button>
+                    </Col>
+                    <Col className="mb-3">
+                        <Button　
+                            onClick={()=>{
+                                persistor.purge(); //localstorageに保存された(condigure)Storeからのstateデータをクリア
+                                dispatch(logOutAction()); //store内のstateデータをクリア。operationsを使っての非同期処理は必要ないっぽい。
+                                props.history.replace("/") //HPに画面遷移
+                            }}
+                        >
+                            ログアウト
+                        </Button>
+                    </Col>
+            </Container>
+        )
+    }
 }
 
 export default OwnerMypage;
