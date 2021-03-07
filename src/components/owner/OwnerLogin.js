@@ -11,8 +11,12 @@ import { withRouter } from 'react-router-dom';
 function OwnerLogin(props){
 
     const [signupShow, setSignupShow] = useState(false);
-    const [inputOwnerPrefId, setInputOwnerPrefId] = useState(false);
-    const [inputPassword, setInputPassword] = useState(false);
+    const [inputOwnerPrefId, setInputOwnerPrefId] = useState("");
+    const [inputPassword, setInputPassword] = useState("");
+    const [isIdEmpty, setIsIdEmpty] = useState(false);
+    const [isPassEmpty, setIsPassEmpty] = useState(false);
+    const [isIdCorrect, setIsIdCorrect] = useState("not submitted");
+    const [isPassCorrect, setIsPassCorrect] = useState("not submitted");
 
     const dispatch = useDispatch();
 
@@ -32,12 +36,15 @@ function OwnerLogin(props){
                         owner_firstname:ownerData.owner_firstname
                     }))
                     props.history.replace(`/owner/${ownerData.id}`)
-                } else {
-                    console.log(response.status)
+                } else if (response.status === 204){
+                    //IDが間違っている=存在しないユーザーの場合：204 no contentにしてる
+                    setIsIdCorrect(false);
                 }
             })
         } catch(error){
-            console.log(error)
+            //Passwordが間違っている場合：クライアントエラー、401にしてる
+            //ここの処理をもっと綺麗にしたい
+            setIsPassCorrect(false);
         }
     }
     
@@ -53,20 +60,44 @@ function OwnerLogin(props){
                     <Col md>
                         <Form.Group controlId="formEmail" >
                         <Form.Label >メールアドレスまたはユーザー名</Form.Label>
-                        <Form.Control type="email" onChange={(e)=>{setInputOwnerPrefId(e.target.value)}}/>
+                        <Form.Control 
+                            type="email" 
+                            onChange={(e)=>{
+                                setInputOwnerPrefId(e.target.value); 
+                                setIsIdCorrect("not submitted");
+                                if(e.target.value.length > 0) {setIsIdEmpty(false)};
+                                }}
+                        />
+                        {isIdEmpty && <Form.Text style={{color:"red"}}>メールアドレスまたはユーザー名が空白です</Form.Text>}
+                        {!isIdEmpty && !isIdCorrect && <Form.Text style={{color:"red"}}>ユーザーが存在しません</Form.Text>}
                         </Form.Group>
                     </Col>
                     <Col md>
                         <Form.Group controlId="formPassword" >
                         <Form.Label className="login-input">パスワード</Form.Label>
-                        <Form.Control type="password" onChange={(e)=>{setInputPassword(e.target.value)}}/>
+                        <Form.Control 
+                            type="password" 
+                            onChange={(e)=>{
+                                setInputPassword(e.target.value); 
+                                setIsPassCorrect("not submitted");
+                                if(e.target.value.length > 0) {setIsPassEmpty(false)};
+                                }}
+                        />
+                        {isPassEmpty && <Form.Text style={{color:"red"}}>パスワードが空白です</Form.Text>}
+                        {!isPassEmpty && isIdCorrect && !isPassCorrect && <Form.Text style={{color:"red"}}>パスワードが正しくありません</Form.Text>}
                         </Form.Group>
                     </Col>
                     <Button 
                         style={{ borderColor:"turquoise", backgroundColor:"darkturquoise", padding:"0.5rem", width:"80%", marginTop:"2rem" }} 
                         onClick={ 
                             () => {
-                                handleClickToLogin(); //非同期処理で複雑なので外出しにしてる。
+                                if (inputOwnerPrefId.length === 0) {
+                                    setIsIdEmpty(true)
+                                } if (inputPassword.length === 0){
+                                    setIsPassEmpty(true)
+                                } else {
+                                    handleClickToLogin(); //非同期処理で複雑なので外出しにしてる。
+                                }
                             }
                         }
                     >
@@ -75,7 +106,18 @@ function OwnerLogin(props){
                 </Form>
             </Container>
             <h4 style={{margin:"2.5rem"}}>アカウントをお持ちでない方はこちら</h4>
-            <Button onClick={()=> setSignupShow(true)} style={{color:"darkturquoise", borderColor:"white", backgroundColor:"white", width:"30%", padding:"0.5rem", borderRadius:"5px" }}>新規登録</Button>
+            <Button 
+                onClick={()=> {setSignupShow(true)}} 
+                style={{
+                    color:"darkturquoise", 
+                    borderColor:"white", 
+                    backgroundColor:"white", 
+                    width:"30%", padding:"0.5rem", 
+                    borderRadius:"5px" 
+                }}
+            >
+                新規登録
+            </Button>
             </header>
 
             <OwnerSignup signupShow = {signupShow} setSignupShow = {setSignupShow}/>

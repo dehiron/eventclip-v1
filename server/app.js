@@ -195,10 +195,11 @@ app.post("/api/owner/login", (req, res) => {
         .count('id')
         .where({owner_pref_id:id})
         .then(result => {
+            // result は [ { count: '1' } ]
             a.push(result[0].count);
         });
 
-        if (parseFloat(a) !== 0){
+        if (parseFloat(a[0]) > 0){ //ユーザー数が１以上＝ユーザーが存在していた場合
             database("owners")
             .select()
             .where({owner_pref_id:id})
@@ -206,11 +207,14 @@ app.post("/api/owner/login", (req, res) => {
                 if (result[0].password === pass){
                     res.send(result[0]);
                 } else {
+                    //パスワード間違った場合
                     res.sendStatus(401)
+                    // express deprecated res.send(status, body): Use res.status(status).send(body) instead
                 }
             })
         } else {
-            res.sendStatus(204)
+            //存在しないユーザーの場合
+            res.sendStatus(204);
         }
 
     };
