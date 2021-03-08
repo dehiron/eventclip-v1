@@ -38,7 +38,7 @@ function UserLogin(props){
                     //     email: userData.email,
                     //     organization: userData.organization,
                     // }))
-                    // props.history.replace(`/user/${userData.id}`)
+                    props.history.replace("/");
                 } else if (response.status === 204){
                     //IDが間違っている=存在しないユーザーの場合：204 no contentにしてる
                     // setIsIdCorrect(false);
