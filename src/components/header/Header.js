@@ -31,11 +31,11 @@ function Header (props){
             </NavDropdown>
             <Navbar.Toggle aria-controls="basic-navbar-nav"/>
             <Navbar.Collapse className="justify-content-end">
-                <Nav>
+                {/* <Nav>
                     <Nav.Item>
                         <Nav.Link onClick={ handleClickToEventsPage }>イベント一覧</Nav.Link>
                     </Nav.Item>
-                </Nav>
+                </Nav> */}
                 <Nav>
                     {(()=>{
                         if (selector.owners.isLoggedIn){

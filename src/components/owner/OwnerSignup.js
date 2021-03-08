@@ -117,7 +117,7 @@ function OwnerSignup(props){
                             <Form.Control type="password" onChange={(e)=>{setOwnerPassword(e.target.value)}}/>
                             </Form.Group>
                         </Col>
-                        {/* 企業・団体の場合ここどうするか、検討 */}
+                        {/* 注意：企業・団体の場合ここどうするか、検討 */}
                         <Col md>
                             <Form.Label >生年月日</Form.Label>
                             <Form.Text>This will not be shown publicly. Confirm your own age, even if this account is for a business, a pet, or something else.</Form.Text>
