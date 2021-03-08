@@ -185,11 +185,13 @@ app.post("/api/user/register", (req, res) => {
                             created_at: new Date() ,
                             updated_at: new Date() ,
                         })
-                        .then(res => {
+                        .then(response => {
                             console.log(`success! user_id:${userPrefId} is created`)
+                            res.sendStatus(201);
                         })
                     } else {
                         console.log("user already exists")
+                        res.sendStatus(409);
                     }
         })
 })

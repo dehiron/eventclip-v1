@@ -6,6 +6,8 @@ import '../Styles.css'
 import HeaderLoginPage from '../header/HeaderLoginPage';
 import UserSignup from './UserSignup';
 import { userLogInAction } from '../../reducks/users/actions';
+import UserSignupSuccessModal from './UserSignupSuccessModal';
+import UserSignupErrorModal from './UserSignupErrorModal';
 
 
 function UserLogin(props){
@@ -17,6 +19,12 @@ function UserLogin(props){
     const [isPassEmpty, setIsPassEmpty] = useState(false);
     const [isIdCorrect, setIsIdCorrect] = useState("not submitted");
     const [isPassCorrect, setIsPassCorrect] = useState("not submitted");
+
+    //ユーザー新規登録後のポップアップウィンドウ用。UserSignupコンポーネントに渡して発火させて、
+    //Loginコンポーネントで受け取ってModalコンポーネントに渡す
+    const [successModalOpen, setSuccessModalOpen] = useState(false);
+    const [errorModalOpen, setErrorModalOpen] = useState(false);
+    const [errorMessage, setErrorMessage] = useState("");
 
     const dispatch = useDispatch();
 
@@ -110,7 +118,22 @@ function UserLogin(props){
             <h4 style={{margin:"2.5rem"}}>アカウントをお持ちでない方はこちら</h4>
             <Button onClick={()=> setSignupShow(true)} style={{color:"darkturquoise", borderColor:"white", backgroundColor:"white", width:"30%", padding:"0.5rem", borderRadius:"5px" }}>新規登録</Button>
             </header>
-            <UserSignup signupShow = {signupShow} setSignupShow = {setSignupShow}/>
+
+            <UserSignup 
+                signupShow = {signupShow} 
+                setSignupShow = {setSignupShow} 
+                setSuccessModalOpen={setSuccessModalOpen} 
+                setErrorModalOpen={setErrorModalOpen} 
+                setErrorMessage={setErrorMessage}/>
+
+            <UserSignupSuccessModal 
+                successModalOpen={successModalOpen} 
+                setSuccessModalOpen={setSuccessModalOpen}/>
+
+            <UserSignupErrorModal 
+                errorMessage={errorMessage} 
+                errorModalOpen={errorModalOpen} 
+                setErrorModalOpen={setErrorModalOpen} />
         </div>
     )
 }
