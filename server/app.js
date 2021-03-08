@@ -272,11 +272,13 @@ app.post("/api/owner/register", (req, res) => {
                             created_at: new Date() ,
                             updated_at: new Date() ,
                         })
-                        .then(res => {
-                            console.log(`success! owner_id:${ownerPrefId} is created`)
+                        .then(response => {
+                            console.log(`success! owner_id:${ownerPrefId} is created`);
+                            res.sendStatus(201);
                         })
                     } else {
                         console.log("owner already exists")
+                        res.sendStatus(409);
                     }
         })
 })

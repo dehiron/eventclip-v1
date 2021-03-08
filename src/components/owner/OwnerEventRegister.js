@@ -9,8 +9,8 @@ import { saveObject } from "../awss3/s3index";
 import HeaderOwnerEventRegister from '../header/HeaderOwnerEventRegister';
 import { withRouter } from 'react-router-dom';
 import OwnerLogin from "./OwnerLogin";
-import SuccessModal from "./SuccessModal";
-import ErrorModal from "./ErrorModal";
+import SuccessModal from "./RegisterEventSuccessModal";
+import ErrorModal from "./RegisterEventErrorModal";
 
 //カレンダーで選べる様にする
 const year = ["2021","2022","2023","2024","2025","2026","2027","2028","2029","2030","2031"]

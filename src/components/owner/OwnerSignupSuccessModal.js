@@ -9,10 +9,10 @@ function SuccessModal(props) {
                 centered 
         >
             <Modal.Header>
-                Yay! Your User Account is Created Successfully!
+                Yay! Your Owner Account is Created Successfully!
             </Modal.Header>
             <Modal.Body>
-                <Container>使い方ステップ的なユーザーへの情報を載せる。Carouselで説明画像を表示</Container>
+                <Container>使い方ステップ的なオーナーへの情報を載せる。Carouselで説明画像を表示</Container>
             </Modal.Body>
             <Modal.Footer>
                 <Button onClick={()=>{props.setSuccessModalOpen(false)}}>

@@ -38,9 +38,16 @@ function OwnerSignup(props){
             body.append("organization", ownerOrganization);
             
             await axios.post('/api/owner/register', body)
-            .then((response) => console.log(response));
+            .then((response) => {
+                if (response.status === 201){
+                    props.setSuccessModalOpen(true);
+                    props.setSignupShow(false); //同時に登録フォームを閉じる
+                }
+            });
         } catch(error){
-            console.log(error);
+            props.setErrorMessage(error.toString());
+            props.setErrorModalOpen(true);
+            // props.setSignupShow(false); //同時に登録フォームを閉じる
         }
     };
 
