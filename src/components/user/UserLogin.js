@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import { Container, Form, Col, Button} from 'react-bootstrap';
+import axios from 'axios';
 import '../Styles.css'
 import HeaderLoginPage from '../header/HeaderLoginPage';
 import UserSignup from './UserSignup';
@@ -8,6 +9,49 @@ import UserSignup from './UserSignup';
 function UserLogin(props){
 
     const [signupShow, setSignupShow] = useState(false);
+    const [inputUserPrefId, setInputUserPrefId] = useState("");
+    const [inputPassword, setInputPassword] = useState("");
+    // const [isIdEmpty, setIsIdEmpty] = useState(false);
+    // const [isPassEmpty, setIsPassEmpty] = useState(false);
+    // const [isIdCorrect, setIsIdCorrect] = useState("not submitted");
+    // const [isPassCorrect, setIsPassCorrect] = useState("not submitted");
+
+    async function handleClickToLogin(){
+        try{
+            const body = new FormData();
+            body.append("input_user_pref_id", inputUserPrefId);
+            body.append("input_password", inputPassword);
+            //他の情報は現時点では認証に必要無いのでappendしない
+            
+            await axios.post('/api/user/login', body)
+            .then(response => {
+                if(response.status === 200){
+                    const userData = response.data;
+                    console.log(userData);
+                    // dispatch(logInAction({
+                    //     id:userData.id,
+                    //     user_pref_id:userData.user_pref_id,
+                    //     user_firstname:userData.user_firstname,
+                    //     user_lastname: userData.user_lastname,
+                    //     date_of_birth: userData.date_of_birth,
+                    //     tel: userData.tel,
+                    //     email: userData.email,
+                    //     organization: userData.organization,
+                    // }))
+                    // props.history.replace(`/user/${userData.id}`)
+                } else if (response.status === 204){
+                    //IDが間違っている=存在しないユーザーの場合：204 no contentにしてる
+                    // setIsIdCorrect(false);
+                    console.log(response);
+                }
+            })
+        } catch(error){
+            //Passwordが間違っている場合：クライアントエラー、401にしてる
+            //ここの処理をもっと綺麗にしたい
+            // setIsPassCorrect(false);
+            console.log(error);
+        }
+    }
 
     return(
         <div className="App">
@@ -20,19 +64,33 @@ function UserLogin(props){
                     <Col md>
                         <Form.Group controlId="formEmail" >
                         <Form.Label >メールアドレスまたはユーザー名</Form.Label>
-                        <Form.Control type="email" />
+                        <Form.Control 
+                            type="email" 
+                            onChange={(e)=>{
+                                setInputUserPrefId(e.target.value); 
+                                // setIsIdCorrect("not submitted");
+                                // if(e.target.value.length > 0) {setIsIdEmpty(false)};
+                                }}
+                        />
                         </Form.Group>
                     </Col>
                     <Col md>
                         <Form.Group controlId="formPassword" >
                         <Form.Label className="login-input">パスワード</Form.Label>
-                        <Form.Control type="password" />
+                        <Form.Control 
+                            type="password"
+                            onChange={(e)=>{
+                                setInputPassword(e.target.value); 
+                                // setIsPassCorrect("not submitted");
+                                // if(e.target.value.length > 0) {setIsPassEmpty(false)};
+                                }}
+                        />
                         </Form.Group>
                     </Col>
                     <Button 
                             style={{ borderColor:"turquoise", backgroundColor:"darkturquoise", width:"80%", marginTop:"2rem" }} 
                             onClick={() => {
-                                // 作成時はOwnerLogin.jsファイルを参照
+                                handleClickToLogin()
                             }}
                         >
                             ログイン

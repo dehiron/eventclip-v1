@@ -190,6 +190,49 @@ app.post("/api/user/register", (req, res) => {
         })
 })
 
+//ユーザーログイン認証確認用
+app.post("/api/user/login", (req, res) => {
+    const userData = req.body;
+
+    const inputUserPrefId = userData.input_user_pref_id;
+    const inputPassword = userData.input_password;
+
+    const accountCounter = [];
+
+    async function confirmAuth(id,pass){
+        await database("users")
+        .count('id')
+        .where({user_pref_id:id})
+        .then(result => {
+            // result は [ { count: '1' } ]
+            accountCounter.push(result[0].count);
+        });
+
+        if (parseFloat(accountCounter[0]) > 0){ //ユーザー数が１以上＝ユーザーが存在していた場合
+            database("users")
+            .select()
+            .where({user_pref_id:id})
+            .then(result => {
+                if (result[0].password === pass){
+                    res.send(result[0]);
+                } else {
+                    //パスワード間違った場合
+                    res.sendStatus(401)
+                    // express deprecated res.send(status, body): Use res.status(status).send(body) instead
+                }
+            })
+        } else {
+            //存在しないユーザーの場合
+            res.sendStatus(204);
+        }
+
+    };
+
+    confirmAuth(inputUserPrefId,inputPassword)
+
+        
+})
+
 //新規オーナー登録用
 app.post("/api/owner/register", (req, res) => {
     const ownerData = req.body;
