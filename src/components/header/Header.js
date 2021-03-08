@@ -7,6 +7,8 @@ import { useSelector } from 'react-redux';
 function Header (props){
 
     const selector = useSelector((state) => state);
+    const ownerData = selector.owners;
+    const userData = selector.users;
 
     // const handleClickToEventsPage = () => {
     //     props.history.push("/allevents");
@@ -16,6 +18,9 @@ function Header (props){
     }
     const handleClickToOwnerMypage = (id) => {
         props.history.push(`/owner/${id}`)
+    }
+    const handleClickToUserMypage = (id) => {
+        props.history.push(`/user/${id}`)
     }
 
 
@@ -38,12 +43,15 @@ function Header (props){
                 </Nav> */}
                 <Nav>
                     {(()=>{
-                        if (selector.owners.isLoggedIn){
+                        if (ownerData.isLoggedIn || userData.isLoggedIn){
                             return (
                                 <Nav.Item>
                                     <Nav.Link onClick={() => {
-                                        handleClickToOwnerMypage(selector.owners.id);
-                                        //注意：ユーザーとしてログインしている時のロジック考える必要有り。
+                                        if (ownerData.isLoggedIn === true) {
+                                            handleClickToOwnerMypage(ownerData.id);
+                                        } else if (userData.isLoggedIn === true) {
+                                            handleClickToUserMypage(userData.id);
+                                        }
                                     }} 
                                     >
                                         マイページ

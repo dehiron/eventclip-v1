@@ -6,6 +6,7 @@ import AllEventsList from "./components/event/AllEventsList";
 import OwnerAllEventsList from "./components/owner/OwnerAllEventsList";
 import EventPage from "./components/event/EventPage";
 import UserLogin from "./components/user/UserLogin";
+import UserMypage from "./components/user/UserMypage";
 import OwnerLogin from "./components/owner/OwnerLogin";
 import OwnerMypage from "./components/owner/OwnerMypage";
 
@@ -31,6 +32,10 @@ function App() {
           <Route
             exact path={'/login'}
             render = {props => (<UserLogin {...props}/>)}
+          />
+          <Route
+            exact path={'/user/:id'}
+            render = {props => (<UserMypage {...props}/>)}
           />
           <Route
             exact path={'/ownerlogin'}

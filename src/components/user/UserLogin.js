@@ -1,11 +1,11 @@
 import { useState } from 'react';
 import { Container, Form, Col, Button} from 'react-bootstrap';
 import axios from 'axios';
-// import { useDispatch } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import '../Styles.css'
 import HeaderLoginPage from '../header/HeaderLoginPage';
 import UserSignup from './UserSignup';
-// import { userLogInAction } from '../../reducks/users/actions';
+import { userLogInAction } from '../../reducks/users/actions';
 
 
 function UserLogin(props){
@@ -18,7 +18,7 @@ function UserLogin(props){
     // const [isIdCorrect, setIsIdCorrect] = useState("not submitted");
     // const [isPassCorrect, setIsPassCorrect] = useState("not submitted");
 
-    // const dispatch = useDispatch();
+    const dispatch = useDispatch();
 
     async function handleClickToLogin(){
         try{
@@ -32,15 +32,15 @@ function UserLogin(props){
                 if(response.status === 200){
                     const userData = response.data;
                     console.log(userData);
-                    // dispatch(userLogInAction({
-                    //     id:userData.id,
-                    //     user_pref_id:userData.user_pref_id,
-                    //     user_firstname:userData.user_firstname,
-                    //     user_lastname: userData.user_lastname,
-                    //     date_of_birth: userData.date_of_birth,
-                    //     tel: userData.tel,
-                    //     email: userData.email,
-                    // }))
+                    dispatch(userLogInAction({
+                        id:userData.id,
+                        user_pref_id:userData.user_pref_id,
+                        user_firstname:userData.user_firstname,
+                        user_lastname: userData.user_lastname,
+                        date_of_birth: userData.date_of_birth,
+                        tel: userData.tel,
+                        email: userData.email,
+                    }))
                     props.history.replace("/");
                 } else if (response.status === 204){
                     //IDが間違っている=存在しないユーザーの場合：204 no contentにしてる
