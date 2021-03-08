@@ -2,7 +2,7 @@ import { Container, Col, Button } from "react-bootstrap";
 import { useSelector, useDispatch } from "react-redux";
 import { userLogOutAction } from '../../reducks/users/actions';
 import { persistor } from "../../reducks/store/configureStore";
-// import HeaderOwnerMypage from "../header/HeaderOwnerMypage";
+import HeaderMypage from "../header/HeaderMypage";
 import UserLogin from "./UserLogin";
 
 function UserMypage (props) {
@@ -19,7 +19,7 @@ function UserMypage (props) {
     } else {
         return (
             <Container>
-                    {/* <HeadeOwnerMypage /> */}
+                    <HeaderMypage />
                     
                     <h2 style={{paddingTop:"7rem"}}>Hi {userData.user_pref_id}, Welcome Back!</h2>
                     
