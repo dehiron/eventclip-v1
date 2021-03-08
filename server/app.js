@@ -150,6 +150,46 @@ app.post("/api/event/name", (req, res) => {
         })
 })
 
+//新規ユーザー登録用
+app.post("/api/user/register", (req, res) => {
+    const userData = req.body;
+
+    const userFirstName = userData.user_firstname;
+    const userLastName = userData.user_lastname;
+    const userTel = userData.tel;
+    const userEmail = userData.email;
+    const userPrefId = userData.user_pref_id;
+    const userPassword = userData.password;
+    const dateOfBirth = userData.date_of_birth;
+
+    database("users")
+        .count('id')
+        .where({
+            user_pref_id:userPrefId})
+        .then(
+            result => {
+                if (result[0].count === '0'){
+                    database("users")
+                        .insert({
+                            user_firstname: userFirstName,
+                            user_lastname: userLastName,
+                            tel: userTel,
+                            email: userEmail,
+                            user_pref_id: userPrefId,
+                            password: userPassword,
+                            date_of_birth: dateOfBirth,
+                            created_at: new Date() ,
+                            updated_at: new Date() ,
+                        })
+                        .then(res => {
+                            console.log(`success! user_id:${userPrefId} is created`)
+                        })
+                    } else {
+                        console.log("user already exists")
+                    }
+        })
+})
+
 //新規オーナー登録用
 app.post("/api/owner/register", (req, res) => {
     const ownerData = req.body;

@@ -21,6 +21,25 @@ function UserSignup(props){
     const [userDobMonth, setUserDobMonth] = useState(null)
     const [userDobDay, setUserDobDay] = useState(null)
 
+    async function handleClickToRegisterUser(e){
+        e.preventDefault();
+        try{
+            const body = new FormData();
+            body.append("user_firstname", userFirstName);
+            body.append("user_lastname", userLastName);
+            body.append("tel", userTel);
+            body.append("email", userEmail);
+            body.append("user_pref_id", userPrefId);
+            body.append("password", userPassword);
+            body.append("date_of_birth", userDobYear+"-"+userDobMonth+"-"+userDobDay);
+            
+            await axios.post('/api/user/register', body)
+            .then((response) => console.log(response));
+        } catch(error){
+            console.log(error);
+        }
+    };
+
     return(
         <Modal
                 size="lg"
@@ -113,7 +132,7 @@ function UserSignup(props){
                     <Button variant="secondary" onClick={() => props.setSignupShow(false)}>
                         キャンセル
                     </Button>
-                    <Button onClick={ null } style={{ borderColor:"turquoise", backgroundColor:"darkturquoise"}}>アカウント作成</Button>
+                    <Button onClick={ handleClickToRegisterUser } style={{ borderColor:"turquoise", backgroundColor:"darkturquoise"}}>アカウント作成</Button>
                 </Modal.Footer>
             </Modal>
 
