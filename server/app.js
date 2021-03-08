@@ -185,7 +185,7 @@ app.post("/api/user/register", (req, res) => {
                             created_at: new Date() ,
                             updated_at: new Date() ,
                         })
-                        .then(response => {
+                        .then(result => {
                             console.log(`success! user_id:${userPrefId} is created`)
                             res.sendStatus(201);
                         })
@@ -272,7 +272,7 @@ app.post("/api/owner/register", (req, res) => {
                             created_at: new Date() ,
                             updated_at: new Date() ,
                         })
-                        .then(response => {
+                        .then(result => {
                             console.log(`success! owner_id:${ownerPrefId} is created`);
                             res.sendStatus(201);
                         })
@@ -375,9 +375,13 @@ app.delete("/api/event/id", (req,res) => {
         database("events")
         .where({id: req.query.id})
         .del()
-        .then((res => console.log(`event (id:${req.query.id}/name:${req.query.event_name}) deleted`)));
+        .then(result => {
+            console.log(`event (id:${req.query.id}/name:${req.query.event_name}) deleted`)
+            res.sendStatus(204);
+        });
     } catch(error) {
         console.log(error);
+        res.sendStatus(409);
     }
 });
 
