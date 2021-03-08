@@ -6,8 +6,8 @@ import '../Styles.css'
 import HeaderLoginPage from '../header/HeaderLoginPage';
 import UserSignup from './UserSignup';
 import { userLogInAction } from '../../reducks/users/actions';
-import UserSignupSuccessModal from './UserSignupSuccessModal';
-import UserSignupErrorModal from './UserSignupErrorModal';
+import UserSignupSuccessModal from './modal/UserSignupSuccessModal';
+import UserSignupErrorModal from './modal/UserSignupErrorModal';
 
 
 function UserLogin(props){

@@ -7,8 +7,8 @@ import '../Styles.css';
 import HeaderOwnerLoginPage from '../header/HeaderOwnerLoginPage';
 import OwnerSignup from './OwnerSignup';
 import { withRouter } from 'react-router-dom';
-import OwnerSignupSuccessModal from './OwnerSignupSuccessModal';
-import OwnerSignupErrorModal from './OwnerSignupErrorModal';
+import OwnerSignupSuccessModal from './modal/OwnerSignupSuccessModal';
+import OwnerSignupErrorModal from './modal/OwnerSignupErrorModal';
 
 function OwnerLogin(props){
 
