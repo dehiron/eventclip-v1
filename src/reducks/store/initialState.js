@@ -5,6 +5,15 @@ const initialState = {
 
     },
     users:{
+        isLoggedIn: false,
+        id: "",
+        user_pref_id: "",
+        // owner_password: "",
+        user_firstname: "",
+        user_lastname: "",
+        date_of_birth: "",
+        tel: "",
+        email: "",
 
     },
     owners: {
