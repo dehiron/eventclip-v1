@@ -1,9 +1,11 @@
 //actionsは必ずプレーンなObjectを返す
 
-const LOG_IN = "LOG_IN";
-const logInAction = (userState) => {
+// ここで定義している定数名と関数名に関してはOwnersで定義している物と同一にすると上書きの関係で混ざってしまうので注意
+// 個別の定数名・関数名を書いてあげてごっちゃにならない様にするのがベター
+const USER_LOG_IN = "USER_LOG_IN";
+const userLogInAction = (userState) => {
     return {
-        type: "LOG_IN",
+        type: "USER_LOG_IN",
         payload: {
             isLoggedIn: true,
             id: userState.id,
@@ -18,11 +20,11 @@ const logInAction = (userState) => {
     }
 };
 
-const LOG_OUT = "LOG_OUT";
-const logOutAction = () => {
+const USER_LOG_OUT = "USER_LOG_OUT";
+const userLogOutAction = () => {
     //サインアウト＝ステートを初期状態に戻す
     return {
-        type: "LOG_OUT",
+        type: "USER_LOG_OUT",
         payload: {
             isLoggedIn: false,
             id: "",
@@ -36,4 +38,4 @@ const logOutAction = () => {
     }
 };
 
-export { LOG_IN, logInAction, LOG_OUT, logOutAction }
+export { USER_LOG_IN, userLogInAction, USER_LOG_OUT, userLogOutAction }

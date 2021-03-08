@@ -1,9 +1,11 @@
 import { useState } from 'react';
 import { Container, Form, Col, Button} from 'react-bootstrap';
 import axios from 'axios';
+// import { useDispatch } from 'react-redux';
 import '../Styles.css'
 import HeaderLoginPage from '../header/HeaderLoginPage';
 import UserSignup from './UserSignup';
+// import { userLogInAction } from '../../reducks/users/actions';
 
 
 function UserLogin(props){
@@ -15,6 +17,8 @@ function UserLogin(props){
     // const [isPassEmpty, setIsPassEmpty] = useState(false);
     // const [isIdCorrect, setIsIdCorrect] = useState("not submitted");
     // const [isPassCorrect, setIsPassCorrect] = useState("not submitted");
+
+    // const dispatch = useDispatch();
 
     async function handleClickToLogin(){
         try{
@@ -28,7 +32,7 @@ function UserLogin(props){
                 if(response.status === 200){
                     const userData = response.data;
                     console.log(userData);
-                    // dispatch(logInAction({
+                    // dispatch(userLogInAction({
                     //     id:userData.id,
                     //     user_pref_id:userData.user_pref_id,
                     //     user_firstname:userData.user_firstname,
@@ -36,7 +40,6 @@ function UserLogin(props){
                     //     date_of_birth: userData.date_of_birth,
                     //     tel: userData.tel,
                     //     email: userData.email,
-                    //     organization: userData.organization,
                     // }))
                     props.history.replace("/");
                 } else if (response.status === 204){

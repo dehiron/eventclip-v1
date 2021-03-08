@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { useDispatch} from 'react-redux';
-import { logInAction } from '../../reducks/owners/actions';
+import { ownerLogInAction } from '../../reducks/owners/actions';
 import { Container, Form, Col, Button} from 'react-bootstrap';
 import axios from 'axios';
 import '../Styles.css';
@@ -31,7 +31,7 @@ function OwnerLogin(props){
             .then(response => {
                 if(response.status === 200){
                     const ownerData = response.data;
-                    dispatch(logInAction({
+                    dispatch(ownerLogInAction({
                         id:ownerData.id,
                         owner_pref_id:ownerData.owner_pref_id,
                         owner_firstname:ownerData.owner_firstname,

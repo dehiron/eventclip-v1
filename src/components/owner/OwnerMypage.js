@@ -1,6 +1,6 @@
 import { Container, Col, Button } from "react-bootstrap";
 import { useSelector, useDispatch } from "react-redux";
-import { logOutAction } from '../../reducks/owners/actions';
+import { ownerLogOutAction } from '../../reducks/owners/actions';
 import { persistor } from "../../reducks/store/configureStore";
 import HeaderOwnerMypage from "../header/HeaderOwnerMypage";
 import OwnerLogin from "./OwnerLogin";
@@ -54,7 +54,7 @@ function OwnerMypage (props) {
                         <Button　
                             onClick={()=>{
                                 persistor.purge(); //localstorageに保存された(condigure)Storeからのstateデータをクリア
-                                dispatch(logOutAction()); //store内のstateデータをクリア。operationsを使っての非同期処理は必要ないっぽい。
+                                dispatch(ownerLogOutAction()); //store内のstateデータをクリア。operationsを使っての非同期処理は必要ないっぽい。
                                 props.history.replace("/") //HPに画面遷移
                             }}
                         >
