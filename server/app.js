@@ -143,9 +143,13 @@ app.post("/api/event/name", (req, res) => {
                             created_at: new Date(),
                             updated_at: new Date(),
                         })
-                        .then(res => console.log("success"))
+                        .then(result => {
+                            console.log("success");
+                            res.sendStatus(201);
+                        })
                     } else {
                         console.log("event already registered")
+                        res.sendStatus(409);
                     }
         })
 })

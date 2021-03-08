@@ -9,6 +9,8 @@ import { saveObject } from "../awss3/s3index";
 import HeaderOwnerEventRegister from '../header/HeaderOwnerEventRegister';
 import { withRouter } from 'react-router-dom';
 import OwnerLogin from "./OwnerLogin";
+import SuccessModal from "./SuccessModal";
+import ErrorModal from "./ErrorModal";
 
 //カレンダーで選べる様にする
 const year = ["2021","2022","2023","2024","2025","2026","2027","2028","2029","2030","2031"]
@@ -24,55 +26,61 @@ function OwnerEventRegister(props) {
     const ownerData = selector.owners;
 
     //state群
-    const [eventName, setEventName] = useState("")
-    // const [startDate, setStartDate] = useState("")
-    const [startTimeYear, setStartTimeYear] = useState("Year")
-    const [startTimeMonth, setStartTimeMonth] = useState("Month")
-    const [startTimeDay, setStartTimeDay] = useState("Day")
-    // const [endDate, setEndDate] = useState("")
-    const [endTimeYear, setEndTimeYear] = useState("Year")
-    const [endTimeMonth, setEndTimeMonth] = useState("Month")
-    const [endTimeDay, setEndTimeDay] = useState("Day")
-    const [dateDetail, setDateDetail] = useState("")
-    const [category, setCategory] = useState("")
-    // const [startTime, setStartTime] = useState("")
-    const [startTimeHour, setStartTimeHour] = useState("")
-    const [startTimeMin, setStartTimeMin] = useState("")
-    // const [endTime, setEndTime] = useState("")
-    const [endTimeHour, setEndTimeHour] = useState("")
-    const [endTimeMin, setEndTimeMin] = useState("")
-    const [timeDetail, setTimeDetail] = useState("")
-    const [state, setState] = useState("")
-    const [prefecture, setPrefecture] = useState("")
-    const [city, setCity] = useState("")
-    // const [address, setAddress] = useState("")
-    const [addressDetail1, setAddressDetail1] = useState("")
-    const [addressDetail2, setAddressDetail2] = useState("")
-    // const [latitude, setLatitude] = useState("")
-    // const [longitude, setLongitude] = useState("")
-    const [facilityName, setFacilityName] = useState("")
-    const [tel, setTel] = useState("")
-    const [description, setDescription] = useState("")
-    const [descriptionDetail, setDescriptionDetail] = useState("")
-    const [parkSpots, setParkSpots] = useState("")
-    const [parkPrice, setParkPrice] = useState("")
-    const [priceDetail, setPriceDetail] = useState("")
-    const [creditCardInfo, setCreditCardInfo] = useState("")
-    // const [ownerId, setOwnerId] = useState("")
-    const [tag, setTag] = useState("")
+    const [eventName, setEventName] = useState("");
+    // const [startDate, setStartDate] = useState("");
+    const [startTimeYear, setStartTimeYear] = useState("Year");
+    const [startTimeMonth, setStartTimeMonth] = useState("Month");
+    const [startTimeDay, setStartTimeDay] = useState("Day");
+    // const [endDate, setEndDate] = useState("");
+    const [endTimeYear, setEndTimeYear] = useState("Year");
+    const [endTimeMonth, setEndTimeMonth] = useState("Month");
+    const [endTimeDay, setEndTimeDay] = useState("Day");
+    const [dateDetail, setDateDetail] = useState("");
+    const [category, setCategory] = useState("");
+    // const [startTime, setStartTime] = useState("");
+    const [startTimeHour, setStartTimeHour] = useState("");
+    const [startTimeMin, setStartTimeMin] = useState("");
+    // const [endTime, setEndTime] = useState("");
+    const [endTimeHour, setEndTimeHour] = useState("");
+    const [endTimeMin, setEndTimeMin] = useState("");
+    const [timeDetail, setTimeDetail] = useState("");
+    const [state, setState] = useState("");
+    const [prefecture, setPrefecture] = useState("");
+    const [city, setCity] = useState("");
+    // const [address, setAddress] = useState("");
+    const [addressDetail1, setAddressDetail1] = useState("");
+    const [addressDetail2, setAddressDetail2] = useState("");
+    // const [latitude, setLatitude] = useState("");
+    // const [longitude, setLongitude] = useState("");
+    const [facilityName, setFacilityName] = useState("");
+    const [tel, setTel] = useState("");
+    const [description, setDescription] = useState("");
+    const [descriptionDetail, setDescriptionDetail] = useState("");
+    const [parkSpots, setParkSpots] = useState("");
+    const [parkPrice, setParkPrice] = useState("");
+    const [priceDetail, setPriceDetail] = useState("");
+    const [creditCardInfo, setCreditCardInfo] = useState("");
+    // const [ownerId, setOwnerId] = useState("");
+    const [tag, setTag] = useState("");
     // オーナーが写真を選ばなければ自動でnoimageの画像になる様に設定
     // 注意：オーナーがまとめてアップロードできる様に、リファクタリング必要
-    const [img1, setImg1] = useState("")
-    const [img2, setImg2] = useState("")
-    const [img3, setImg3] = useState("")
-    const [img4, setImg4] = useState("")
-    const [img5, setImg5] = useState("")
-    const [linkToHp, setLinkToHp] = useState("")
+    const [img1, setImg1] = useState("");
+    const [img2, setImg2] = useState("");
+    const [img3, setImg3] = useState("");
+    const [img4, setImg4] = useState("");
+    const [img5, setImg5] = useState("");
+    const [linkToHp, setLinkToHp] = useState("");
+
+    //イベント登録後のポップアップウィンドウ用
+    const [successModalOpen, setSuccessModalOpen] = useState(false);
+    const [errorModalOpen, setErrorModalOpen] = useState(false);
+    const [errorMessage, setErrorMessage] = useState("");
     
     //関数群
     async function uploadImage(img){
         if (img !== undefined　&& img !== ""){
             await saveObject(img,time);
+            // 注意：確認用。最終的には消す。
             console.log(`imgアップロード成功、S3保存先URL：https://eventclip.s3-ap-northeast-1.amazonaws.com/${time.toISOString()}${img.name}`)
         }
     }
@@ -123,9 +131,15 @@ function OwnerEventRegister(props) {
             body.append('link_to_hp', linkToHp);
             
             await axios.post('/api/event/name', body)
-            .then((response) => console.log(response));
+            .then((response) => {
+                if (response.status === 201){
+                    setSuccessModalOpen(true);
+                }
+
+            });
         } catch(error){
-            console.log(error)
+            setErrorModalOpen(true);
+            setErrorMessage(error);
         }
     }
 
@@ -236,8 +250,10 @@ function OwnerEventRegister(props) {
                     <button onClick={handleRegisterEvent}>イベント登録</button>
                     <button onClick={() => {props.history.goBack()} }>マイページに戻る</button>
                     <button onClick={() => {props.history.replace("/")} }>Homeに戻る</button>
-    
                 </Container>
+
+                <SuccessModal successModalOpen = {successModalOpen} setSuccessModalOpen = {setSuccessModalOpen} />
+                <ErrorModal errorMessage = {errorMessage} errorModalOpen = {errorModalOpen} setErrorModalOpen = {setErrorModalOpen} />
     
           </Container>
         )
