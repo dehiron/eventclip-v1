@@ -21,8 +21,8 @@ function UserSignup(props){
     const [userDobMonth, setUserDobMonth] = useState(null)
     const [userDobDay, setUserDobDay] = useState(null)
 
-    async function handleClickToRegisterUser(){
-        // e.preventDefault();
+    async function handleClickToRegisterUser(e){
+        e.preventDefault();
         try{
             const body = new FormData();
             body.append("user_firstname", userFirstName);
@@ -36,13 +36,11 @@ function UserSignup(props){
             await axios.post('/api/user/register', body)
             .then((response) => {
                 if (response.status === 201){
-                    console.log(response)
                     props.setSuccessModalOpen(true);
                     props.setSignupShow(false); //同時に登録フォームを閉じる
                 }
             });
         } catch(error){
-            console.log(error.toString());
             props.setErrorMessage(error.toString());
             props.setErrorModalOpen(true);
             // props.setSignupShow(false); //同時に登録フォームを閉じる
