@@ -1,7 +1,7 @@
 //Page
 
 import React, {useState, useEffect} from "react"
-import { useSelector } from "react-redux";
+// import { useSelector } from "react-redux";
 import axios from 'axios';
 import Modal from 'react-modal';
 import './Styles.css'
@@ -19,8 +19,8 @@ Modal.setAppElement("#root")
 function HomePage(props) {
 
   // storeの情報参照
-  const selector = useSelector((state) => state);
-  console.log(selector)
+  // const selector = useSelector((state) => state);
+  // console.log(selector)
 
   //state群
   const [isLoading, setLoading] = useState(true)

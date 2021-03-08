@@ -13,10 +13,10 @@ function UserLogin(props){
     const [signupShow, setSignupShow] = useState(false);
     const [inputUserPrefId, setInputUserPrefId] = useState("");
     const [inputPassword, setInputPassword] = useState("");
-    // const [isIdEmpty, setIsIdEmpty] = useState(false);
-    // const [isPassEmpty, setIsPassEmpty] = useState(false);
-    // const [isIdCorrect, setIsIdCorrect] = useState("not submitted");
-    // const [isPassCorrect, setIsPassCorrect] = useState("not submitted");
+    const [isIdEmpty, setIsIdEmpty] = useState(false);
+    const [isPassEmpty, setIsPassEmpty] = useState(false);
+    const [isIdCorrect, setIsIdCorrect] = useState("not submitted");
+    const [isPassCorrect, setIsPassCorrect] = useState("not submitted");
 
     const dispatch = useDispatch();
 
@@ -31,7 +31,6 @@ function UserLogin(props){
             .then(response => {
                 if(response.status === 200){
                     const userData = response.data;
-                    console.log(userData);
                     dispatch(userLogInAction({
                         id:userData.id,
                         user_pref_id:userData.user_pref_id,
@@ -44,15 +43,13 @@ function UserLogin(props){
                     props.history.replace("/");
                 } else if (response.status === 204){
                     //IDが間違っている=存在しないユーザーの場合：204 no contentにしてる
-                    // setIsIdCorrect(false);
-                    console.log(response);
+                    setIsIdCorrect(false);
                 }
             })
         } catch(error){
             //Passwordが間違っている場合：クライアントエラー、401にしてる
             //ここの処理をもっと綺麗にしたい
-            // setIsPassCorrect(false);
-            console.log(error);
+            setIsPassCorrect(false);
         }
     }
 
@@ -71,10 +68,12 @@ function UserLogin(props){
                             type="email" 
                             onChange={(e)=>{
                                 setInputUserPrefId(e.target.value); 
-                                // setIsIdCorrect("not submitted");
-                                // if(e.target.value.length > 0) {setIsIdEmpty(false)};
+                                setIsIdCorrect("not submitted");
+                                if(e.target.value.length > 0) {setIsIdEmpty(false)};
                                 }}
                         />
+                        {isIdEmpty && <Form.Text style={{color:"red"}}>メールアドレスまたはユーザー名が空白です</Form.Text>}
+                        {!isIdEmpty && !isIdCorrect && <Form.Text style={{color:"red"}}>ユーザーが存在しません</Form.Text>}
                         </Form.Group>
                     </Col>
                     <Col md>
@@ -84,16 +83,24 @@ function UserLogin(props){
                             type="password"
                             onChange={(e)=>{
                                 setInputPassword(e.target.value); 
-                                // setIsPassCorrect("not submitted");
-                                // if(e.target.value.length > 0) {setIsPassEmpty(false)};
+                                setIsPassCorrect("not submitted");
+                                if(e.target.value.length > 0) {setIsPassEmpty(false)};
                                 }}
                         />
+                        {isPassEmpty && <Form.Text style={{color:"red"}}>パスワードが空白です</Form.Text>}
+                        {!isPassEmpty && isIdCorrect && !isPassCorrect && <Form.Text style={{color:"red"}}>パスワードが正しくありません</Form.Text>}
                         </Form.Group>
                     </Col>
                     <Button 
                             style={{ borderColor:"turquoise", backgroundColor:"darkturquoise", width:"80%", marginTop:"2rem" }} 
                             onClick={() => {
-                                handleClickToLogin()
+                                if (inputUserPrefId.length === 0) {
+                                    setIsIdEmpty(true)
+                                } if (inputPassword.length === 0){
+                                    setIsPassEmpty(true)
+                                } else {
+                                    handleClickToLogin()
+                                }
                             }}
                         >
                             ログイン
