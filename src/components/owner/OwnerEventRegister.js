@@ -1,6 +1,6 @@
-import {useState} from "react";
+import {useEffect, useState} from "react";
 import axios from 'axios';
-import { Container } from "react-bootstrap";
+import { Container, Row, Col, Button, Form, Table, Checkbox } from "react-bootstrap";
 import { useSelector } from "react-redux";
 import { getGeocode, getLatLng } from "use-places-autocomplete";
 import '../Styles.css';
@@ -18,31 +18,38 @@ const month = ["01","02","03","04","05","06","07","08","09","10","11","12"]
 const day = ["01","02","03","04","05","06","07","08","09","10","11","12","13","14","15","16","17","18","19","20","21","22","23","24","25","26","27","28","29","30","31"]
 const hour = ["00","01","02","03","04","05","06","07","08","09","10","11","12","13","14","15","16","17","18","19","20","21","22","23","24"]
 const min = ["00","30"]
+const eventCategory = ["音楽","食べる・飲む","エンタメ","フェス","祭り","展示会","講演会","スポーツ"] //注意：カテゴリー分け考える必要ある
+const spotCategory = ["カフェ","インドア","アウトドア"] //注意：カテゴリー分け考える必要ある
 
 function OwnerEventRegister(props) {
 
     const time = new Date();
+    const todayStr = `${time.getFullYear()}-${(time.getMonth()+1).toString().padStart(2, '0')}-${time.getDate().toString().padStart(2, '0')}`.replace(/\n|\r/g, '');
+    const tenYearsLater = new Date(time.setDate(time.getDate()+3650));
+    const tenYearsLaterStr = `${tenYearsLater.getFullYear()}-${(tenYearsLater.getMonth()+1).toString().padStart(2, '0')}-${tenYearsLater.getDate().toString().padStart(2, '0')}`.replace(/\n|\r/g, '');
     const selector = useSelector((state) => state);
     const ownerData = selector.owners;
 
     //state群
+    const [type, setType] = useState(""); //イベントかスポットか（3/9追加）
     const [eventName, setEventName] = useState("");
-    // const [startDate, setStartDate] = useState("");
-    const [startTimeYear, setStartTimeYear] = useState("Year");
-    const [startTimeMonth, setStartTimeMonth] = useState("Month");
-    const [startTimeDay, setStartTimeDay] = useState("Day");
-    // const [endDate, setEndDate] = useState("");
-    const [endTimeYear, setEndTimeYear] = useState("Year");
-    const [endTimeMonth, setEndTimeMonth] = useState("Month");
-    const [endTimeDay, setEndTimeDay] = useState("Day");
+    const [startDate, setStartDate] = useState(todayStr);
+    // const [startTimeYear, setStartTimeYear] = useState("Year");
+    // const [startTimeMonth, setStartTimeMonth] = useState("Month");
+    // const [startTimeDay, setStartTimeDay] = useState("Day");
+    const [endDate, setEndDate] = useState(tenYearsLaterStr);
+    // const [endTimeYear, setEndTimeYear] = useState("Year");
+    // const [endTimeMonth, setEndTimeMonth] = useState("Month");
+    // const [endTimeDay, setEndTimeDay] = useState("Day");
     const [dateDetail, setDateDetail] = useState("");
     const [category, setCategory] = useState("");
-    // const [startTime, setStartTime] = useState("");
-    const [startTimeHour, setStartTimeHour] = useState("");
-    const [startTimeMin, setStartTimeMin] = useState("");
-    // const [endTime, setEndTime] = useState("");
-    const [endTimeHour, setEndTimeHour] = useState("");
-    const [endTimeMin, setEndTimeMin] = useState("");
+    const [startTime, setStartTime] = useState("");
+    // const [startTimeHour, setStartTimeHour] = useState("");
+    // const [startTimeMin, setStartTimeMin] = useState("");
+    const [endTime, setEndTime] = useState("");
+    const [timeType, setTimeType] = useState("");
+    // const [endTimeHour, setEndTimeHour] = useState("");
+    // const [endTimeMin, setEndTimeMin] = useState("");
     const [timeDetail, setTimeDetail] = useState("");
     const [state, setState] = useState("");
     const [prefecture, setPrefecture] = useState("");
@@ -71,6 +78,10 @@ function OwnerEventRegister(props) {
     const [img5, setImg5] = useState("");
     const [linkToHp, setLinkToHp] = useState("");
 
+    //開催時間のデータ処理
+    const dateDiff = (endDate.slice(0,4) + endDate.slice(5,7) + endDate.slice(8,10)) - (startDate.slice(0,4) + startDate.slice(5,7) + startDate.slice(8,10)); 
+    const [schedule, setSchedule] = useState([]);
+
     //イベント登録後のポップアップウィンドウ用
     const [successModalOpen, setSuccessModalOpen] = useState(false);
     const [errorModalOpen, setErrorModalOpen] = useState(false);
@@ -83,6 +94,16 @@ function OwnerEventRegister(props) {
             // 注意：確認用。最終的には消す。
             console.log(`imgアップロード成功、S3保存先URL：https://eventclip.s3-ap-northeast-1.amazonaws.com/${time.toISOString()}${img.name}`)
         }
+    }
+    async function generateScheduleArray(){
+        const scheduleResult = [];
+        for (let i = 0 ; i < dateDiff+1; i++){
+            const fixedStartDate = new Date(startDate);
+            const nextDay = new Date(fixedStartDate.setDate(fixedStartDate.getDate()+i));
+            const nextDayStr = `${nextDay.getFullYear()}-${(nextDay.getMonth()+1).toString().padStart(2, '0')}-${nextDay.getDate().toString().padStart(2, '0')}`.replace(/\n|\r/g, '');
+            scheduleResult.push(nextDayStr);
+        }
+        setSchedule(scheduleResult)
     }
     async function handleRegisterEvent(e){
         e.preventDefault();
@@ -100,12 +121,12 @@ function OwnerEventRegister(props) {
             //body作る
             const body = new FormData();
             body.append('event_name', eventName);
-            body.append('start_date', startTimeYear+"-"+startTimeMonth+"-"+startTimeDay);
-            body.append('end_date', endTimeYear+"-"+endTimeMonth+"-"+endTimeDay);
+            body.append('start_date', startDate);
+            body.append('end_date', endDate);
             body.append('date_detail', dateDetail);
             body.append('category', category);
-            body.append('start_time', startTimeHour+":"+startTimeMin);
-            body.append('end_time', endTimeHour+":"+endTimeMin);
+            body.append('start_time', startTime);
+            body.append('end_time', endTime);
             body.append('time_detail', timeDetail);
             body.append('state', state);
             body.append('prefecture', prefecture);
@@ -143,6 +164,9 @@ function OwnerEventRegister(props) {
         }
     }
 
+    useEffect(()=>{
+        generateScheduleArray();
+    },[endDate])
 
 
     if (!ownerData.isLoggedIn){
@@ -154,103 +178,112 @@ function OwnerEventRegister(props) {
         return (
             <Container>
                 <HeaderOwnerEventRegister />
-                <Container style={{paddingTop:"7rem"}}>
-                    <h2>イベント登録フォーム</h2>
-    
-                    <ul className = "all-events">
-                    <li><p>イベント名称：<input placeholder="例：第一回大江戸花火大会" onChange={e => setEventName(e.target.value)}></input></p></li>
-                    <li><p>開始日：
-                            <select name="Year" onChange={e => {setStartTimeYear(e.target.value); setEndTimeYear(e.target.value)}}>
-                                <option value="Year">{startTimeYear}</option>
-                                {year.map((year) => <option key={year}>{year}</option>)}
-                            </select>
-                            <span> / </span>
-                            <select name="Month" onChange={e => {setStartTimeMonth(e.target.value); setEndTimeMonth(e.target.value)}}>
-                                <option value="Month">Month</option>
-                                {month.map((month) => <option key={month}>{month}</option>)}
-                            </select>
-                            <span> / </span>
-                            <select name="Day" onChange={e => {setStartTimeDay(e.target.value); setEndTimeDay(e.target.value)}}>
-                                <option value="Day">Day</option>
-                                {day.map((day) => <option key={day}>{day}</option>)}
-                            </select>
-                            </p>
-                        </li>
-                        <li><p>終了日：
-                            <select name="Year" onChange={e => setEndTimeYear(e.target.value)}>
-                                <option value="Year">{endTimeYear}</option>
-                                {year.map((year) => <option key={year}>{year}</option>)}
-                            </select>
-                            <span> / </span>
-                            <select name="Month" onChange={e => setEndTimeMonth(e.target.value)}>
-                                <option value="Month">{endTimeMonth}</option>
-                                {month.map((month) => <option key={month}>{month}</option>)}
-                            </select>
-                            <span> / </span>
-                            <select name="Day" onChange={e => setEndTimeDay(e.target.value)}>
-                                <option value="Day">{endTimeDay}</option>
-                                {day.map((day) => <option key={day}>{day}</option>)}
-                            </select>
-                            </p>
-                        </li>
-                        <li><p>開催期間についての補足情報：<input placeholder="例：開催期間についての補足情報" onChange={e => setDateDetail(e.target.value)}></input></p></li>
-                        <li><p>カテゴリー：<input placeholder="例：イベント" onChange={e => setCategory(e.target.value)}></input></p></li>
-                        <li><p>開始時刻：
-                            <select name="Hour" onChange={e => setStartTimeHour(e.target.value)}>
-                                <option value="Hour">Hour</option>
-                                {hour.map((hour) => <option key={hour}>{hour}</option>)}
-                            </select>
-                            <span> : </span>
-                            <select name="Min" onChange={e => setStartTimeMin(e.target.value)}>
-                                <option value="Min">Min</option>
-                                {min.map((min) => <option key={min}>{min}</option>)}
-                            </select>
-                            </p>
-                        </li>
-                        <li><p>終了時刻：
-                            <select name="hour" onChange={e => setEndTimeHour(e.target.value)}>
-                                <option value="Hour">Hour</option>
-                                {hour.map((hour) => <option key={hour}>{hour}</option>)}
-                            </select>
-                            <span> : </span>
-                            <select name="min" onChange={e => setEndTimeMin(e.target.value)}>
-                                <option value="Min">Min</option>
-                                {min.map((min) => <option key={min}>{min}</option>)}
-                            </select>
-                            </p>
-                        </li>
-                        <li><p>開催期間についての補足情報：<input placeholder="例：開催期間についての補足情報" onChange={e => setTimeDetail(e.target.value)}></input></p></li>
-                        {/* <li><p>住所：<input placeholder="例：東京都渋谷区渋谷0-0-0" onChange={e => setAddress(e.target.value)}></input></p></li> */}
-                        {/* searchBar参考にして入力しやすい様にする */}
-                        <li><p>住所：
-                            <label className="registered-address"><input placeholder="地方を選択（例：関東地方）" onChange={e => setState(e.target.value)}></input></label>
-                            <label className="registered-address"><input placeholder="都道府県を入力（例：東京都）" onChange={e => setPrefecture(e.target.value)}></input></label>
-                            <label className="registered-address"><input placeholder="市区町村を入力（例：渋谷区）" onChange={e => setCity(e.target.value)}></input></label>
-                            <label className="registered-address"><input placeholder="番地以降を入力（例：渋谷1-2-3）" onChange={e => setAddressDetail1(e.target.value)}></input></label>
-                            <label className="registered-address"><input placeholder="（該当する場合）詳細を入力（例：渋谷ビル101）" onChange={e => setAddressDetail2(e.target.value)}></input></label>
-                            </p>
-                        </li>
-                        <li><p>施設名：<input placeholder="例：サンシャインシティ60F" onChange={e => setFacilityName(e.target.value)}></input></p></li>
-                        <li><p>電話番号：<input placeholder="例：0300000000" onChange={e => setTel(e.target.value)}></input></p></li>
-                        <li><p>詳細情報：<input placeholder="例：花火！" onChange={e => setDescription(e.target.value)}></input></p></li>
-                        <li><p>詳細情報についての補足：<input placeholder="例：詳細情報についての補足情報" onChange={e => setDescriptionDetail(e.target.value)}></input></p></li>
-                        <li><p>駐車場情報：<input placeholder="例：有/○○台" onChange={e => setParkSpots(e.target.value)}></input></p></li>
-                        <li><p>駐車場料金：<input placeholder="例：平日8:00~22:00 300円/10分 平日22:00~8:00 100円/60分 土日8:00~22:00 500円/10分 土日22:00~8:00 100円/60分" onChange={e => setParkPrice(e.target.value)}></input></p></li>
-                        <li><p>料金情報：<input placeholder="例：大人700円　子供300円" onChange={e => setPriceDetail(e.target.value)}></input></p></li>
-                        <li><p>クレジットカード利用可否：<input placeholder="例：可/不可" onChange={e => setCreditCardInfo(e.target.value)}></input></p></li>
-                        {/* <li><p>オーナーID：<input placeholder="例：1" onChange={e => setOwnerId(e.target.value)}></input></p></li> */}
-                        <li><p>タグ：<input placeholder="例：['家族と','デートに','お一人様','癒されたい']" onChange={e => setTag(e.target.value)}></input></p></li>
-                        <li><p>画像1：</p><Upload1 setImg1 = {setImg1}/></li>
-                        <li><p>画像2：</p><Upload2 setImg2 = {setImg2}/></li>
-                        <li><p>画像3：</p><Upload3 setImg3 = {setImg3}/></li>
-                        <li><p>画像4：</p><Upload4 setImg4 = {setImg4}/></li>
-                        <li><p>画像5：</p><Upload5 setImg5 = {setImg5}/></li>
-                        <li><p>公式HPリンク：<input placeholder="例：XXXXXXXX.com" onChange={e => setLinkToHp(e.target.value)}></input></p></li>
-                    </ul>
-                    <button onClick={handleRegisterEvent}>イベント登録</button>
-                    <button onClick={() => {props.history.goBack()} }>マイページに戻る</button>
-                    <button onClick={() => {props.history.replace("/")} }>Homeに戻る</button>
-                </Container>
+                <Form style={{paddingTop:"7rem"}}>
+                <h2>イベント登録フォーム</h2>
+                <h6>（ここでイベント/スポット選択して次のページで情報入力のやり方もある）</h6>
+                
+                    <Row>
+                        <Col>
+                        <Form.Group>
+                            <Form.Label >タイプ</Form.Label>
+                            <Form.Control as="select" onChange={(e)=>{setType(e.target.value)}}><option>選択して下さい</option><option>イベント</option><option>スポット</option></Form.Control>
+                        </Form.Group>
+                        </Col>
+                        <Col>
+                        <Form.Group>
+                            <Form.Label >カテゴリー</Form.Label>
+                            {(type === "選択して下さい" || type === "") &&  <Form.Control as="select"><option>←タイプを選択して下さい</option></Form.Control>}
+                            {(type === "イベント") &&  <Form.Control as="select" htmlSize={1} onChange={(e)=>{setCategory(e.target.value)}}><option>{eventCategory.length} categories</option>{eventCategory.map((category)=><option key={category}>{category}</option>)}</Form.Control>}
+                            {(type === "スポット") &&  <Form.Control as="select" htmlSize={1} onChange={(e)=>{setCategory(e.target.value)}}><option>{spotCategory.length} categories</option>{spotCategory.map((spot)=><option key={category}>{spot}</option>)}</Form.Control>}
+                        </Form.Group>
+                        </Col>
+                    </Row>
+                    <Row>
+                        <Col>
+                        <Form.Group>
+                            {(type === "選択して下さい" || type === "") && <Form.Label >名称</Form.Label>}
+                            {(type === "イベント") && <Form.Label >イベント名称</Form.Label>}
+                            {(type === "スポット") && <Form.Label >スポット名称</Form.Label>}
+                            <Form.Control onChange={(e)=>{setEventName(e.target.value)}}></Form.Control>
+                        </Form.Group>
+                        </Col>
+                    </Row>
+                    <Row>
+                        <Col>
+                        <Form.Group>
+                            {(type === "イベント" || type === "選択して下さい" || type === "") && <Form.Label >開始日</Form.Label>}
+                            {(type === "スポット") && <Form.Label >開始日(オープン済の場合は記入不要です)</Form.Label>}
+                            <Form.Control type="date" onChange={(e)=>{setStartDate(e.target.value)}}></Form.Control>
+                        </Form.Group>
+                        </Col>
+                        <Col>
+                        <Form.Group>
+                            <Form.Label >終了日</Form.Label>
+                            {(type === "イベント" || type === "選択して下さい" || type === "") && <Form.Control type="date" min={startDate} onChange={(e)=>{setEndDate(e.target.value); if(dateDiff===0){setTimeType("単日タイプ")}}}></Form.Control>}
+                            {(type === "スポット") && <Form.Control readOnly type="date" onChange={(e)=>{setEndDate(e.target.value); }}></Form.Control>}
+                        </Form.Group>
+                        </Col>
+                    </Row>
+                    <Row>
+                        <Col>
+                        <Form.Group>
+                            {(type === "イベント") && <Form.Label >開催期間についての補足情報</Form.Label>}
+                            {(type === "イベント") && <Form.Control as="textarea" onChange={(e)=>{setEventName(e.target.value)}}></Form.Control>}
+                        </Form.Group>
+                        </Col>
+                    </Row>
+                    
+                    <Row>
+                        <Form.Group>
+                        <Col>
+                        <Form.Label >開催時間</Form.Label>
+                        {(dateDiff !== 0) && <Form.Control 
+                            as="select" 
+                            onChange={(e)=>{
+                                setTimeType(e.target.value);
+                                generateScheduleArray()
+                            }}
+                        >
+                            <option>タイプを選択して下さい</option>
+                            <option>月〜日タイプ</option>
+                            <option>連日タイプ</option>
+                        </Form.Control>}
+                        {(timeType === "単日タイプ") && 
+                            <Table>
+                            <thead>
+                                <tr><th>#</th><th>{startDate}</th></tr>
+                                <tr><th>開始時間</th>{[1].map((num) => <th key={num}><Form.Control type="time"></Form.Control></th>)}</tr>
+                                <tr><th>終了時間</th>{[1].map((num) => <th key={num}><Form.Control type="time"></Form.Control></th>)}</tr>
+                            </thead>
+                            </Table>
+                        }
+                        {(timeType === "月〜日タイプ") && 
+                            <Table>
+                            <thead>
+                                <tr><th>#</th><th>Mon</th><th>Tue</th><th>Wed</th><th>Thu</th><th>Fri</th><th>Sat</th><th>Sun</th></tr>
+                                <tr><th>開始時間</th>{[1,2,3,4,5,6,7].map((num) => <th key={num}><Form.Control type="time"></Form.Control></th>)}</tr>
+                                <tr><th>終了時間</th>{[1,2,3,4,5,6,7].map((num) => <th key={num}><Form.Control type="time"></Form.Control></th>)}</tr>
+                            </thead>
+                            </Table>
+                        }
+                        {(timeType === "連日タイプ") && 
+                            <Table striped hover size="sm">
+                            <thead>
+                                <tr><th>#</th>{schedule.map((day) => <th key={day}>{day}</th>)}</tr>
+                                <tr><th>開始時間</th>{[...Array(dateDiff+1).keys()].map((num) => <th key={num}><Form.Control type="time"></Form.Control></th>)}</tr>
+                                <tr><th>終了時間</th>{[...Array(dateDiff+1).keys()].map((num) => <th key={num}><Form.Control type="time"></Form.Control></th>)}</tr>
+                            </thead>
+                            </Table>
+                        }
+                        
+                        </Col>
+                        </Form.Group>
+                    </Row>
+                    
+                    <Button onClick={handleRegisterEvent}>開催期間</Button>{' '}
+                    <Button onClick={() => {props.history.goBack()} }>マイページに戻る</Button>{' '}
+                    <Button onClick={() => {props.history.replace("/")} }>Homeに戻る</Button>
+                </Form>
 
                 <SuccessModal successModalOpen = {successModalOpen} setSuccessModalOpen = {setSuccessModalOpen} />
                 <ErrorModal errorMessage = {errorMessage} errorModalOpen = {errorModalOpen} setErrorModalOpen = {setErrorModalOpen} />
