@@ -1,6 +1,6 @@
 import {useEffect, useState} from "react";
 import axios from 'axios';
-import { Container, Row, Col, Button, Form, Table, Checkbox } from "react-bootstrap";
+import { Container, Row, Col, Button, Form, Table } from "react-bootstrap";
 import { useSelector } from "react-redux";
 import { getGeocode, getLatLng } from "use-places-autocomplete";
 import '../Styles.css';
@@ -13,11 +13,6 @@ import SuccessModal from "./modal/RegisterEventSuccessModal";
 import ErrorModal from "./modal/RegisterEventErrorModal";
 
 //カレンダーで選べる様にする
-const year = ["2021","2022","2023","2024","2025","2026","2027","2028","2029","2030","2031"]
-const month = ["01","02","03","04","05","06","07","08","09","10","11","12"]
-const day = ["01","02","03","04","05","06","07","08","09","10","11","12","13","14","15","16","17","18","19","20","21","22","23","24","25","26","27","28","29","30","31"]
-const hour = ["00","01","02","03","04","05","06","07","08","09","10","11","12","13","14","15","16","17","18","19","20","21","22","23","24"]
-const min = ["00","30"]
 const eventCategory = ["音楽","食べる・飲む","エンタメ","フェス","祭り","展示会","講演会","スポーツ"] //注意：カテゴリー分け考える必要ある
 const spotCategory = ["カフェ","インドア","アウトドア"] //注意：カテゴリー分け考える必要ある
 
@@ -34,13 +29,7 @@ function OwnerEventRegister(props) {
     const [type, setType] = useState(""); //イベントかスポットか（3/9追加）
     const [eventName, setEventName] = useState("");
     const [startDate, setStartDate] = useState(todayStr);
-    // const [startTimeYear, setStartTimeYear] = useState("Year");
-    // const [startTimeMonth, setStartTimeMonth] = useState("Month");
-    // const [startTimeDay, setStartTimeDay] = useState("Day");
     const [endDate, setEndDate] = useState(tenYearsLaterStr);
-    // const [endTimeYear, setEndTimeYear] = useState("Year");
-    // const [endTimeMonth, setEndTimeMonth] = useState("Month");
-    // const [endTimeDay, setEndTimeDay] = useState("Day");
     const [dateDetail, setDateDetail] = useState("");
     const [category, setCategory] = useState("");
     const [startTime, setStartTime] = useState("");
@@ -54,11 +43,8 @@ function OwnerEventRegister(props) {
     const [state, setState] = useState("");
     const [prefecture, setPrefecture] = useState("");
     const [city, setCity] = useState("");
-    // const [address, setAddress] = useState("");
     const [addressDetail1, setAddressDetail1] = useState("");
     const [addressDetail2, setAddressDetail2] = useState("");
-    // const [latitude, setLatitude] = useState("");
-    // const [longitude, setLongitude] = useState("");
     const [facilityName, setFacilityName] = useState("");
     const [tel, setTel] = useState("");
     const [description, setDescription] = useState("");
@@ -67,7 +53,6 @@ function OwnerEventRegister(props) {
     const [parkPrice, setParkPrice] = useState("");
     const [priceDetail, setPriceDetail] = useState("");
     const [creditCardInfo, setCreditCardInfo] = useState("");
-    // const [ownerId, setOwnerId] = useState("");
     const [tag, setTag] = useState("");
     // オーナーが写真を選ばなければ自動でnoimageの画像になる様に設定
     // 注意：オーナーがまとめてアップロードできる様に、リファクタリング必要
@@ -80,6 +65,7 @@ function OwnerEventRegister(props) {
 
     //開催時間のデータ処理
     const dateDiff = (endDate.slice(0,4) + endDate.slice(5,7) + endDate.slice(8,10)) - (startDate.slice(0,4) + startDate.slice(5,7) + startDate.slice(8,10)); 
+    console.log(dateDiff)
     const [schedule, setSchedule] = useState([]);
 
     //イベント登録後のポップアップウィンドウ用
@@ -124,7 +110,7 @@ function OwnerEventRegister(props) {
             body.append('start_date', startDate);
             body.append('end_date', endDate);
             body.append('date_detail', dateDetail);
-            body.append('category', category);
+            body.append('category', type); //temporaly
             body.append('start_time', startTime);
             body.append('end_time', endTime);
             body.append('time_detail', timeDetail);
@@ -219,8 +205,8 @@ function OwnerEventRegister(props) {
                         <Col>
                         <Form.Group>
                             <Form.Label >終了日</Form.Label>
-                            {(type === "イベント" || type === "選択して下さい" || type === "") && <Form.Control type="date" min={startDate} onChange={(e)=>{setEndDate(e.target.value); if(dateDiff===0){setTimeType("単日タイプ")}}}></Form.Control>}
-                            {(type === "スポット") && <Form.Control readOnly type="date" onChange={(e)=>{setEndDate(e.target.value); }}></Form.Control>}
+                            {(type === "イベント" || type === "選択して下さい" || type === "") && <Form.Control type="date" min={startDate} onChange={(e)=>{setEndDate(e.target.value); }}></Form.Control>}
+                            {(type === "スポット") && <Form.Control readOnly type="date" onChange={(e)=>{setEndDate(e.target.value);  }}></Form.Control>}
                         </Form.Group>
                         </Col>
                     </Row>
@@ -228,7 +214,7 @@ function OwnerEventRegister(props) {
                         <Col>
                         <Form.Group>
                             {(type === "イベント") && <Form.Label >開催期間についての補足情報</Form.Label>}
-                            {(type === "イベント") && <Form.Control as="textarea" onChange={(e)=>{setEventName(e.target.value)}}></Form.Control>}
+                            {(type === "イベント") && <Form.Control as="textarea" onChange={(e)=>{setDateDetail(e.target.value)}}></Form.Control>}
                         </Form.Group>
                         </Col>
                     </Row>
@@ -236,7 +222,8 @@ function OwnerEventRegister(props) {
                     <Row>
                         <Form.Group>
                         <Col>
-                        <Form.Label >開催時間</Form.Label>
+                        {(type === "イベント" || type === "") && <Form.Label >開催時間</Form.Label>}
+                        {(type === "スポット") && <Form.Label >営業時間</Form.Label>}
                         {(dateDiff !== 0) && <Form.Control 
                             as="select" 
                             onChange={(e)=>{
@@ -248,12 +235,12 @@ function OwnerEventRegister(props) {
                             <option>月〜日タイプ</option>
                             <option>連日タイプ</option>
                         </Form.Control>}
-                        {(timeType === "単日タイプ") && 
+                        {(dateDiff === 0) && 
                             <Table>
                             <thead>
                                 <tr><th>#</th><th>{startDate}</th></tr>
-                                <tr><th>開始時間</th>{[1].map((num) => <th key={num}><Form.Control type="time"></Form.Control></th>)}</tr>
-                                <tr><th>終了時間</th>{[1].map((num) => <th key={num}><Form.Control type="time"></Form.Control></th>)}</tr>
+                                <tr><th>開始時間</th>{[1].map((num) => <th key={num}><Form.Control type="time" onChange={(e)=>{setStartTime(e.target.value)}}></Form.Control></th>)}</tr>
+                                <tr><th>終了時間</th>{[1].map((num) => <th key={num}><Form.Control type="time" onChange={(e)=>{setEndTime(e.target.value)}}></Form.Control></th>)}</tr>
                             </thead>
                             </Table>
                         }
@@ -261,8 +248,8 @@ function OwnerEventRegister(props) {
                             <Table>
                             <thead>
                                 <tr><th>#</th><th>Mon</th><th>Tue</th><th>Wed</th><th>Thu</th><th>Fri</th><th>Sat</th><th>Sun</th></tr>
-                                <tr><th>開始時間</th>{[1,2,3,4,5,6,7].map((num) => <th key={num}><Form.Control type="time"></Form.Control></th>)}</tr>
-                                <tr><th>終了時間</th>{[1,2,3,4,5,6,7].map((num) => <th key={num}><Form.Control type="time"></Form.Control></th>)}</tr>
+                                <tr><th>開始時間</th>{[1,2,3,4,5,6,7].map((num) => <th key={num}><Form.Control type="time" onChange={(e)=>{setStartTime(e.target.value)}}></Form.Control></th>)}</tr>
+                                <tr><th>終了時間</th>{[1,2,3,4,5,6,7].map((num) => <th key={num}><Form.Control type="time" onChange={(e)=>{setEndTime(e.target.value)}}></Form.Control></th>)}</tr>
                             </thead>
                             </Table>
                         }
@@ -270,8 +257,8 @@ function OwnerEventRegister(props) {
                             <Table striped hover size="sm">
                             <thead>
                                 <tr><th>#</th>{schedule.map((day) => <th key={day}>{day}</th>)}</tr>
-                                <tr><th>開始時間</th>{[...Array(dateDiff+1).keys()].map((num) => <th key={num}><Form.Control type="time"></Form.Control></th>)}</tr>
-                                <tr><th>終了時間</th>{[...Array(dateDiff+1).keys()].map((num) => <th key={num}><Form.Control type="time"></Form.Control></th>)}</tr>
+                                <tr><th>開始時間</th>{[...Array(dateDiff+1).keys()].map((num) => <th key={num}><Form.Control type="time" onChange={(e)=>{setStartTime(e.target.value)}}></Form.Control></th>)}</tr>
+                                <tr><th>終了時間</th>{[...Array(dateDiff+1).keys()].map((num) => <th key={num}><Form.Control type="time" onChange={(e)=>{setEndTime(e.target.value)}}></Form.Control></th>)}</tr>
                             </thead>
                             </Table>
                         }
@@ -279,8 +266,149 @@ function OwnerEventRegister(props) {
                         </Col>
                         </Form.Group>
                     </Row>
+                    <Row>
+                        <Col>
+                        <Form.Group>
+                            {(type === "イベント"　|| type === "") && <Form.Label >開催時間についての補足情報</Form.Label>}
+                            {(type === "スポット") && <Form.Label >営業期間についての補足情報</Form.Label>}
+                            <Form.Control as="textarea" onChange={(e)=>{setTimeDetail(e.target.value)}}></Form.Control>
+                        </Form.Group>
+                        </Col>
+                    </Row>
+                    <Row>
+                        <Col>
+                        <Form.Group>
+                            <Form.Label >住所</Form.Label>
+                            <Row className="mb-3">
+                            <Col><Form.Control placeholder="地方" onChange={(e) => setState(e.target.value)}></Form.Control></Col>
+                            <Col><Form.Control placeholder="都道府県" onChange={(e) => setPrefecture(e.target.value)}></Form.Control></Col>
+                            <Col><Form.Control placeholder="市区町村" onChange={(e) => setCity(e.target.value)}></Form.Control></Col>
+                            </Row>
+                            <Row className="mb-3">
+                            <Col><Form.Control placeholder="Address1：番地以降（例：渋谷1-2-3）" onChange={(e) => setAddressDetail1(e.target.value)}></Form.Control></Col>
+                            </Row>
+                            <Row className="mb-3">
+                            <Col><Form.Control placeholder="Address2：ビル名・部屋番号等の詳細（例：渋谷ビル101）" onChange={(e) => setAddressDetail2(e.target.value)}></Form.Control></Col>
+                            </Row>
+                        </Form.Group>
+                        </Col>
+                    </Row>
+                    <Row>
+                        <Col>
+                        <Form.Group>
+                            <Form.Label >施設名</Form.Label>
+                            <Form.Control placeholder="施設名（例：渋谷ビル）" onChange={(e) => setFacilityName(e.target.value)}></Form.Control>
+                        </Form.Group>
+                        </Col>
+                    </Row>
+                    <Row>
+                        <Col>
+                        <Form.Group>
+                            <Form.Label >電話番号</Form.Label>
+                            <Form.Control onChange={(e) => setTel(e.target.value)}></Form.Control>
+                        </Form.Group>
+                        </Col>
+                    </Row>
+                    <Row>
+                        <Col>
+                        <Form.Group>
+                            <Form.Label >イベント情報</Form.Label>
+                            <Form.Control onChange={(e) => setDescription(e.target.value)}></Form.Control>
+                        </Form.Group>
+                        </Col>
+                    </Row>
+                    <Row>
+                        <Col>
+                        <Form.Group>
+                            <Form.Label >更に詳しいイベント情報</Form.Label>
+                            <Form.Control as="textarea" onChange={(e) => setDescriptionDetail(e.target.value)}></Form.Control>
+                        </Form.Group>
+                        </Col>
+                    </Row>
+                    <Row>
+                        <Col>
+                        <Form.Group>
+                            <Form.Label >駐車場情報</Form.Label>
+                            <Form.Control placeholder="例：有/○○台" onChange={(e) => setParkSpots(e.target.value)}></Form.Control>
+                        </Form.Group>
+                        </Col>
+                        <Col>
+                        <Form.Group>
+                            <Form.Label >駐車場料金</Form.Label>
+                            <Form.Control as="textarea" placeholder="平日8:00~22:00 300円/10分 平日22:00~8:00 100円/60分&#13;&#10;土日8:00~22:00 500円/10分 土日22:00~8:00 100円/60分" onChange={(e) => setParkPrice(e.target.value)}></Form.Control>
+                        </Form.Group>
+                        </Col>
+                    </Row>
+                    <Row>
+                        <Col>
+                        <Form.Group>
+                            <Form.Label >料金情報</Form.Label>
+                            <Form.Control placeholder="例：大人700円　子供300円" onChange={(e) => setPriceDetail(e.target.value)}></Form.Control>
+                        </Form.Group>
+                        </Col>
+                    </Row>
+                    <Row>
+                        <Col>
+                        <Form.Group>
+                            <Form.Label >クレジットカード利用可否</Form.Label>
+                            <Form.Control placeholder="例：可/不可" onChange={(e) => setCreditCardInfo(e.target.value)}></Form.Control>
+                        </Form.Group>
+                        </Col>
+                    </Row>
+                    <Row>
+                        <Col>
+                        <Form.Group>
+                            <Form.Label >タグ</Form.Label>
+                            <Form.Control placeholder="例：['家族と','デートに','お一人様','癒されたい']"  onChange={(e) => setTag(e.target.value)}></Form.Control>
+                        </Form.Group>
+                        </Col>
+                    </Row>
+                    {(type !== "") && 
+                        <Row>
+                            <Col>
+                            <Form.Group>
+                                <Row>
+                                    <Col>
+                                        <Form.Label >{type}画像1</Form.Label>
+                                        <Upload1 setImg1 = {setImg1}/>
+                                    </Col>
+                            
+                                    <Col>
+                                        <Form.Label >{type}画像2</Form.Label>
+                                        <Upload2 setImg2 = {setImg2}/>
+                                    </Col>
+                            
+                                    <Col>
+                                        <Form.Label >{type}画像3</Form.Label>
+                                        <Upload3 setImg3 = {setImg3}/>
+                                    </Col>
+                            
+                                    <Col>
+                                        <Form.Label >{type}画像4</Form.Label>
+                                        <Upload4 setImg4 = {setImg4}/>
+                                    </Col>
+                            
+                                    <Col>
+                                        <Form.Label >{type}画像5</Form.Label>
+                                        <Upload5 setImg5 = {setImg5}/>
+                                    </Col>
+                                </Row>
+                            </Form.Group>
+                            </Col>
+                            
+                        </Row>
+                    }
+                    <Row>
+                        <Col>
+                        <Form.Group>
+                            <Form.Label >公式HPリンク</Form.Label>
+                            <Form.Control placeholder="例：XXXXXXXX.com"  onChange={(e) => setLinkToHp(e.target.value)}></Form.Control>
+                        </Form.Group>
+                        </Col>
+                    </Row>
+                            
                     
-                    <Button onClick={handleRegisterEvent}>開催期間</Button>{' '}
+                    <Button onClick={handleRegisterEvent}>イベント登録</Button>{' '}
                     <Button onClick={() => {props.history.goBack()} }>マイページに戻る</Button>{' '}
                     <Button onClick={() => {props.history.replace("/")} }>Homeに戻る</Button>
                 </Form>
