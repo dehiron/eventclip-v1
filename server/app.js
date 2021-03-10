@@ -18,12 +18,11 @@ app.get("/api", (req,res) => {
 })
 
 //注意：eventsとownersの順番が逆で気持ち悪いが動く
-//注意：leftJoinを使うべきなのかinnerJoinを使うべきなのか
 //イベント情報Get用(all, filtered)
 app.get("/api/events", (req,res) => {
     database.select("*")
     .from("owners")
-    .leftJoin("events","owners.id","events.owner_id")
+    .innerJoin("events","owners.id","events.owner_id") //leftJoinだとid=nullの不明なデータも入ってくるので注意
     // .where({"owners.id":xx})
     .then((events) => {
         
