@@ -58,6 +58,8 @@ function OwnerAllEventsList(props) {
       }
       
       fetchData();
+      // 注意：これでいいのか・・
+      // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [modalIsOpen])
 
 

@@ -43,6 +43,8 @@ function AddressSearchBar(props) {
         if (props.selectedLocation !== ""){
             getSelectedLocation();
         }
+        // 注意：これでいいのか・・
+        // eslint-disable-next-line react-hooks/exhaustive-deps
       }, [props.selectedLocation])
   
     return(

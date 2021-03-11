@@ -113,7 +113,6 @@ function Filters(props){
                 <Button 
                     className = "search-button"
                     onClick={()=>{ 
-                        console.log("locationCandidate", locationCandidate)
                         props.setSelectedLocation(locationCandidate); // Mapコンポーネントに渡したAPIとは関係なしにauto focusする
                         handleClickFetchFilteredEvent();　// こっちで検索結果に基づいたAPIが走る
                     }} 

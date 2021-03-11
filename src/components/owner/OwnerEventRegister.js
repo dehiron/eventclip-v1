@@ -152,6 +152,8 @@ function OwnerEventRegister(props) {
 
     useEffect(()=>{
         generateScheduleArray();
+        // 注意：これでいいのか・・
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     },[endDate])
 
 
