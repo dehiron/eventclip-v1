@@ -9,7 +9,6 @@ import {
     Marker, 
     MarkerClusterer,
     InfoWindow } from "@react-google-maps/api";
-import { getGeocode } from "use-places-autocomplete";
 import "@reach/combobox/styles.css"
 import mapStyles from "./MapStyles";
 import { withRouter } from 'react-router-dom';
@@ -78,34 +77,8 @@ function Map(props){
 
     return(
         <div className = "map">
-            <Button
-                onClick={()=>{ 
-
-                    const success = async (position) => {
-                        const latLng = {
-                            lat: position.coords.latitude,
-                            lng: position.coords.longitude,
-                        };
-                        console.log(latLng);
-                        const results = await getGeocode({ location: latLng });
-                        console.log(results);
-                    };
-                    const error = (error) => {
-                        const errorMessage = {
-                            0: "原因不明のエラー" ,
-                            1: "位置情報取得の未許可によるエラー" ,
-                            2: "電波状況によるエラー" ,
-                            3: "タイムアウトエラー" ,
-                        }
-                        alert(errorMessage[error.code]);
-                    };
-                    navigator.geolocation.getCurrentPosition(success,error)
-                }}
-            >
-                現在地取得テスト
-            </Button>
             <AddressSearchBar panTo = { panTo } selectedLocation = {props.selectedLocation}/>
-            <CurrentLocator panTo = { panTo } currentLocation = {props.currentLocation} />
+            <CurrentLocator panTo = { panTo } />
             <div>
             <GoogleMap 
                 // GoogleMapタグのattitude
@@ -116,9 +89,9 @@ function Map(props){
                 onLoad = {onMapLoad}
                 onClick = {() => { 
                     setSelected(null); 
-                    props.setCurrentLocation("disabled") }}
-                    onCenterChanged= {() => { 
-                    props.setCurrentLocation("disabled") }}
+                }}
+                onCenterChanged= {() => { 
+                }}
                 >
                     {/* GoogleMapタグの中身=マーカーの見た目について */}
                     <MarkerClusterer options={optionsForMarkerCluster}>

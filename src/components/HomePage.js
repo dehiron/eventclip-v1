@@ -26,14 +26,13 @@ function HomePage(props) {
   const [isLoading, setLoading] = useState(true)
   const [events, setEvents] = useState([]);
   const [selectedLocation, setSelectedLocation] = useState(""); //for filters component(find location)
-  const [currentLocation, setCurrentLocation] = useState(""); //for filters component(get current location) 
   const [mapOrList, setMapOrList] = useState("Mapで表示");
-  // const [isLoggedInAsOwner, setIsLoggedInAsOwner] = useState(false);
 
 
   useEffect(()=>{
     const fetchData = async () => {
       try {
+        //fetch events data
         const response = await axios.get("/api/events")
         const allEvents = response.data;
         setEvents(allEvents);
@@ -44,6 +43,7 @@ function HomePage(props) {
     }
     fetchData();
   }, [isLoading])
+
 
   //displaying contents
   if (isLoading){
@@ -61,8 +61,8 @@ function HomePage(props) {
         <Header mapOrList={mapOrList} setMapOrList={setMapOrList} />
         <Filters 
           setSelectedLocation={setSelectedLocation}
-          setCurrentLocation={setCurrentLocation}
-          setEvents={setEvents} />
+          setEvents={setEvents}
+        />
 
         {/* JSX内で条件分岐させる時は即時関数又はArrow関数で実装できる。最後の()が重要なので注意。 */}
         {(()=>{ 
@@ -71,8 +71,7 @@ function HomePage(props) {
               <Map 
                 events={events} 
                 selectedLocation={selectedLocation}
-                currentLocation={currentLocation}
-                setCurrentLocation={setCurrentLocation} />
+              />
             )
           } else if (mapOrList === "一覧で表示"){
             return (

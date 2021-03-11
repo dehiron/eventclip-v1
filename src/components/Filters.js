@@ -2,12 +2,14 @@
 import { Container, Col, Row, Button, Form, InputGroup} from 'react-bootstrap';
 import { useState} from 'react';
 import axios from 'axios';
+import { getGeocode } from "use-places-autocomplete";
 
 function Filters(props){
 
-    const [locationCandidate, setLocationCandidate] = useState(null)
+    const [locationCandidate, setLocationCandidate] = useState("")
     const [selectedDate, setSelectedDate] = useState("")
     const [selectedCategories, setSelectedCategories] = useState("")
+    const [locationBarPlaceHolder, setLocationBarPlaceHolder] = useState("Filter by location")
     
     //動くけど、API実装方法違うかもしれない。検索後にURLが変わらないことによる弊害はないか注意しておく。
     const handleClickFetchFilteredEvent = async () => {
@@ -32,20 +34,38 @@ function Filters(props){
                     <InputGroup>
                         <Form.Control
                             id = "location-candidate"
-                            onChange={(e) => { setLocationCandidate(e.target.value) }} 
-                            placeholder="例：渋谷区" />
+                            onChange={(e) => { setLocationCandidate(e.target.value) }}
+                            placeholder = {locationBarPlaceHolder}
+                            value = {locationCandidate} />
                         <InputGroup.Append>
                             <Button 
                                 variant="outline-secondary"
                                 onClick = {()=>{
-                                    props.setCurrentLocation("abled");
-                                    document.getElementById('location-candidate').value = ""; //入力値をリセット(Form.Controlのボックスから)
-                                    setLocationCandidate("") //入力値をリセット(ステート情報から)
-                                    props.setSelectedLocation("") //入力値をリセット(ステート情報から)
+                                    setLocationBarPlaceHolder("現在地を取得中...")
+                                    setLocationCandidate("現在地を取得中...") 
+                                    const success = async (position) => {
+                                        const latLng = {
+                                            lat: position.coords.latitude,
+                                            lng: position.coords.longitude,
+                                        };
+                                        const results = await getGeocode({ location: latLng });
+                                        setLocationCandidate(results[1].formatted_address);
+                                        setLocationBarPlaceHolder("Filter by location")
+                                        };
+                                    const error = (error) => {
+                                        const errorMessage = {
+                                            0: "原因不明のエラー" ,
+                                            1: "位置情報取得の未許可によるエラー" ,
+                                            2: "電波状況によるエラー" ,
+                                            3: "タイムアウトエラー" ,
+                                        }
+                                        alert(errorMessage[error.code]);
+                                    };
+                                    navigator.geolocation.getCurrentPosition(success,error)
                                 }
                             }
                             >
-                                現在地 🧭
+                                🧭
                             </Button>
                         </InputGroup.Append>
                     </InputGroup>
@@ -93,16 +113,14 @@ function Filters(props){
                 <Button 
                     className = "search-button"
                     onClick={()=>{ 
+                        console.log("locationCandidate", locationCandidate)
                         props.setSelectedLocation(locationCandidate); // Mapコンポーネントに渡したAPIとは関係なしにauto focusする
-                        props.setCurrentLocation("disabled"); //ロケーション検索した場合は一度現在地取得用のstateを更新、次回また現在地取得ができる様にする
                         handleClickFetchFilteredEvent();　// こっちで検索結果に基づいたAPIが走る
                     }} 
                     variant="secondary">
                         検索
                 </Button>
             </Container>
-            
-            
             
         </Form>
     )
