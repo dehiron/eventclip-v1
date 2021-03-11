@@ -6,7 +6,7 @@ import axios from 'axios';
 import Modal from 'react-modal';
 import './Styles.css'
 import "@reach/combobox/styles.css"
-import { Container, Col } from 'react-bootstrap';
+import { Container, Row, Col, Card, Button } from 'react-bootstrap';
 //componentsのインポート
 import Header from "./header/Header";
 import Map from "./map/Map";
@@ -27,6 +27,7 @@ function HomePage(props) {
   const [events, setEvents] = useState([]);
   const [selectedLocation, setSelectedLocation] = useState(""); //for filters component(find location)
   const [mapOrList, setMapOrList] = useState("Mapで表示");
+  const [isSubmitted, setIsSubmitted] = useState(false);
 
 
   useEffect(()=>{
@@ -62,21 +63,78 @@ function HomePage(props) {
         <Filters 
           setSelectedLocation={setSelectedLocation}
           setEvents={setEvents}
+          setIsSubmitted = {setIsSubmitted}
         />
 
         {/* JSX内で条件分岐させる時は即時関数又はArrow関数で実装できる。最後の()が重要なので注意。 */}
         {(()=>{ 
-          if (mapOrList === "Mapで表示"){
+          if (mapOrList === "Mapで表示" && isSubmitted){
             return(
               <Map 
                 events={events} 
                 selectedLocation={selectedLocation}
               />
             )
-          } else if (mapOrList === "一覧で表示"){
+          } else if (mapOrList === "一覧で表示" && isSubmitted){
             return (
               <EventCards 
               events={events}/>
+            )
+          } else if (!isSubmitted){
+            return(
+              <Container fluid style={{paddingTop:5}}>
+                <Row>
+                <Card style={{width:300}}>
+                  <Card.Img style={{width:300}} variant="top" src="fes.jpg" alt="none"/>
+                  <Card.Body>
+                    <Card.Title>Online Event Sample1</Card.Title>
+                    <Card.Text>サンプルです</Card.Text>
+                    <Button variant="primary">詳細を見る</Button>
+                  </Card.Body>
+                </Card>
+                <Card style={{width:300}}>
+                  <Card.Img style={{width:300}} variant="top" src="fes.jpg" alt="none"/>
+                  <Card.Body>
+                    <Card.Title>Online Event Sample1</Card.Title>
+                    <Card.Text>サンプルです</Card.Text>
+                    <Button variant="primary">詳細を見る</Button>
+                  </Card.Body>
+                </Card>
+                <Card style={{width:300}}>
+                  <Card.Img style={{width:300}} variant="top" src="fes.jpg" alt="none"/>
+                  <Card.Body>
+                    <Card.Title>Online Event Sample1</Card.Title>
+                    <Card.Text>サンプルです</Card.Text>
+                    <Button variant="primary">詳細を見る</Button>
+                  </Card.Body>
+                </Card>
+                <Card style={{width:300}}>
+                  <Card.Img style={{width:300}} variant="top" src="fes.jpg" alt="none"/>
+                  <Card.Body>
+                    <Card.Title>Online Event Sample1</Card.Title>
+                    <Card.Text>サンプルです</Card.Text>
+                    <Button variant="primary">詳細を見る</Button>
+                  </Card.Body>
+                </Card>
+                <Card style={{width:300}}>
+                  <Card.Img style={{width:300}} variant="top" src="fes.jpg" alt="none"/>
+                  <Card.Body>
+                    <Card.Title>Online Event Sample1</Card.Title>
+                    <Card.Text>サンプルです</Card.Text>
+                    <Button variant="primary">詳細を見る</Button>
+                  </Card.Body>
+                </Card>
+                <Card style={{width:300}}>
+                  <Card.Img style={{width:300}} variant="top" src="fes.jpg" alt="none"/>
+                  <Card.Body>
+                    <Card.Title>Online Event Sample1</Card.Title>
+                    <Card.Text>サンプルです</Card.Text>
+                    <Button variant="primary">詳細を見る</Button>
+                  </Card.Body>
+                </Card>
+                </Row>
+              </Container>
+              
             )
           }
         })()}

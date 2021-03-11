@@ -38,7 +38,7 @@
 
 .login-window{
     background-color: white;
-    padding: 3rem;
+    padding: 7rem;
     border-radius: 5px;
 }
 
@@ -80,15 +80,26 @@
     /* 横幅が767px(smサイズ)以下の場合に適用するスタイル */
     .listed-event-container {
         margin-top: 1rem;
+        
     }
     .map {
-        margin-top: 1rem;
+        margin-top: 0px
+        
+    }
+    .bootstrap-navbar{
+        background-color:whitesmoke;
+        min-height: 5%;
+    }
+    .filters-container {
+        padding-top:5rem;
+        height: 40vh
     }
 }
 
 @media (max-width: 576px){
     .filters-container {
-        margin-top:8rem;
+        padding-top:5rem;
+        height: 30vh
     }
 }
 /* メディアクエリ */

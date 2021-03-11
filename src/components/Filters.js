@@ -30,7 +30,7 @@ function Filters(props){
             <Row>
                 <Col md={{span:5}}>
                   <Form.Group>
-                    <Form.Label>ロケーションで検索</Form.Label>
+                    <Form.Label className="d-none d-sm-block">ロケーションで検索</Form.Label>
                     <InputGroup>
                         <Form.Control
                             id = "location-candidate"
@@ -73,7 +73,7 @@ function Filters(props){
                 </Col>
                 <Col md={{span:4}}>
                   <Form.Group>
-                    <Form.Label>日時で検索</Form.Label>
+                    <Form.Label className="d-none d-sm-block">日時で検索</Form.Label>
                     <Form.Control 
                         onChange={(e) => {setSelectedDate(e.target.value)}} 
                         type="date" />
@@ -81,7 +81,7 @@ function Filters(props){
                 </Col>
                 <Col md={{span:3}}>
                   <Form.Group>
-                    <Form.Label>ジャンルで検索</Form.Label>
+                    <Form.Label className="d-none d-sm-block">ジャンルで検索</Form.Label>
                     {/* ハードコーディング。最終的にはevent.categoryに置き換える */}
                     {["イベント","スポット"].map((category) => (
                         <div key={category} className="mb-2">
@@ -113,6 +113,7 @@ function Filters(props){
                 <Button 
                     className = "search-button"
                     onClick={()=>{ 
+                        props.setIsSubmitted(true);
                         props.setSelectedLocation(locationCandidate); // Mapコンポーネントに渡したAPIとは関係なしにauto focusする
                         handleClickFetchFilteredEvent();　// こっちで検索結果に基づいたAPIが走る
                     }} 
