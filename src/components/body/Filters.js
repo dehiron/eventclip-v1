@@ -8,7 +8,7 @@ function Filters(props){
 
     const [locationCandidate, setLocationCandidate] = useState("")
     const [selectedDate, setSelectedDate] = useState("")
-    const [selectedCategories, setSelectedCategories] = useState("")
+    const [selectedCategories] = useState("")
     const [locationBarPlaceHolder, setLocationBarPlaceHolder] = useState("Filter by location")
     
     //動くけど、API実装方法違うかもしれない。検索後にURLが変わらないことによる弊害はないか注意しておく。
@@ -28,7 +28,7 @@ function Filters(props){
     return (
         <Form className="filters-container">
             <Row>
-                <Col md={{span:5}}>
+                <Col md={{span:6}}>
                   <Form.Group>
                     <Form.Label className="d-none d-sm-block">ロケーションで検索</Form.Label>
                     <InputGroup>
@@ -41,14 +41,21 @@ function Filters(props){
                             <Button 
                                 variant="outline-secondary"
                                 onClick = {()=>{
+                                    console.log(1);
                                     setLocationBarPlaceHolder("現在地を取得中...")
+                                    console.log(2);
                                     setLocationCandidate("現在地を取得中...") 
+                                    console.log(3);
                                     const success = async (position) => {
+                                        console.log(4);
                                         const latLng = {
                                             lat: position.coords.latitude,
                                             lng: position.coords.longitude,
                                         };
+                                        console.log(5)
                                         const results = await getGeocode({ location: latLng });
+                                        console.log(6)
+                                        console.log(results)
                                         setLocationCandidate(results[1].formatted_address);
                                         setLocationBarPlaceHolder("Filter by location")
                                         };
@@ -71,7 +78,7 @@ function Filters(props){
                     </InputGroup>
                   </Form.Group>
                 </Col>
-                <Col md={{span:4}}>
+                <Col md={{span:6}}>
                   <Form.Group>
                     <Form.Label className="d-none d-sm-block">日時で検索</Form.Label>
                     <Form.Control 
@@ -79,10 +86,9 @@ function Filters(props){
                         type="date" />
                   </Form.Group>
                 </Col>
-                <Col md={{span:3}}>
+                {/* <Col md={{span:3}}>
                   <Form.Group>
                     <Form.Label className="d-none d-sm-block">ジャンルで検索</Form.Label>
-                    {/* ハードコーディング。最終的にはevent.categoryに置き換える */}
                     {["イベント","スポット"].map((category) => (
                         <div key={category} className="mb-2">
                         <Form.Check 
@@ -106,7 +112,7 @@ function Filters(props){
                         </div>
                     ))}
                   </Form.Group>
-                </Col>
+                </Col> */}
             </Row>
             
             <Container className="search-button-wrapper">    

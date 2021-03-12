@@ -30,10 +30,7 @@ function Header (props){
                 <img src="/logo.png" alt="logo"/>
             </Navbar.Brand>
             {/* hrefでコードの見た目良くできるけど、イベント登録ページでのAPIでエラーが起きるのでonClickを使う。 */}
-            <NavDropdown id="map-or-list" title={props.mapOrList}>
-                <NavDropdown.Item onSelect={()=>props.setMapOrList("Mapで表示")}>Mapで表示</NavDropdown.Item>
-                <NavDropdown.Item onSelect={()=>props.setMapOrList("一覧で表示")}>一覧で表示</NavDropdown.Item>
-            </NavDropdown>
+            
             <Navbar.Toggle aria-controls="basic-navbar-nav"/>
             <Navbar.Collapse className="justify-content-end">
                 {/* <Nav>
@@ -41,6 +38,10 @@ function Header (props){
                         <Nav.Link onClick={ handleClickToEventsPage }>イベント一覧</Nav.Link>
                     </Nav.Item>
                 </Nav> */}
+                <NavDropdown id="map-or-list" title={props.mapOrList}>
+                    <NavDropdown.Item onSelect={()=>props.setMapOrList("Mapで表示")}>Mapで表示</NavDropdown.Item>
+                    <NavDropdown.Item onSelect={()=>props.setMapOrList("一覧で表示")}>一覧で表示</NavDropdown.Item>
+                </NavDropdown>
                 <Nav>
                     {(()=>{
                         if (ownerData.isLoggedIn || userData.isLoggedIn){

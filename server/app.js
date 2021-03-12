@@ -50,14 +50,40 @@ app.get("/api/events", (req,res) => {
                 
             }
             if (Object.keys(req.query).includes("id")){ //該当する[オーナー]idを持つイベントを抽出
-                const resultsFilteredByDate = [];
+                const resultsFilteredByOwnerId = [];
                 for (const event of events){
                     //確実なreq.query.idの方をnumber化する
                     if (event.owner_id === parseInt(req.query.id)){
-                        resultsFilteredByDate.push(event);
+                        resultsFilteredByOwnerId.push(event);
                     }
                 }
-                events = resultsFilteredByDate;
+                events = resultsFilteredByOwnerId;
+            }
+            if (Object.keys(req.query).includes("recom")){ //該当する[オーナー]idを持つイベントを抽出
+                const resultsFilteredByRecom = [];
+                if (req.query.recom === "イベント" || req.query.recom === "スポット"){
+                    for (const event of events){
+                        //確実なreq.query.idの方をnumber化する
+                        if (event.category.includes(req.query.recom)){
+                            resultsFilteredByRecom.push(event);
+                        }
+                    }
+                    events = resultsFilteredByRecom;
+                }
+                else {
+                    for (const event of events){
+                        //確実なreq.query.idの方をnumber化する
+                        if ((event.event_name.includes(req.query.recom)) || 
+                            (event.category.includes(req.query.recom)) || 
+                            (event.description.includes(req.query.recom)) || 
+                            (event.description_detail.includes(req.query.recom)) || 
+                            (event.tag.join(",").includes(req.query.recom))
+                            ){
+                            resultsFilteredByRecom.push(event);
+                        }
+                    }
+                    events = resultsFilteredByRecom;
+                }
             } 
             
         }

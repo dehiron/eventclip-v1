@@ -6,12 +6,13 @@ import axios from 'axios';
 import Modal from 'react-modal';
 import './Styles.css'
 import "@reach/combobox/styles.css"
-import { Container, Row, Col, Card, Button } from 'react-bootstrap';
+import { Container, Col } from 'react-bootstrap';
 //componentsのインポート
 import Header from "./header/Header";
 import Map from "./map/Map";
 import EventCards from "./event/EventCards";
-import Filters from "./Filters";
+import Filters from "./body/Filters";
+import Recoms from "./body/Recoms";
 //componentsのインポート
 require('dotenv').config();
 
@@ -82,59 +83,7 @@ function HomePage(props) {
             )
           } else if (!isSubmitted){
             return(
-              <Container fluid style={{paddingTop:5}}>
-                <Row>
-                <Card style={{width:300}}>
-                  <Card.Img style={{width:300}} variant="top" src="fes.jpg" alt="none"/>
-                  <Card.Body>
-                    <Card.Title>Online Event Sample1</Card.Title>
-                    <Card.Text>サンプルです</Card.Text>
-                    <Button variant="primary">詳細を見る</Button>
-                  </Card.Body>
-                </Card>
-                <Card style={{width:300}}>
-                  <Card.Img style={{width:300}} variant="top" src="fes.jpg" alt="none"/>
-                  <Card.Body>
-                    <Card.Title>Online Event Sample1</Card.Title>
-                    <Card.Text>サンプルです</Card.Text>
-                    <Button variant="primary">詳細を見る</Button>
-                  </Card.Body>
-                </Card>
-                <Card style={{width:300}}>
-                  <Card.Img style={{width:300}} variant="top" src="fes.jpg" alt="none"/>
-                  <Card.Body>
-                    <Card.Title>Online Event Sample1</Card.Title>
-                    <Card.Text>サンプルです</Card.Text>
-                    <Button variant="primary">詳細を見る</Button>
-                  </Card.Body>
-                </Card>
-                <Card style={{width:300}}>
-                  <Card.Img style={{width:300}} variant="top" src="fes.jpg" alt="none"/>
-                  <Card.Body>
-                    <Card.Title>Online Event Sample1</Card.Title>
-                    <Card.Text>サンプルです</Card.Text>
-                    <Button variant="primary">詳細を見る</Button>
-                  </Card.Body>
-                </Card>
-                <Card style={{width:300}}>
-                  <Card.Img style={{width:300}} variant="top" src="fes.jpg" alt="none"/>
-                  <Card.Body>
-                    <Card.Title>Online Event Sample1</Card.Title>
-                    <Card.Text>サンプルです</Card.Text>
-                    <Button variant="primary">詳細を見る</Button>
-                  </Card.Body>
-                </Card>
-                <Card style={{width:300}}>
-                  <Card.Img style={{width:300}} variant="top" src="fes.jpg" alt="none"/>
-                  <Card.Body>
-                    <Card.Title>Online Event Sample1</Card.Title>
-                    <Card.Text>サンプルです</Card.Text>
-                    <Button variant="primary">詳細を見る</Button>
-                  </Card.Body>
-                </Card>
-                </Row>
-              </Container>
-              
+              <Recoms setEvents={setEvents} setIsSubmitted={setIsSubmitted}/>
             )
           }
         })()}
