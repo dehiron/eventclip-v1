@@ -53,7 +53,7 @@ function OwnerEventRegister(props) {
     const [parkPrice, setParkPrice] = useState("");
     const [priceDetail, setPriceDetail] = useState("");
     const [creditCardInfo, setCreditCardInfo] = useState("");
-    const [tag, setTag] = useState("");
+    const [tag, setTag] = useState('{}');
     // オーナーが写真を選ばなければ自動でnoimageの画像になる様に設定
     // 注意：オーナーがまとめてアップロードできる様に、リファクタリング必要
     const [img1, setImg1] = useState("");
@@ -65,7 +65,6 @@ function OwnerEventRegister(props) {
 
     //開催時間のデータ処理
     const dateDiff = (endDate.slice(0,4) + endDate.slice(5,7) + endDate.slice(8,10)) - (startDate.slice(0,4) + startDate.slice(5,7) + startDate.slice(8,10)); 
-    console.log(dateDiff)
     const [schedule, setSchedule] = useState([]);
 
     //イベント登録後のポップアップウィンドウ用
@@ -361,7 +360,7 @@ function OwnerEventRegister(props) {
                         <Col>
                         <Form.Group>
                             <Form.Label >タグ</Form.Label>
-                            <Form.Control placeholder="例：['家族と','デートに','お一人様','癒されたい']"  onChange={(e) => setTag(e.target.value)}></Form.Control>
+                            <Form.Control placeholder="例：{家族と,デートに,お一人様,癒されたい}"  onChange={(e) => setTag(e.target.value)}></Form.Control>
                         </Form.Group>
                         </Col>
                     </Row>

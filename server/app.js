@@ -20,10 +20,54 @@ app.get("/api", (req,res) => {
 //注意：eventsとownersの順番が逆で気持ち悪いが動く
 //イベント情報Get用(all, filtered)
 app.get("/api/events", (req,res) => {
-    database.select("*")
-    .from("owners")
-    .innerJoin("events","owners.id","events.owner_id") //leftJoinだとid=nullの不明なデータも入ってくるので注意
-    // .where({"owners.id":xx})
+    database.select(
+        "events.id as id",
+        "events.event_name",
+        "events.start_date",
+        "events.end_date ",
+        "events.date_detail ",
+        "events.category",
+        "events.start_time",
+        "events.end_time",
+        "events.time_detail ",
+        "events.state",
+        "events.prefecture",
+        "events.city",
+        "events.address",
+        "events.latitude",
+        "events.longitude",
+        "events.facility_name",
+        "events.tel",
+        "events.description",
+        "events.description_detail",
+        "events.park_spots",
+        "events.park_price",
+        "events.price_detail",
+        "events.credit_card_info",
+        "events.owner_id",
+        "events.tag",
+        "events.img1",
+        "events.img2",
+        "events.img3",
+        "events.img4",
+        "events.img5",
+        "events.link_to_hp",
+        "events.created_at",
+        "events.updated_at",
+        // "owners.id",
+        "owners.owner_pref_id",
+        // "owners.password",
+        "owners.owner_firstname",
+        "owners.owner_lastname",
+        "owners.date_of_birth",
+        // "owners.tel",
+        // "owners.email",
+        "owners.organization",
+        // "owners.created_at",
+        // "owners.updated_at",
+    )
+    .from("events")
+    .innerJoin("owners","events.owner_id","owners.id") //leftJoinだとid=nullの不明なデータも入ってくるので注意
     .then((events) => {
         
         if (Object.keys(req.query).length > 0) { //日付が選択された場合 or ジャンルが選択された場合
@@ -50,6 +94,7 @@ app.get("/api/events", (req,res) => {
                 
             }
             if (Object.keys(req.query).includes("id")){ //該当する[オーナー]idを持つイベントを抽出
+                console.log(req.query)
                 const resultsFilteredByOwnerId = [];
                 for (const event of events){
                     //確実なreq.query.idの方をnumber化する
@@ -59,7 +104,8 @@ app.get("/api/events", (req,res) => {
                 }
                 events = resultsFilteredByOwnerId;
             }
-            if (Object.keys(req.query).includes("recom")){ //該当する[オーナー]idを持つイベントを抽出
+            if (Object.keys(req.query).includes("recom")){ //該当するrecomを持つイベントを抽出
+                console.log(req.query)
                 const resultsFilteredByRecom = [];
                 if (req.query.recom === "イベント" || req.query.recom === "スポット"){
                     for (const event of events){
@@ -119,7 +165,7 @@ app.post("/api/event/name", (req, res) => {
     const priceDetail = eventData.price_detail;
     const creditCardInfo = eventData.credit_card_info;
     const ownerId = eventData.owner_id;
-    const tag = eventData.owner_tag;
+    const tag = eventData.tag;
     const img1 = eventData.img1;
     const img2 = eventData.img2;
     const img3 = eventData.img3;

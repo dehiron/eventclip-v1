@@ -12,7 +12,6 @@ function Recoms(props){
         const handleClickToMap = async (input) => {
             if (selectedRecom !== undefined){
                 try {
-                    console.log(selectedRecom);
                     const recom = selectedRecom ? `recom=${selectedRecom}` : "";
                     const response = await axios.get(`/api/events?${recom}`)
                     const filteredEvents = response.data;
