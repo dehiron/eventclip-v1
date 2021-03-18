@@ -19,6 +19,8 @@ require('dotenv').config();
 Modal.setAppElement("#root")
 function HomePage(props) {
 
+  console.log("test");
+
   // storeの情報参照
   // const selector = useSelector((state) => state);
   // console.log(selector)
